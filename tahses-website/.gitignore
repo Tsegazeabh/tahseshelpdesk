@@ -1,8 +1,15 @@
 /node_modules
 /public/hot
+/public/css
+/public/js
+/public/js/*.js
+/public/css/*.css
+/public/fonts
+/public/images
 /public/storage
 /storage/*.key
 /vendor
+/resources/assets/images
 .env
 .env.example
 .phpunit.result.cache

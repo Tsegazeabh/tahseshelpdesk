@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router';
 
-import ServiceIndex from '../components/services/ServiceIndex';
-import App from '../components/App';
+import ServiceIndex from '../pages/services/ServiceIndex';
+import App from '../pages/App';
 
 
 const routes = [
