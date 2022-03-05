@@ -9,23 +9,17 @@ module.exports = {
     ],
 
     theme: {
-        borderRadius:{
-            'fine': '30px',
-            'none': '0',
-            'sm': '0.125rem',
-            DEFAULT: '0.25rem',
-            'md': '0.375rem',
-            'lg': '0.5rem',
-            'full': '9999px',
-            'large': '12px',
-        },
-        color:{
-            transparent: 'transparent',
-            current: 'currentColor',
-            'primary': '#0b9b0b',
-            'secondary': '#006E90'
-        },
         extend: {
+            borderRadius:{
+                'fine': '30px',
+                'large': '12px',
+            },
+            color:{
+                transparent: 'transparent',
+                current: 'currentColor',
+                'primary': '#0b9b0b',
+                'secondary': '#006E90'
+            },
             fontFamily: {
                 sans: ['Poppins', ...defaultTheme.fontFamily.sans],
             },
