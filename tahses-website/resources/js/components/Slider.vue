@@ -1,23 +1,16 @@
 <template>
     <div>
-        <Splide :options="options">
-            <SplideSlide>
-                <img class="object-cover w-full" src="../../assets/images/img1.png" alt="Sample 1">
+        <Splide v-if="!partners" :options="options">
+            <SplideSlide v-for="partner in img_src" key="partner.img">
+                <img class="object-cover w-full" :src="'/images/'+partner.img" alt="Sample 1">
             </SplideSlide>
-            <SplideSlide>
-                <img class="object-cover w-full" src="../../assets/images/img2.png" alt="Sample 2">
-            </SplideSlide>
-            <SplideSlide>
-                <img class="object-cover w-full" src="../../assets/images/img3.jpg" alt="Sample 2">
-            </SplideSlide>
-            <SplideSlide>
-                <img class="object-cover w-full" src="../../assets/images/img4.jpg" alt="Sample 2">
-            </SplideSlide>
-            <SplideSlide>
-                <img class="object-cover w-full" src="../../assets/images/img5.jpg" alt="Sample 2">
-            </SplideSlide>
-            <SplideSlide>
-                <img class="object-cover w-full" src="../../assets/images/img6.jpg" alt="Sample 2">
+        </Splide>
+        <Splide v-else :options="options">
+            <SplideSlide v-for="partner in img_src" key="partner.img">
+                <div class="splide__slide__container">
+                    <img class="object-cover w-full" :src="'/images/'+partner.img" alt="Sample 1">
+                    <h3>{{partner.title}}</h3>
+                </div>
             </SplideSlide>
         </Splide>
     </div>
@@ -27,16 +20,8 @@
 import { ref, reactive } from 'vue';
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
-const options = reactive({
-    rewind: true,
-    gap: 0,
-    type: 'loop',
-    perPage: 1,
-    autoplay: 'play',
-    height: '38vw',
-    width: '100%',
-
-})
+const props = defineProps(['options','img_src','partners'])
+console.log(props.img_src)
 
 </script>
 
