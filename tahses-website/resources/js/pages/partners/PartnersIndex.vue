@@ -1,7 +1,7 @@
 <template>
 <!--    competency cards-->
-    <div class="mx-auto my-4 p-2">
-        <slider :options="options" :img_src="img_src" :mode="true"></slider>
+    <div class="mx-auto my-4 py-6">
+        <slider :options="options" :img_src="img_src" :partners="true"></slider>
     </div>
 
 </template>
@@ -15,19 +15,28 @@
         rewind: true,
         gap: 50,
         type: 'loop',
-        perPage: 4,
+        pagination: false,
+        perPage: 3,
+        breakpoints: {
+            640: {
+                perPage: 1,
+                width: '70%',
+                height: '25vh'
+            },
+        },
+        perMove: 1,
         autoplay: 'play',
-        height: '20vh',
-        width: '100%',
+        height: '28vh',
+        width: '80%',
         hasSliderWrapper: true,
     })
     const img_src = reactive([
-            {img:'img1.png', title:'this is partner0'},
-            {img:'img2.png', title:'this is partner1'},
-            {img:'img3.jpg', title:'this is partner2'},
-            {img:'img4.jpg', title:'this is partner3'},
-            {img:'img5.jpg', title:'this is partner4'},
-            {img:'img6.jpg', title:'this is partner5'}
+            {img:'img1.png', title:'Ethiopian Electric Utility Organization'},
+            {img:'img2.png', title:'Ethiopian Chemical and Constructions input industry'},
+            {img:'img3.jpg', title:'Ethiopian Telecommunication'},
+            {img:'img4.jpg', title:'Ethiopian Ministry of Education'},
+            {img:'img5.jpg', title:'this is partner1'},
+            {img:'img6.jpg', title:'this is partner2'}
     ]);
 
 

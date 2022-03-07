@@ -39,12 +39,12 @@ const options = reactive({
     width: '100%',
 })
 const img_src = reactive([
-    {img:'img1.png', title:'this is partner0'},
-    {img:'img2.png', title:'this is partner1'},
-    {img:'img3.jpg', title:'this is partner2'},
-    {img:'img4.jpg', title:'this is partner3'},
-    {img:'img5.jpg', title:'this is partner4'},
-    {img:'img6.jpg', title:'this is partner5'}
+    {img:'img1.png', title:'Software as a Service (SaaS)'},
+    {img:'img2.png', title:'We provide the following ICT based Trainings'},
+    {img:'img3.jpg', title:'The services provided by data-center includes'},
+    {img:'img4.jpg', title:'Manufacturing Process Management Information System (MPMIS)'},
+    {img:'img5.jpg', title:'Construction Management Information System (CMIS)'},
+    {img:'img6.jpg', title:'Land Management Information System (LMIS)'}
 ]);
 </script>
 
