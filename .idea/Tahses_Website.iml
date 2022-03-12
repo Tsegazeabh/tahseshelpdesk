@@ -118,6 +118,11 @@
       <excludeFolder url="file://$MODULE_DIR$/tahses-website/vendor/doctrine/inflector" />
       <excludeFolder url="file://$MODULE_DIR$/tahses-website/vendor/doctrine/lexer" />
       <excludeFolder url="file://$MODULE_DIR$/tahses-website/vendor/doctrine/instantiator" />
+      <excludeFolder url="file://$MODULE_DIR$/tahses-website/public/fonts" />
+      <excludeFolder url="file://$MODULE_DIR$/tahses-website/resources/assets" />
+      <excludeFolder url="file://$MODULE_DIR$/tahses-website/storage/framework/cache/data/c0" />
+      <excludeFolder url="file://$MODULE_DIR$/tahses-website/storage/framework/cache/data/ec" />
+      <excludeFolder url="file://$MODULE_DIR$/tahses-website/vendor" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
