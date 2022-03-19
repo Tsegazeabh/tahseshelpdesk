@@ -65,4 +65,6 @@ Route::prefix('contact-us')->group(function (){
     Route::post('/request', [\App\Http\Controllers\Api\cms\ContactUsController::class,'store']);
 });
 
+Route::post('/upload-image',[\App\Http\Controllers\UploadController::class, 'index']);
+
 

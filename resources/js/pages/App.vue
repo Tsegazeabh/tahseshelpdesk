@@ -1,5 +1,6 @@
 <template>
     <home-layout id="homelayout">
+        <notifications position="top center"/>
         <slider :options="options" :img_src="img_src" :mode="false"></slider>
         <the-header title="Our Core Competencies"></the-header>
         <competency-card></competency-card>
@@ -28,6 +29,7 @@ import CustomerCard from './public/customers/CustomerCard';
 import PartnersCard from './public/partners/PartnersCard';
 import TheHeader from '../components/TheHeader'
 import {reactive} from 'vue';
+
 
 const options = reactive({
     rewind: true,

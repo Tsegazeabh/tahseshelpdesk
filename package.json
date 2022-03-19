@@ -23,7 +23,14 @@
         "tailwindcss": "^3.0.18"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^33.0.0",
+        "@ckeditor/ckeditor5-vue": "^2.0.1",
+        "@kyvg/vue3-notification": "^2.3.4",
         "@splidejs/vue-splide": "^0.5.18",
+        "@tinymce/tinymce-vue": "^4.0.7",
+        "ag-grid-community": "^27.0.1",
+        "ag-grid-vue3": "^27.0.0",
+        "blueimp-md5": "^2.19.0",
         "sass": "^1.49.9",
         "sass-loader": "^12.6.0",
         "vue": "^3.2.31",

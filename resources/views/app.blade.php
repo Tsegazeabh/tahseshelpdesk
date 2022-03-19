@@ -11,6 +11,7 @@
         <style>
             body {
                 font-family: 'Poppins', sans-serif;
+                overflow: hidden;
             }
         </style>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
