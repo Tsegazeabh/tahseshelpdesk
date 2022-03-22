@@ -5,21 +5,46 @@ namespace App\Http\Controllers;
 use App\Models\About;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Intervention\Image\Facades\Image;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
 
 class UploadController extends Controller
 {
     public function index(Request $request){
-        $about = new About();
-        $about->id = 0;
-        $about->exists = true;
-        $image = $about->addMediaFromRequest('file')->toMediaCollection('media');
 
-//        Log::info($image);
-        Log::info($image);
-        return response()->json([
-//            'location' => 'https://images.unsplash.com/photo-1597431793715-b4b71ddb5670?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY0NzcwMTQzMg&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080'
-            'location' => $image->getUrl().'?crop=entropy&fit=max&w=1080'
-        ]);
+        try {
+            $root_path = 'MyImages';
+            $root_path_thumbnail = 'MyImages\thumbnail';
+            $image = $request->file('file');
+            $imagename = time() . '.' . $image->extension();
+            $destinationPath = public_path($root_path_thumbnail);
+
+            if(!file_exists($destinationPath)){
+                mkdir($destinationPath, 0777, true);
+            }
+
+            $img = Image::make($image->path());
+            $img->resize(100, 100, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath . '/' . $imagename);
+            $destinationPath = public_path($root_path);
+            $image->move($destinationPath, $imagename);
+            Log::info('upload');
+
+            $images = array(
+                "default" => url($root_path . '/' . $imagename),
+                "800" => url($root_path . '/' . $imagename),
+                "1024" => url($root_path . '/' . $imagename),
+                "1920" => url($root_path . '/' . $imagename)
+            );
+
+            return response()->json([
+                'location' => url($root_path . '/' . $imagename)
+            ]);
+        } catch (\Throwable $ex) {
+//            logError($ex);
+            return response('unable to upload image');
+        }
     }
 }

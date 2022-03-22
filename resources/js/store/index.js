@@ -9,13 +9,12 @@ const store = createStore({
         return{
             user: {},
             isAuthenticated: false,
-            authToken: ''
+            authToken: '',
         }
     },
     mutations,
     getters,
     actions,
     plugins: [createPersistedState()],
-    // config.headers["Authorization"] = 'Bearer ' + token;
 });
 export default store;

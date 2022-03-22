@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div class="overflow-y-auto">
 <!-- nabar -->
-        <teleport to="#app">
+<!--        <teleport to="#app">-->
         <nav-bar></nav-bar>
-        </teleport>
+<!--        </teleport>-->
 <!-- content goes here -->
         <slot></slot>
 <!-- footer -->

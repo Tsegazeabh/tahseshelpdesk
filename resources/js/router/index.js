@@ -4,6 +4,10 @@ import CreateCompetency from '@pages/cms/competencies/CreateCompetency';
 import EditCompetency from '@pages/cms/competencies/EditCompetency';
 import ManageCompetency from '@pages/cms/competencies/ManageCompetency';
 import Competency from '@pages/cms/competencies/Competency';
+import CarouselGallery from '@pages/cms/carousel_gallery/CarouselGallery';
+import CreateCarouselGallery from '@pages/cms/carousel_gallery/CreateCarouselGallery';
+import EditCarouselGallery from '@pages/cms/carousel_gallery/EditCarouselGallery';
+import ManageCarouselGallery from '@pages/cms/carousel_gallery/ManageCarouselGallery';
 import CreateNews from '@pages/cms/news/CreateNews';
 import EditNews from '@pages/cms/news/EditNews';
 import ManageNews from '@pages/cms/news/ManageNews';
@@ -72,7 +76,6 @@ const routes = [
     },
     {
         path: '/cms',
-        name: 'dashboard',
         component: Dashboard,
         meta:{
             protected: true,
@@ -80,6 +83,7 @@ const routes = [
         children:[
             {
                 path: '',
+                name: 'cms',
                 component: ManageAbout,
                 meta:{
                     protected: true,
@@ -87,7 +91,7 @@ const routes = [
             },
             {
                 path: 'create_about',
-                name: 'about.create',
+                name: 'create_about',
                 component: CreateAbout,
                 meta:{
                     protected: true,
@@ -95,7 +99,7 @@ const routes = [
             },
             {
                 path: 'edit_about',
-                name: 'about.edit',
+                name: 'edit_about',
                 component: EditAbout,
                 meta:{
                     protected: true,
@@ -103,7 +107,6 @@ const routes = [
             },
             {
                 path: 'products',
-                name: 'products.index',
                 component: Product,
                 meta:{
                     protected: true,
@@ -111,7 +114,7 @@ const routes = [
                 children:[
                     {
                         path: '',
-                        name: 'products.manage',
+                        name: 'products',
                         component: ManageProduct,
                         meta:{
                             protected: true,
@@ -119,7 +122,7 @@ const routes = [
                     },
                     {
                         path: 'create_product',
-                        name: 'products.create',
+                        name: 'create_product',
                         component: CreateProduct,
                         meta:{
                             protected: true,
@@ -127,7 +130,7 @@ const routes = [
                     },
                     {
                         path: 'edit_product',
-                        name: 'products.edit',
+                        name: 'edit_product',
                         component: EditProduct,
                         meta:{
                             protected: true,
@@ -137,7 +140,6 @@ const routes = [
             },
             {
                 path: 'services',
-                name: 'services.index',
                 component: Service,
                 meta:{
                     protected: true,
@@ -145,7 +147,7 @@ const routes = [
                 children:[
                     {
                         path: '',
-                        name: 'services.manage',
+                        name: 'services',
                         component: ManageService,
                         meta:{
                             protected: true,
@@ -153,7 +155,7 @@ const routes = [
                     },
                     {
                         path: 'create_service',
-                        name: 'services.create',
+                        name: 'create_service',
                         component: CreateService,
                         meta:{
                             protected: true,
@@ -161,7 +163,7 @@ const routes = [
                     },
                     {
                         path: 'edit_service',
-                        name: 'services.edit',
+                        name: 'edit_service',
                         component: EditService,
                         meta:{
                             protected: true,
@@ -171,7 +173,6 @@ const routes = [
             },
             {
                 path: 'customers',
-                name: 'customers.index',
                 component: Customer,
                 meta:{
                     protected: true,
@@ -179,7 +180,7 @@ const routes = [
                 children:[
                     {
                         path: '',
-                        name: 'customers.manage',
+                        name: 'customers',
                         component: ManageCustomer,
                         meta:{
                             protected: true,
@@ -187,7 +188,7 @@ const routes = [
                     },
                     {
                         path: 'create_customer',
-                        name: 'customers.create',
+                        name: 'create_customer',
                         component: CreateCustomer,
                         meta:{
                             protected: true,
@@ -195,7 +196,7 @@ const routes = [
                     },
                     {
                         path: 'edit_customer',
-                        name: 'customers.edit',
+                        name: 'edit_customer',
                         component: EditCustomer,
                         meta:{
                             protected: true,
@@ -205,7 +206,6 @@ const routes = [
             },
             {
                 path: 'news',
-                name: 'news.index',
                 component: News,
                 meta:{
                     protected: true,
@@ -213,7 +213,7 @@ const routes = [
                 children:[
                     {
                         path: '',
-                        name: 'news.manage',
+                        name: 'news',
                         component: ManageNews,
                         meta:{
                             protected: true,
@@ -221,7 +221,7 @@ const routes = [
                     },
                     {
                         path: 'create_news',
-                        name: 'news.create',
+                        name: 'create_news',
                         component: CreateNews,
                         meta:{
                             protected: true,
@@ -229,7 +229,7 @@ const routes = [
                     },
                     {
                         path: 'edit_news',
-                        name: 'news.edit',
+                        name: 'edit_news',
                         component: EditNews,
                         meta:{
                             protected: true,
@@ -239,7 +239,6 @@ const routes = [
             },
             {
                 path: 'competencies',
-                name: 'competencies.index',
                 component: Competency,
                 meta:{
                     protected: true,
@@ -247,7 +246,7 @@ const routes = [
                 children:[
                     {
                         path: '',
-                        name: 'competencies.manage',
+                        name: 'competencies',
                         component: ManageCompetency,
                         meta:{
                             protected: true,
@@ -255,7 +254,7 @@ const routes = [
                     },
                     {
                         path: 'create_competency',
-                        name: 'competencies.create',
+                        name: 'create_competency',
                         component: CreateCompetency,
                         meta:{
                             protected: true,
@@ -263,7 +262,7 @@ const routes = [
                     },
                     {
                         path: 'edit_competency',
-                        name: 'competencies.edit',
+                        name: 'edit_competency',
                         component: EditCompetency,
                         meta:{
                             protected: true,
@@ -273,7 +272,6 @@ const routes = [
             },
             {
                 path: 'privacy_policy',
-                name: 'privacy_policy.index',
                 component: PrivacyPolicy,
                 meta:{
                     protected: true,
@@ -281,7 +279,7 @@ const routes = [
                 children:[
                     {
                         path: '',
-                        name: 'privacy_policy.manage',
+                        name: 'privacy_policy',
                         component: ManagePrivacyPolicy,
                         meta:{
                             protected: true,
@@ -289,7 +287,7 @@ const routes = [
                     },
                     {
                         path: 'create_privacy_policy',
-                        name: 'privacy_policy.create',
+                        name: 'create_privacy_policy',
                         component: CreatePrivacyPolicy,
                         meta:{
                             protected: true,
@@ -297,7 +295,7 @@ const routes = [
                     },
                     {
                         path: 'edit_privacy_policy',
-                        name: 'privacy_policy.edit',
+                        name: 'edit_privacy_policy',
                         component: EditPrivacyPolicy,
                         meta:{
                             protected: true,
@@ -307,7 +305,6 @@ const routes = [
             },
             {
                 path: 'terms_of_use',
-                name: 'terms_of_use.index',
                 component: TermsOfUse,
                 meta:{
                     protected: true,
@@ -315,7 +312,7 @@ const routes = [
                 children:[
                     {
                         path: '',
-                        name: 'terms_of_use.manage',
+                        name: 'terms_of_use',
                         component: ManageTermsOfUse,
                         meta:{
                             protected: true,
@@ -323,7 +320,7 @@ const routes = [
                     },
                     {
                         path: 'create_terms_of_use',
-                        name: 'terms_of_use.create',
+                        name: 'create_terms_of_use',
                         component: CreateTermsOfUse,
                         meta:{
                             protected: true,
@@ -331,7 +328,7 @@ const routes = [
                     },
                     {
                         path: 'edit_terms_of_use',
-                        name: 'terms_of_use.edit',
+                        name: 'edit_terms_of_use',
                         component: EditTermsOfUse,
                         meta:{
                             protected: true,
@@ -341,7 +338,6 @@ const routes = [
             },
             {
                 path: 'partners',
-                name: 'partners.index',
                 component: Partner,
                 meta:{
                     protected: true,
@@ -349,7 +345,7 @@ const routes = [
                 children:[
                     {
                         path: '',
-                        name: 'partners.manage',
+                        name: 'partners',
                         component: ManagePartner,
                         meta:{
                             protected: true,
@@ -357,7 +353,7 @@ const routes = [
                     },
                     {
                         path: 'create_partner',
-                        name: 'partners.create',
+                        name: 'create_partner',
                         component: CreatePartner,
                         meta:{
                             protected: true,
@@ -365,7 +361,7 @@ const routes = [
                     },
                     {
                         path: 'edit_partner',
-                        name: 'partners.edit',
+                        name: 'edit_partner',
                         component: EditPartner,
                         meta:{
                             protected: true,
@@ -374,8 +370,41 @@ const routes = [
                 ]
             },
             {
+                path: 'carousel_gallery',
+                component: CarouselGallery,
+                meta:{
+                    protected: true,
+                },
+                children:[
+                    {
+                        path: '',
+                        name: 'carousel_gallery',
+                        component: ManageCarouselGallery,
+                        meta:{
+                            protected: true,
+                        }
+                    },
+                    {
+                        path: 'create_carousel_gallery',
+                        name: 'create_carousel_gallery',
+                        component: CreateCarouselGallery,
+                        meta:{
+                            protected: true,
+                        }
+                    },
+                    {
+                        path: 'edit_carousel_gallery',
+                        name: 'edit_carousel_gallery',
+                        component: EditCarouselGallery,
+                        meta:{
+                            protected: true,
+                        }
+                    },
+                ]
+            },
+            {
                 path: 'contact_us',
-                name: 'contact.index',
+                name: 'contact_us',
                 component: ContactCms,
                 meta:{
                     protected: true,
@@ -406,7 +435,6 @@ const router = createRouter({
 
 router.beforeEach((to,from) => {
 let authenticated = store.getters['isLoggedIn'];
-console.log(authenticated)
     if (to.meta.protected && !authenticated){
         return { name: 'login' }
     }

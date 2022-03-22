@@ -1,7 +1,8 @@
 <template>
-    <div class="flex bg-gray-200 font-roboto">
+    <div class="flex bg-gray-200 font-roboto overflow-y-hidden m-0 min-h-screen max-h-screen">
         <div :class="sidebarOpen ? 'block' : 'hidden'" @click="sidebarOpen = false" class="fixed inset-0 z-20 transition-opacity bg-black opacity-50 lg:hidden"></div>
 
+<!--        side bar        -->
         <div :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'" class="fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto transition duration-300 transform bg-gray-900 lg:translate-x-0 lg:static lg:inset-0">
             <div class="flex items-center justify-center mt-8">
                 <div class="flex items-center">
@@ -12,44 +13,48 @@
 
             <nav class="mt-10">
 
-                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" to="/cms">
+                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" :to="{ name:'cms' }">
                     <span class="mx-3">About</span>
                 </router-link>
 
-                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" to="/cms/services">
+                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"  :to="{ name:'services' }">
                     <span class="mx-3">Services</span>
                 </router-link>
 
-                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" to="/cms/products">
+                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" :to="{ name:'products' }">
                     <span class="mx-3">Products</span>
                 </router-link>
 
-                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" to="/cms/customers">
+                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" :to="{ name:'customers' }">
                     <span class="mx-3">Customers</span>
                 </router-link>
 
-                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" to="/cms/competencies">
+                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" :to="{ name:'competencies' }">
                     <span class="mx-3">Competencies</span>
                 </router-link>
 
-                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" to="/cms/news">
+                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" :to="{ name:'news' }">
                     <span class="mx-3">News</span>
                 </router-link>
 
-                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" to="/cms/partners">
+                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" :to="{ name:'partners' }">
                     <span class="mx-3">Partners</span>
                 </router-link>
 
-                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" to="/cms/contact_us">
+                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" :to="{ name:'contact_us' }">
                     <span class="mx-3">Contact Us</span>
                 </router-link>
 
-                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" to="/cms/terms_of_use">
+                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" :to="{ name:'terms_of_use' }">
                     <span class="mx-3">Terms of Use</span>
                 </router-link>
 
-                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" to="/cms/privacy_policy">
+                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" :to="{ name:'privacy_policy' }">
                     <span class="mx-3">Privacy Policy</span>
+                </router-link>
+
+                <router-link class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" :to="{ name:'carousel_gallery' }">
+                    <span class="mx-3">Carousel Gallery</span>
                 </router-link>
 
                 <!--                <a class="flex items-center px-6 py-2 mt-4 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="/forms">-->
@@ -62,7 +67,8 @@
                 <!--                </a>-->
             </nav>
         </div>
-        <div class="flex-1 flex flex-col overflow-hidden">
+
+        <div class="flex-1 flex flex-col">
             <header class="flex items-center justify-between px-6 py-4 bg-white border-b-4 border-[#56af5D]">
                 <div class="flex items-center">
                     <button @click="sidebarOpen = true" class="text-gray-500 focus:outline-none lg:hidden">
@@ -88,10 +94,9 @@
                     </div>
                 </div>
             </header>
+
             <main class="flex-1 overflow-y-auto max-h-screen bg-gray-200">
                 <div class="container mx-auto px-6 py-8">
-
-                    <!--                breadcrumb ends-->
                     <div class="m-8">
                         <slot></slot>
                     </div>
@@ -111,5 +116,4 @@
 </script>
 
 <style scoped>
-
 </style>

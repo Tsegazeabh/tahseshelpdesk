@@ -7,11 +7,14 @@
         <title>Laravel Vue</title>
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+{{--        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">--}}
         <style>
+            *{
+                box-sizing: border-box;
+            }
             body {
-                font-family: 'Poppins', sans-serif;
-                overflow: hidden;
+                /*font-family: 'Poppins', sans-serif;*/
+                scroll-behavior: smooth;
             }
         </style>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">

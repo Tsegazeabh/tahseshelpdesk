@@ -9,5 +9,5 @@ export default {
         state.isAuthenticated = false;
         state.authToken = '';
         state.user = {};
-    }
+    },
 }

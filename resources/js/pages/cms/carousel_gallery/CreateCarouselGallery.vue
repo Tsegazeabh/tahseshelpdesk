@@ -3,7 +3,7 @@
     <div class="mt-8">
         <div class="mt-4">
             <div class="p-6 bg-white rounded-md shadow-md">
-                <h2 class="text-lg text-gray-700 font-semibold capitalize">Create News</h2>
+                <h2 class="text-lg text-gray-700 font-semibold capitalize">Create Carousel Gallery</h2>
 
                 <form @submit.prevent="submitForm">
                     <div class="grid grid-cols-1 gap-6 mt-4">
@@ -48,7 +48,7 @@
                             <label class="text-gray-700"></label>
 <!--                            <input class="form-input w-full mt-2 p-2 rounded-md text-sm rounded-lg border cursor-pointer text-gray-400 focus:outline-none focus:border-transparent bg-gray-700 border-gray-600 placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" type="file">-->
                             <label class="block focus:outline-none">
-                                <span class="sr-only">Choose profile photo</span>
+                                <span class="sr-only">Choose carousel photo</span>
                                 <input @input="Upload" type="file" class="block w-full text-sm text-slate-500
                                   file:mr-4 file:py-2 file:px-4
                                   file:rounded-full file:border-0
@@ -82,7 +82,13 @@ const form = reactive({
 
 // form submit method
 function submitForm(){
-
+    // axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
+    // axios.post("/path/to/api", data, {
+    //     headers: {
+    //         "Authorization": store.getters['getToken'],
+    //         "Content-Type": "multipart/form-data",
+    //     },
+    // });
       axios.post('/api/upload-image',form).then((res) => {
         console.log(res.data);
       }).catch((e) => {

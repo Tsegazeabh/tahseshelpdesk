@@ -72,9 +72,9 @@ Route::middleware(['auth:sanctum'])->prefix('cms')->group(function (){
     });
 //about
     Route::prefix('about')->group(function (){
-        Route::get('manage', [\App\Http\Controllers\Api\cms\AboutController::class,'show']);
+        Route::get('manage', [\App\Http\Controllers\Api\cms\AboutController::class,'index']);
         Route::post('create',[\App\Http\Controllers\Api\cms\AboutController::class,'create']);
-        Route::post('edit/{id}',[\App\Http\Controllers\Api\cms\AboutController::class,'update']);
+        Route::post('update/{id}',[\App\Http\Controllers\Api\cms\AboutController::class,'update']);
         Route::delete('archive/{id}',[\App\Http\Controllers\Api\cms\AboutController::class,'archive']);
         Route::delete('delete/{id}',[\App\Http\Controllers\Api\cms\AboutController::class,'destroy']);
         Route::post('restore/{id}',[\App\Http\Controllers\Api\cms\AboutController::class,'restore']);

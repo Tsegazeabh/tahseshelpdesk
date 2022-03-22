@@ -28,18 +28,15 @@
 </template>
 
 <script setup>
-    import {ref, reactive, onMounted } from 'vue';
+    import { reactive } from 'vue';
     import { useStore } from 'vuex';
     const store = useStore();
     const user = reactive({email:'',password:''});
-    const url = 'admin/login';
-    const encoded = encodeURIComponent(url);
-    console.log(encoded);
 
     function login(){
         store.dispatch('login',user)
     }
-    onMounted(()=>{console.log('onmounted' + store.getters['isLoggedIn'])})
+
 </script>
 
 <style scoped>

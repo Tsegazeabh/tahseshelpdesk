@@ -26,7 +26,6 @@ class AboutRequest extends FormRequest
         return [
             'title' => ['string','required'],
             'description' => ['string','required'],
-            'image' => ['image'],
         ];
     }
 }

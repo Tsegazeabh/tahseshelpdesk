@@ -1,5 +1,6 @@
 export default {
     getToken(state){
+        console.log(state.authToken);
         return state.authToken;
     },
     getUser(state){
@@ -7,5 +8,5 @@ export default {
     },
     isLoggedIn(state){
         return state.isAuthenticated;
-    }
+    },
 }
