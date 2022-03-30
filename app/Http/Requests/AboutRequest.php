@@ -26,6 +26,7 @@ class AboutRequest extends FormRequest
         return [
             'title' => ['string','required'],
             'description' => ['string','required'],
+            'is_published' => ['sometimes','boolean']
         ];
     }
 }

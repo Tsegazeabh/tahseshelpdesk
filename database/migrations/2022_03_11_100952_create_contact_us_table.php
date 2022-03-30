@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('phone');
             $table->text('comment');
             $table->timestamp('published_at');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -4,11 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class About extends Model implements HasMedia
+class About extends Model
 {
-    use HasFactory, InteractsWithMedia;
+    use HasFactory, SoftDeletes;
     protected $guarded = [];
+
+    protected $casts = [
+        'published_at' => 'datetime:Y-m-d',
+    ];
+
 }

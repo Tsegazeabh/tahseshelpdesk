@@ -5,20 +5,18 @@ import { createApp } from "vue";
 import router from './router/index';
 import store from './store/index';
 import Notifications from '@kyvg/vue3-notification';
-import CKEditor from '@ckeditor/ckeditor5-vue';
-
-
+import Pagination from '@components/Pagination';
 
 window.Alpine = Alpine;
 Alpine.start();
 
-createApp({
+const app = createApp({
 })
-    .use(router)
-    .use(store)
-    .use(Notifications)
-    .use(CKEditor)
-    .mount('#app');
+    app.use(router)
+    app.use(store)
+    app.use(Notifications)
+    app.component('Pagination',Pagination)
+    app.mount('#app');
 
 
 

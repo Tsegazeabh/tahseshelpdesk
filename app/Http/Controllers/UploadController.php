@@ -14,6 +14,7 @@ class UploadController extends Controller
     public function index(Request $request){
 
         try {
+            Log::info($request);
             $root_path = 'MyImages';
             $root_path_thumbnail = 'MyImages\thumbnail';
             $image = $request->file('file');

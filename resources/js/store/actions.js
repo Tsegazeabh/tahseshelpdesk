@@ -7,12 +7,12 @@ export default {
         axios.post('api/login',data).then((response) => {
             let payload = {user:response.data.user,token:response.data.token}
             context.commit('setAuth', payload);
-            // axios.interceptors.request.use(function (config) {
-            //     config.headers.Authorization = context.getters('getToken');
-            //     return config;
-            // });
-            router.push('/cms');
-            console.log('getters: ', context.getters['getToken']);
+            router.replace('/cms');
+            let auth_user = context.getters['getUser'];
+            let auth_token = context.getters['getToken'];
+            localStorage.setItem('auth_token', auth_token);
+            localStorage.setItem('auth_user', JSON.stringify(auth_user));
+            // localStorage.setItem('user', JSON.stringify(user));
             axios.defaults.headers.common['Authorization'] = 'Bearer '+ context.getters['getToken'];
         }).catch((error) => {
             console.log(error.response.data)
@@ -22,6 +22,7 @@ export default {
         axios.post('api/logout').then((response) => {
             console.log(response.data)
             context.commit('clearAuth');
+            localStorage.removeItem('auth_token');
         }).catch((error) => {
             console.log(error.response)
         });

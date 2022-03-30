@@ -1,5 +1,26 @@
 <template>
-    <bread-crumb></bread-crumb>
+    <nav class="flex mb-4 py-3 px-5 text-gray-700 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-3">
+            <li class="inline-flex items-center">
+                <router-link :to="{name:'cms'}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                    <svg class="mr-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                    Cms
+                </router-link>
+            </li>
+            <li>
+                <div class="flex items-center">
+                    <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                    <router-link :to="{name:'carousel_gallery'}" class="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white">Carousel Gallery</router-link>
+                </div>
+            </li>
+            <li aria-current="page">
+                <div class="flex items-center">
+                    <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                    <span class="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">Create Carousel Gallery</span>
+                </div>
+            </li>
+        </ol>
+    </nav>
     <div class="mt-8">
         <div class="mt-4">
             <div class="p-6 bg-white rounded-md shadow-md">
@@ -9,53 +30,32 @@
                     <div class="grid grid-cols-1 gap-6 mt-4">
                         <div>
                             <label class="text-gray-700" for="title">Title</label>
+                            <p v-if="errors.title && errors.title.length > 0" class="text-red-600 text-sm py-1">
+                                <span v-for="(error,index) in errors.title" :key="index">{{ error }} </span>
+                            </p>
                             <input v-model="form.title" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="title">
                         </div>
 
                         <div>
                             <label class="text-gray-700">Description</label>
-<!--                            <input v-model="form.description" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="description">-->
-<!--                            <editor class="rounded-md" :editor="editor" v-model="form.description" ></editor>-->
-                            <editor
-                                v-model="form.description"
-                                api-key="no-api-key"
-                                :init="{
-                                     height: 500,
-                                     menubar: false,
-                                     plugins: [
-                                       'advlist autolink lists link image charmap print preview anchor',
-                                       'searchreplace visualblocks code fullscreen',
-                                       'insertdatetime media table imagetools paste code help wordcount'
-                                     ],
-                                     toolbar:
-                                       'undo redo | link image | formatselect | bold italic backcolor | \
-                                       alignleft aligncenter alignright alignjustify | \
-                                       bullist numlist outdent indent | removeformat | help',
-                                     image_title: true,
-                                     automatic_uploads: true,
-                                     file_picker_types: 'image',
-                                     file_picker_callback: fileUploader,
-                                   }"
-                            />
+                            <p v-if="errors.description && errors.description.length > 0" class="text-red-600 text-sm py-1">
+                                <span v-for="(error,index) in errors.description" :key="index">{{ error }} </span>
+                            </p>
+                            <textarea v-model="form.description" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="description"></textarea>
                         </div>
 
-<!--                        <div>-->
-<!--                            <label class="text-gray-700" for="password">Password</label>-->
-<!--                            <input class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="password" id="password">-->
-<!--                        </div>-->
-
                         <div class="flex items-center">
-                            <label class="text-gray-700"></label>
-<!--                            <input class="form-input w-full mt-2 p-2 rounded-md text-sm rounded-lg border cursor-pointer text-gray-400 focus:outline-none focus:border-transparent bg-gray-700 border-gray-600 placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" type="file">-->
+                            <p v-if="errors.image && errors.image.length > 0" class="text-red-600 text-sm py-1">
+                                <span v-for="(error,index) in errors.image" :key="index">{{ error }} </span>
+                            </p>
                             <label class="block focus:outline-none">
                                 <span class="sr-only">Choose carousel photo</span>
-                                <input @input="Upload" type="file" class="block w-full text-sm text-slate-500
+                                <input @change="Upload" type="file" name="image" class="block w-full text-sm text-slate-500
                                   file:mr-4 file:py-2 file:px-4
                                   file:rounded-full file:border-0
                                   file:text-sm file:font-semibold
-                                  file:bg-violet-50 file:text-violet-700
-                                  hover:file:bg-violet-100
-                                " multiple/>
+                                  file:bg-violet-200 file:text-violet-700
+                                  hover:file:bg-violet-300"/>
                             </label>
                         </div>
                     </div>
@@ -71,57 +71,32 @@
 
 <script setup>
 import {ref, reactive} from "vue";
-import Editor from '@tinymce/tinymce-vue';
-import BreadCrumb from '@components/BreadCrumb';
+import useCarousel from "@composable/carousel_gallery";
+
+const {createCarousel,errors} = useCarousel();
 
 const form = reactive({
     title: '',
-    description: '<p>Content of the editor.</p>',
-    image: [],
+    description: '',
+    image: '',
 });
 
 // form submit method
-function submitForm(){
-    // axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
-    // axios.post("/path/to/api", data, {
-    //     headers: {
-    //         "Authorization": store.getters['getToken'],
-    //         "Content-Type": "multipart/form-data",
-    //     },
-    // });
-      axios.post('/api/upload-image',form).then((res) => {
-        console.log(res.data);
-      }).catch((e) => {
-          console.log(e.response);
-      });
-
+const submitForm = async() => {
+    await createCarousel(form);
 }
+
 //upload image
 function Upload(event) {
-    form.image = event.target.files;
-}
-
-    function fileUploader(cb, value, meta) {
-        var input = document.createElement('input');
-        input.setAttribute('type', 'file');
-        input.setAttribute('accept', 'image/*');
-        input.onchange = function () {
-            var file = this.files[0];
-
-            var reader = new FileReader();
-            reader.onload = function () {
-                var id = 'blobid' + (new Date()).getTime();
-                var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
-                var base64 = reader.result.split(',')[1];
-                var blobInfo = blobCache.create(id, file, base64);
-                blobCache.add(blobInfo);
-
-                /* call the callback and populate the Title field with the file name */
-                cb(blobInfo.blobUri(), { title: file.name });
-            };
-            reader.readAsDataURL(file);
-        };
-        input.click();
+     form.image = event.target.files[0];
+    // let img = event.target.files[0];
+    // console.log(img);
+    // axios.post('/api/upload-image',img).then((response) => {
+    //     // form.image = response.data;
+    //     console.log(response.data);
+    // }).catch((error) => {
+    //     console.log(error.response);
+    // })
 }
 </script>
 

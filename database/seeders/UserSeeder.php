@@ -16,10 +16,13 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-         User::create([
-             'name' => 'admin',
-             'email' => 'admin@test.com',
-             'password' => Hash::make('admin'),
-         ]);
+        $user = User::all()->where('email', 'admin@test.com')->first();
+        if (!$user) {
+            User::create([
+                'name' => 'admin',
+                'email' => 'admin@test.com',
+                'password' => Hash::make('admin'),
+            ]);
+        }
     }
 }

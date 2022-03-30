@@ -3,7 +3,7 @@
         <div :class="sidebarOpen ? 'block' : 'hidden'" @click="sidebarOpen = false" class="fixed inset-0 z-20 transition-opacity bg-black opacity-50 lg:hidden"></div>
 
 <!--        side bar        -->
-        <div :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'" class="fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto transition duration-300 transform bg-gray-900 lg:translate-x-0 lg:static lg:inset-0">
+        <div :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'" class="fixed inset-y-0 left-0 z-30 w-64 min-w-64 overflow-y-auto transition duration-300 transform bg-gray-900 lg:translate-x-0 lg:static lg:inset-0">
             <div class="flex items-center justify-center mt-8">
                 <div class="flex items-center">
                     <i class="text-white fas fa-leaf fa-xl"></i>
@@ -95,7 +95,7 @@
                 </div>
             </header>
 
-            <main class="flex-1 overflow-y-auto max-h-screen bg-gray-200">
+            <main class="flex-1 overflow-y-auto max-h-screen overflow-x-hidden max-w-[80vw] bg-gray-200">
                 <div class="container mx-auto px-6 py-8">
                     <div class="m-8">
                         <slot></slot>

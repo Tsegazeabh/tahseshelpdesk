@@ -44,7 +44,7 @@ import CreateProduct from '@pages/cms/products/CreateProduct';
 import ServiceIndex from '../pages/public/services/ServiceIndex';
 import NewsIndex from '../pages/public/news/NewsIndex';
 import CompetencyIndex from '../pages/public/competencies/CompetencyIndex';
-// import TermsOfUse from '../pages/public/terms_of_use/TermsOfUse';
+import PageNotFound from '@components/PageNotFound';
 // import PrivacyPolicy from '../pages/public/privacy_policy/PrivacyPolicy';
 import CustomersIndex from '../pages/public/customers/CustomersIndex';
 import Contact from '../pages/public/contact/Contact';
@@ -98,8 +98,9 @@ const routes = [
                 }
             },
             {
-                path: 'edit_about',
+                path: 'edit_about/:id',
                 name: 'edit_about',
+                props: true,
                 component: EditAbout,
                 meta:{
                     protected: true,
@@ -129,8 +130,9 @@ const routes = [
                         }
                     },
                     {
-                        path: 'edit_product',
+                        path: 'edit_product/:id',
                         name: 'edit_product',
+                        props: true,
                         component: EditProduct,
                         meta:{
                             protected: true,
@@ -162,8 +164,9 @@ const routes = [
                         }
                     },
                     {
-                        path: 'edit_service',
+                        path: 'edit_service/:id',
                         name: 'edit_service',
+                        props: true,
                         component: EditService,
                         meta:{
                             protected: true,
@@ -195,8 +198,9 @@ const routes = [
                         }
                     },
                     {
-                        path: 'edit_customer',
+                        path: 'edit_customer/:id',
                         name: 'edit_customer',
+                        props: true,
                         component: EditCustomer,
                         meta:{
                             protected: true,
@@ -228,8 +232,9 @@ const routes = [
                         }
                     },
                     {
-                        path: 'edit_news',
+                        path: 'edit_news/:id',
                         name: 'edit_news',
+                        props: true,
                         component: EditNews,
                         meta:{
                             protected: true,
@@ -261,8 +266,9 @@ const routes = [
                         }
                     },
                     {
-                        path: 'edit_competency',
+                        path: 'edit_competency/:id',
                         name: 'edit_competency',
+                        props: true,
                         component: EditCompetency,
                         meta:{
                             protected: true,
@@ -294,8 +300,9 @@ const routes = [
                         }
                     },
                     {
-                        path: 'edit_privacy_policy',
+                        path: 'edit_privacy_policy/:id',
                         name: 'edit_privacy_policy',
+                        props: true,
                         component: EditPrivacyPolicy,
                         meta:{
                             protected: true,
@@ -327,8 +334,9 @@ const routes = [
                         }
                     },
                     {
-                        path: 'edit_terms_of_use',
+                        path: 'edit_terms_of_use/:id',
                         name: 'edit_terms_of_use',
+                        props: true,
                         component: EditTermsOfUse,
                         meta:{
                             protected: true,
@@ -360,8 +368,9 @@ const routes = [
                         }
                     },
                     {
-                        path: 'edit_partner',
+                        path: 'edit_partner/:id',
                         name: 'edit_partner',
+                        props: true,
                         component: EditPartner,
                         meta:{
                             protected: true,
@@ -393,8 +402,9 @@ const routes = [
                         }
                     },
                     {
-                        path: 'edit_carousel_gallery',
+                        path: 'edit_carousel_gallery/:id',
                         name: 'edit_carousel_gallery',
+                        props: true,
                         component: EditCarouselGallery,
                         meta:{
                             protected: true,
@@ -411,8 +421,8 @@ const routes = [
                 }
             },
         ]
-    }
-
+    },
+    { path: '/:pathMatch(.*)*', name: 'NotFound', component: PageNotFound },
 ]
 
 const router = createRouter({
@@ -434,12 +444,25 @@ const router = createRouter({
 // });
 
 router.beforeEach((to,from) => {
-let authenticated = store.getters['isLoggedIn'];
-    if (to.meta.protected && !authenticated){
-        return { name: 'login' }
+    if (localStorage.getItem('auth_user') !== null){
+        let user = localStorage.getItem('auth_user');
+        let token = localStorage.getItem('auth_token');
+        let auth_user = JSON.parse(user);
+        // let auth_token = token;
+        let payload = {user:auth_user,token:token}
+        store.commit('setAuth', payload);
+        console.log(payload);
     }
-    // else if(!to.meta.protected && authenticated){
-    //     return {name: 'dashboard'}
+    let is_authenticated = store.getters['isLoggedIn'];
+    if (to.meta.protected && !is_authenticated){
+        return { name: 'login', replace: true }
+    }
+
+    // if(to.name === 'NotFound'){
+    //     if (from.name)
+    // }
+    // else if(!to.meta.protected){
+    //     return true;
     // }
     else{
         return true;

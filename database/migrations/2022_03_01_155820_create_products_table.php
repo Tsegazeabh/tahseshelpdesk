@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->string('image');
             $table->bigInteger('price')->default(0);
-            $table->timestamp('published_at');
             $table->boolean('is_published')->default(false);
+            $table->timestamp('published_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

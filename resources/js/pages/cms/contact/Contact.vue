@@ -1,8 +1,8 @@
 <template>
     <bread-crumb></bread-crumb>
-    <disv class="mx-auto my-4 py-6">
+    <div class="mx-auto my-4 py-6">
         contact us page coming soon...
-    </disv>
+    </div>
 
 </template>
 

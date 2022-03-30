@@ -14,10 +14,6 @@ class AboutResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'description' => $this->description,
-        ];
+        return parent::toArray($request);
     }
 }

@@ -6,50 +6,39 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ServiceRequest;
 use App\Http\Resources\ServiceResource;
 use App\Models\Service;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Log;
 
 class ServiceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
-    public function index()
-    {
-        return ServiceResource::collection(Service::all());
+    public function index(){
+        return ServiceResource::collection(Service::withTrashed()->paginate(5));
     }
 
-    public function detail(ServiceRequest $request, $id){
-
-        return new ServiceResource(Service::all()->find($id));
-    }
-
-    public function latest(){
-
-        return ServiceResource::collection(Service::all()->sortBy('published_at'));
-    }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(ServiceRequest $request)
-    {
-        return response('store controller');
+    public function store(ServiceRequest $request){
+        try {
+            Log::info($request);
+            $service = Service::create($request->validated());
+            return new ServiceResource($service);
+        }catch (\Throwable $exception){
+            Log::info($exception);
+            return response($exception);
+        }
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Service  $service
-     * @return \Illuminate\Http\Response
+    //     * @return \Illuminate\Http\Response
      */
     public function show(Service $service)
     {
-        return response('show controller');
+        Log::info($service);
+        return new ServiceResource($service);
+//        return new JsonResponse($service);
     }
 
     /**
@@ -57,29 +46,61 @@ class ServiceController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Service  $service
-     * @return \Illuminate\Http\Response
+    //     * @return ServiceResource
      */
-    public function update(ServiceRequest $request, Service $service)
-    {
-        return response('update controller');
+    public function update(ServiceRequest $request,Service $service){
+        try {
+            $date = null;
+            if ($request->published_at != null){
+                $date = Carbon::parse($request->published_at);
+            }
+            Log::info($request);
+            $service->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'is_published' => $request->is_published,
+                'published_at' => $date
+            ]);
+            return new ServiceResource($service);
+        }catch (\Throwable $exception){
+            return response($exception);
+        }
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Display the specified resource.
      *
      * @param  \App\Models\Service  $service
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Service $service)
-    {
-        return response('destroy');
+    public function destroy($id){
+        try {
+            $service = Service::withTrashed()->where('id', $id)->firstOrFail();
+            if ($service->trashed()){
+
+                $service->forceDelete();
+                return response()->json(['message'=>'successfully deleted']);
+            }
+            $service->delete();
+            return response()->json(['message'=>'Record successfully deleted']);
+
+        }catch (\Throwable $exception){
+            return response($exception);
+        }
     }
 
-    public function archive(Service $service){
-        return 'archive(soft delete)';
-    }
+    public function restore($id){
+        try {
+            $service = Service::onlyTrashed()->where('id', $id)->firstOrFail();
+            if ($service->trashed()){
+                Log::info('if');
+                Log::info($service);
+                $service->restore();
 
-    public function restore(Service $service){
-        return 'restore controller';
+                return response()->json(['message'=>'successfully Restore']);
+            }
+        }catch (\Throwable $exception){
+            return response($exception);
+        }
     }
 }

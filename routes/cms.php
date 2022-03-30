@@ -12,81 +12,115 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+
+Route::get('pagination', [\App\Http\Controllers\Api\cms\AboutController::class, 'paginate']);
+
 Route::middleware(['auth:sanctum'])->prefix('cms')->group(function (){
     Route::get('dashboard', [\App\Http\Controllers\Api\AuthController::class,'index']);
     Route::get('logout/{id}', [AuthController::class, 'logout']);
 
     //services
     Route::prefix('services')->group(function (){
-        Route::get('manage', [\App\Http\Controllers\Api\cms\ServiceController::class,'show']);
+        Route::get('index', [\App\Http\Controllers\Api\cms\ServiceController::class,'index']);
         Route::post('create',[\App\Http\Controllers\Api\cms\ServiceController::class,'store']);
-        Route::post('edit/{id}',[\App\Http\Controllers\Api\cms\ServiceController::class,'update']);
-        Route::delete('archive/{id}',[\App\Http\Controllers\Api\cms\ServiceController::class,'archive']);
-        Route::delete('delete/{id}',[\App\Http\Controllers\Api\cms\ServiceController::class,'destroy']);
-        Route::post('restore/{id}',[\App\Http\Controllers\Api\cms\ServiceController::class,'restore']);
+        Route::get('show/{service}',[\App\Http\Controllers\Api\cms\ServiceController::class,'show']);
+        Route::put('update/{service}',[\App\Http\Controllers\Api\cms\ServiceController::class,'update']);
+        Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\ServiceController::class,'destroy']);
+        Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\ServiceController::class,'restore']);
     });
 //products
     Route::prefix('products')->group(function (){
-        Route::get('manage', [\App\Http\Controllers\Api\cms\ProductController::class,'show']);
-        Route::post('create',[\App\Http\Controllers\Api\cms\ProductController::class,'create']);
-        Route::post('edit/{id}',[\App\Http\Controllers\Api\cms\ProductController::class,'update']);
-        Route::delete('archive/{id}',[\App\Http\Controllers\Api\cms\ProductController::class,'archive']);
-        Route::delete('delete/{id}',[\App\Http\Controllers\Api\cms\ProductController::class,'destroy']);
-        Route::post('restore/{id}',[\App\Http\Controllers\Api\cms\ProductController::class,'restore']);
+        Route::get('index', [\App\Http\Controllers\Api\cms\ProductController::class,'index']);
+        Route::post('create',[\App\Http\Controllers\Api\cms\ProductController::class,'store']);
+        Route::get('show/{product}',[\App\Http\Controllers\Api\cms\ProductController::class,'show']);
+        Route::put('update/{product}',[\App\Http\Controllers\Api\cms\ProductController::class,'update']);
+        Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\ProductController::class,'destroy']);
+        Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\ProductController::class,'restore']);
     });
 //customers
     Route::prefix('customers')->group(function (){
-        Route::get('manage', [\App\Http\Controllers\Api\cms\CustomerController::class,'show']);
-        Route::post('create',[\App\Http\Controllers\Api\cms\CustomerController::class,'create']);
-        Route::post('edit/{id}',[\App\Http\Controllers\Api\cms\CustomerController::class,'update']);
-        Route::delete('archive/{id}',[\App\Http\Controllers\Api\cms\CustomerController::class,'archive']);
-        Route::delete('delete/{id}',[\App\Http\Controllers\Api\cms\CustomerController::class,'destroy']);
-        Route::post('restore/{id}',[\App\Http\Controllers\Api\cms\CustomerController::class,'restore']);
+        Route::get('index', [\App\Http\Controllers\Api\cms\CustomerController::class,'index']);
+        Route::post('create',[\App\Http\Controllers\Api\cms\CustomerController::class,'store']);
+        Route::get('show/{customer}',[\App\Http\Controllers\Api\cms\CustomerController::class,'show']);
+        Route::put('update/{customer}',[\App\Http\Controllers\Api\cms\CustomerController::class,'update']);
+        Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\CustomerController::class,'destroy']);
+        Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\CustomerController::class,'restore']);
     });
 //competencies
     Route::prefix('competencies')->group(function (){
-        Route::get('manage', [\App\Http\Controllers\Api\cms\CompetencyController::class,'show']);
-        Route::post('create',[\App\Http\Controllers\Api\cms\CompetencyController::class,'create']);
-        Route::post('edit/{id}',[\App\Http\Controllers\Api\cms\CompetencyController::class,'update']);
-        Route::delete('archive/{id}',[\App\Http\Controllers\Api\cms\CompetencyController::class,'archive']);
-        Route::delete('delete/{id}',[\App\Http\Controllers\Api\cms\CompetencyController::class,'destroy']);
-        Route::post('restore/{id}',[\App\Http\Controllers\Api\cms\CompetencyController::class,'restore']);
+        Route::get('index', [\App\Http\Controllers\Api\cms\CompetencyController::class,'index']);
+        Route::post('create',[\App\Http\Controllers\Api\cms\CompetencyController::class,'store']);
+        Route::get('show/{competency}',[\App\Http\Controllers\Api\cms\CompetencyController::class,'show']);
+        Route::put('update/{competency}',[\App\Http\Controllers\Api\cms\CompetencyController::class,'update']);
+        Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\CompetencyController::class,'destroy']);
+        Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\CompetencyController::class,'restore']);
     });
 //privacy_policy
-    Route::prefix('privacy-policy')->group(function (){
-        Route::get('manage', [\App\Http\Controllers\Api\cms\PrivacyPolicyController::class,'show']);
-        Route::post('create',[\App\Http\Controllers\Api\cms\PrivacyPolicyController::class,'create']);
-        Route::post('edit/{id}',[\App\Http\Controllers\Api\cms\PrivacyPolicyController::class,'update']);
-        Route::delete('archive/{id}',[\App\Http\Controllers\Api\cms\PrivacyPolicyController::class,'archive']);
-        Route::delete('delete/{id}',[\App\Http\Controllers\Api\cms\PrivacyPolicyController::class,'destroy']);
-        Route::post('restore/{id}',[\App\Http\Controllers\Api\cms\PrivacyPolicyController::class,'restore']);
+    Route::prefix('privacy_policy')->group(function (){
+        Route::get('index', [\App\Http\Controllers\Api\cms\PrivacyPolicyController::class,'index']);
+        Route::post('create',[\App\Http\Controllers\Api\cms\PrivacyPolicyController::class,'store']);
+        Route::get('show/{privacy_policy}',[\App\Http\Controllers\Api\cms\PrivacyPolicyController::class,'show']);
+        Route::put('update/{privacy_policy}',[\App\Http\Controllers\Api\cms\PrivacyPolicyController::class,'update']);
+        Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\PrivacyPolicyController::class,'destroy']);
+        Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\PrivacyPolicyController::class,'restore']);
     });
 //terms_of_use
-    Route::prefix('terms-of-use')->group(function (){
-        Route::get('manage', [\App\Http\Controllers\Api\cms\TermsOfUseController::class,'show']);
-        Route::post('create',[\App\Http\Controllers\Api\cms\TermsOfUseController::class,'create']);
-        Route::post('edit/{id}',[\App\Http\Controllers\Api\cms\TermsOfUseController::class,'update']);
-        Route::delete('archive/{id}',[\App\Http\Controllers\Api\cms\TermsOfUseController::class,'archive']);
-        Route::delete('delete/{id}',[\App\Http\Controllers\Api\cms\TermsOfUseController::class,'destroy']);
-        Route::post('restore/{id}',[\App\Http\Controllers\Api\cms\TermsOfUseController::class,'restore']);
+    Route::prefix('terms_of_use')->group(function (){
+        Route::get('index', [\App\Http\Controllers\Api\cms\TermsOfUseController::class,'index']);
+        Route::post('create',[\App\Http\Controllers\Api\cms\TermsOfUseController::class,'store']);
+        Route::get('show/{terms_of_use}',[\App\Http\Controllers\Api\cms\TermsOfUseController::class,'show']);
+        Route::put('update/{terms_of_use}',[\App\Http\Controllers\Api\cms\TermsOfUseController::class,'update']);
+        Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\TermsOfUseController::class,'destroy']);
+        Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\TermsOfUseController::class,'restore']);
     });
 //about
     Route::prefix('about')->group(function (){
-        Route::get('manage', [\App\Http\Controllers\Api\cms\AboutController::class,'index']);
-        Route::post('create',[\App\Http\Controllers\Api\cms\AboutController::class,'create']);
-        Route::post('update/{id}',[\App\Http\Controllers\Api\cms\AboutController::class,'update']);
-        Route::delete('archive/{id}',[\App\Http\Controllers\Api\cms\AboutController::class,'archive']);
-        Route::delete('delete/{id}',[\App\Http\Controllers\Api\cms\AboutController::class,'destroy']);
-        Route::post('restore/{id}',[\App\Http\Controllers\Api\cms\AboutController::class,'restore']);
+        Route::get('index', [\App\Http\Controllers\Api\cms\AboutController::class,'index']);
+        Route::post('create',[\App\Http\Controllers\Api\cms\AboutController::class,'store']);
+        Route::get('show/{about}',[\App\Http\Controllers\Api\cms\AboutController::class,'show']);
+        Route::put('update/{about}',[\App\Http\Controllers\Api\cms\AboutController::class,'update']);
+        Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\AboutController::class,'destroy']);
+        Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\AboutController::class,'restore']);
     });
+//news
+    Route::prefix('news')->group(function (){
+        Route::get('index', [\App\Http\Controllers\Api\cms\NewsController::class,'index']);
+        Route::post('create',[\App\Http\Controllers\Api\cms\NewsController::class,'store']);
+        Route::get('show/{news}',[\App\Http\Controllers\Api\cms\NewsController::class,'show']);
+        Route::put('update/{news}',[\App\Http\Controllers\Api\cms\NewsController::class,'update']);
+        Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\NewsController::class,'destroy']);
+        Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\NewsController::class,'restore']);
+    });
+//partners
+    Route::prefix('partners')->group(function (){
+        Route::get('index', [\App\Http\Controllers\Api\cms\PartnerController::class,'index']);
+        Route::post('create',[\App\Http\Controllers\Api\cms\PartnerController::class,'store']);
+        Route::get('show/{partner}',[\App\Http\Controllers\Api\cms\PartnerController::class,'show']);
+        Route::put('update/{partner}',[\App\Http\Controllers\Api\cms\PartnerController::class,'update']);
+        Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\PartnerController::class,'destroy']);
+        Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\PartnerController::class,'restore']);
+    });
+
+//carousel
+    Route::prefix('carousels')->group(function (){
+        Route::get('index', [\App\Http\Controllers\Api\cms\CarouselController::class,'index']);
+        Route::post('create',[\App\Http\Controllers\Api\cms\CarouselController::class,'store']);
+        Route::get('show/{carousel}',[\App\Http\Controllers\Api\cms\CarouselController::class,'show']);
+        Route::put('update/{carousel}',[\App\Http\Controllers\Api\cms\CarouselController::class,'update']);
+        Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\CarouselController::class,'destroy']);
+        Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\CarouselController::class,'restore']);
+    });
+
 //contact-us
     Route::prefix('contact-us')->group(function (){
-        Route::get('manage', [\App\Http\Controllers\Api\cms\ContactUsController::class,'show']);
-        Route::delete('archive/{id}',[\App\Http\Controllers\Api\cms\ContactUsController::class,'archive']);
-        Route::delete('delete/{id}',[\App\Http\Controllers\Api\cms\ContactUsController::class,'destroy']);
-        Route::post('restore/{id}',[\App\Http\Controllers\Api\cms\ContactUsController::class,'restore']);
+        Route::get('index', [\App\Http\Controllers\Api\cms\ContactUsController::class,'index']);
+        Route::get('archive/{id}',[\App\Http\Controllers\Api\cms\ContactUsController::class,'archive']);
+        Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\ContactUsController::class,'destroy']);
+        Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\ContactUsController::class,'restore']);
     });
 });
+
+
 
 //Route::middleware('guest')->group(function () {
 //    Route::get('register', [RegisteredUserController::class, 'create'])

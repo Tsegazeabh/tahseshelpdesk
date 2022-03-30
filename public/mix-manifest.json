@@ -1,6 +1,4 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js": "/node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js",
-    "/node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js.map": "/node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js.map"
+    "/css/app.css": "/css/app.css"
 }

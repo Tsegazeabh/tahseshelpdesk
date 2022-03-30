@@ -12,7 +12,6 @@ const mix = require('laravel-mix');
  */
 
 mix.webpackConfig(require('./webpack.config'))
-    .copyDirectory('resources/ckEditor_custom/build', 'node_modules/@ckeditor/ckeditor5-build-classic/build')
     .js('resources/js/app.js', 'public/js')
     .vue()
     .sass('resources/sass/app.scss', 'public/css')

@@ -3,7 +3,9 @@ export default {
         state.isAuthenticated = true;
         state.authToken = payload.token;
         state.user = payload.user;
-        console.log(state.isAuthenticated);
+        console.log('setAuth called *****')
+        console.log(payload);
+        console.log('setAuth ended *****')
     },
     clearAuth(state){
         state.isAuthenticated = false;
