@@ -88,8 +88,8 @@
                         <div  v-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 z-10 w-full h-full"></div>
 
                         <div  v-show="dropdownOpen" class="absolute right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-900 hover:text-white">Profile</a>
-                            <a href="/login" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-900 hover:text-white">Logout</a>
+                            <router-link :to="{name:'profile'}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-900 hover:text-white">Profile</router-link>
+                            <button @click="logout" class="block text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-900 hover:text-white w-full">Logout</button>
                         </div>
                     </div>
                 </div>
@@ -109,9 +109,17 @@
 
 <script setup>
     import { ref } from "vue";
-
+    import {useStore} from "vuex";
+    import {useRouter} from "vue-router";
     let sidebarOpen = ref(false);
     let dropdownOpen = ref(false);
+
+    const store = useStore();
+    const router = useRouter();
+
+    const logout = async() => {
+            await store.dispatch('logout');
+    }
 
 </script>
 

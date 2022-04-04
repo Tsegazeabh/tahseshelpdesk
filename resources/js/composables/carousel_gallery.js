@@ -84,7 +84,7 @@ export default function useCarousel(){
         data.append('image',carousel.value.image);
         errors.value = {};
         try {
-            await axios.put('/api/cms/carousels/update/'+ id, data,{
+            await axios.post('/api/cms/carousels/update/'+ id, data,{
                 headers: {
                     'Authorization': 'Bearer '+ store.getters['getToken'],
                     'Content-Type': 'multipart/form-data'
@@ -136,10 +136,9 @@ export default function useCarousel(){
         }
         console.log(update_carousel.value);
         try {
-            await axios.put('/api/cms/carousels/update/'+ update_carousel.value.id, update_carousel.value,{
+            await axios.post('/api/cms/carousels/publish/'+ update_carousel.value.id, update_carousel.value,{
                 headers: {
                     'Authorization': 'Bearer '+ store.getters['getToken'],
-                    'Content-Type': 'multipart/form-data'
                 }
             });
             console.log('successfully ended try block');

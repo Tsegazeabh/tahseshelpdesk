@@ -106,21 +106,23 @@ Route::middleware(['auth:sanctum'])->prefix('cms')->group(function (){
         Route::get('index', [\App\Http\Controllers\Api\cms\CarouselController::class,'index']);
         Route::post('create',[\App\Http\Controllers\Api\cms\CarouselController::class,'store']);
         Route::get('show/{carousel}',[\App\Http\Controllers\Api\cms\CarouselController::class,'show']);
-        Route::put('update/{carousel}',[\App\Http\Controllers\Api\cms\CarouselController::class,'update']);
+        Route::post('update/{carousel}',[\App\Http\Controllers\Api\cms\CarouselController::class,'update']);
+        Route::post('publish/{carousel}',[\App\Http\Controllers\Api\cms\CarouselController::class,'publish']);
         Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\CarouselController::class,'destroy']);
         Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\CarouselController::class,'restore']);
     });
 
 //contact-us
-    Route::prefix('contact-us')->group(function (){
+    Route::prefix('contact_us')->group(function (){
         Route::get('index', [\App\Http\Controllers\Api\cms\ContactUsController::class,'index']);
         Route::get('archive/{id}',[\App\Http\Controllers\Api\cms\ContactUsController::class,'archive']);
         Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\ContactUsController::class,'destroy']);
         Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\ContactUsController::class,'restore']);
     });
+
+//logout
+    Route::post('logout', [AuthController::class, 'logout']);
 });
-
-
 
 //Route::middleware('guest')->group(function () {
 //    Route::get('register', [RegisteredUserController::class, 'create'])

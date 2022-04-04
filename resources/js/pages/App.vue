@@ -1,7 +1,7 @@
 <template>
     <home-layout id="homelayout">
         <notifications position="top center"/>
-        <slider :options="options" :img_src="img_src" :mode="false"></slider>
+        <slider :options="options" :img_src="allCarousel"></slider>
         <the-header title="Our Core Competencies"></the-header>
         <competency-card></competency-card>
         <the-header title="Our News"></the-header>
@@ -28,8 +28,11 @@ import ServiceCard from './public/services/ServiceCard';
 import CustomerCard from './public/customers/CustomerCard';
 import PartnersCard from './public/partners/PartnersCard';
 import TheHeader from '../components/TheHeader'
-import {reactive} from 'vue';
+import {onMounted, reactive} from 'vue';
+import usePublicCarousel from "@composable/public/public_carousel";
 
+
+const { allCarousel, fetchCarousel } = usePublicCarousel();
 
 const options = reactive({
     rewind: true,
@@ -40,14 +43,8 @@ const options = reactive({
     height: '38vw',
     width: '100%',
 })
-const img_src = reactive([
-    {img:'img1.png', title:'Software as a Service (SaaS)'},
-    {img:'img2.png', title:'We provide the following ICT based Trainings'},
-    {img:'img3.jpg', title:'The services provided by data-center includes'},
-    {img:'img4.jpg', title:'Manufacturing Process Management Information System (MPMIS)'},
-    {img:'img5.jpg', title:'Construction Management Information System (CMIS)'},
-    {img:'img6.jpg', title:'Land Management Information System (LMIS)'}
-]);
+
+onMounted(fetchCarousel);
 </script>
 
 <style scoped>

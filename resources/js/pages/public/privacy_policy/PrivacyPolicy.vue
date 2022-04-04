@@ -1,47 +1,20 @@
 <template>
-<!--    competency cards-->
-    <div class="mx-auto my-4 py-6">
-       privacy policy coming soon...
-    </div>
+    <home-layout>
+        <div class="flex flex-col justify-center items-center p-6 bg-gray-100 overflow-x-hidden my-4">
+            <h2 class="text-center font-bold p-4 m-2 uppercase text-xl font-normal tracking-wide">Privacy Policy</h2>
+            <!-- title and description -->
+            <div class="p-6 w-[80vw] mx-auto">
+                <h3 class="text-left uppercase my-2 text-gray-600">Title goes here</h3>
+                <p class="flex-wrap text-left py-2 px-4 text-gray-400">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid amet atque aut eius fuga, ipsa iure laborum, magnam natus nostrum provident quidem unde vitae! Et obcaecati officia provident sed voluptate.</p>
+            </div>
+        </div>
+    </home-layout>
 
 </template>
 
 <script setup>
-    import { ref } from 'vue';
-    import slider from '../../../components/Slider';
-    import {reactive} from 'vue';
-
-    const options = reactive({
-        rewind: true,
-        gap: 50,
-        type: 'loop',
-        pagination: false,
-        perPage: 3,
-        breakpoints: {
-            640: {
-                perPage: 1,
-                width: '70%',
-                height: '25vh'
-            },
-        },
-        perMove: 1,
-        autoplay: 'play',
-        height: '28vh',
-        width: '80%',
-        hasSliderWrapper: true,
-    })
-    const img_src = reactive([
-            {img:'img1.png', title:'Ethiopian Electric Utility Organization'},
-            {img:'img2.png', title:'Ethiopian Chemical and Constructions input industry'},
-            {img:'img3.jpg', title:'Ethiopian Telecommunication'},
-            {img:'img4.jpg', title:'Ethiopian Ministry of Education'},
-            {img:'img5.jpg', title:'this is partner1'},
-            {img:'img6.jpg', title:'this is partner2'}
-    ]);
+import HomeLayout from '@layouts/HomeLayout.vue';
 
 
 </script>
 
-<style scoped>
-
-</style>

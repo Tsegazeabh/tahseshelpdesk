@@ -12,6 +12,19 @@
             *{
                 box-sizing: border-box;
             }
+            ::-webkit-scrollbar {
+                width: 5px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background-color: #efefef;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background-color: #56935D;
+                border-radius: 100px;
+                box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            }
             body {
                 /*font-family: 'Poppins', sans-serif;*/
                 scroll-behavior: smooth;

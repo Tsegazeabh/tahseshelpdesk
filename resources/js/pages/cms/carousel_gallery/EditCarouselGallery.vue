@@ -79,23 +79,11 @@ const props = defineProps(['id']);
 
 onMounted(()=>{
     getCarousel(props.id);
-    console.log(props.id);
 });
-
-//get image
-// const getImage = computed(()=>{
-//     if (typeof carousel.value.image === "string"){
-//         return carousel.value.image;
-//     }
-//     let image = 'https://localhost'
-//     return image;
-// });
 
 //upload image
 function Upload(event) {
-    console.log(carousel.value);
     carousel.value.image = event.target.files[0];
-    console.log(carousel.value);
 }
 
 // form submit method

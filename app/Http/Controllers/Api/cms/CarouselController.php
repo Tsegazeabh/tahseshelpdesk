@@ -89,23 +89,35 @@ class CarouselController extends Controller
             $destinationPath = public_path($root_path);
             $image->move($destinationPath, $imagename);
 
-            $date = null;
-            if ($request->published_at != null){
-                $date = Carbon::parse($request->published_at);
-            }
             Log::info($request);
             $carousel->update([
                 'title' => $request->title,
                 'description' => $request->description,
                 'image' => url($root_path . '/' . $imagename),
-                'is_published' => $request->is_published,
-                'published_at' => $date
             ]);
-            $cc = CarouselGallery::withTrashed()->get();
-            Log::info('this shit not working');
+            Log::info('why this shit not working');
             return new CarouselResource($carousel);
         }catch (\Throwable $exception){
             Log::error($exception);
+            return response($exception);
+        }
+    }
+
+    public function publish(Request $request,CarouselGallery $carousel){
+        try {
+            $date = null;
+            if ($request->published_at != null){
+                $date = Carbon::parse($request->published_at);
+            }
+            $carousel->is_published = $request->is_published;
+            $carousel->published_at = $date;
+            Log::info($carousel);
+            $carousel->save();
+            Log::info($carousel);
+
+            return response()->json(['message'=>'successfully published!']);
+        }catch (\Throwable $exception){
+            Log::info($exception);
             return response($exception);
         }
     }

@@ -1,15 +1,18 @@
 <template>
 <!--    competency cards-->
     <div class="mx-auto my-4 py-6">
-        <slider :options="options" :img_src="img_src" :partners="true"></slider>
+        <slider :options="options" :img_src="allPartner" :partners="true"></slider>
     </div>
 
 </template>
 
 <script setup>
-    import { ref } from 'vue';
-    import slider from '../../../components/Slider';
-    import {reactive} from 'vue';
+    import slider from '@components/Slider';
+    import {onMounted, reactive} from 'vue';
+    import usePublicPartner from "@composable/public/public_partner";
+
+
+    const { fetchPartner, allPartner } = usePublicPartner();
 
     const options = reactive({
         rewind: true,
@@ -21,7 +24,7 @@
             640: {
                 perPage: 1,
                 width: '70%',
-                height: '25vh'
+                height: '30vh'
             },
         },
         perMove: 1,
@@ -30,18 +33,7 @@
         width: '80%',
         hasSliderWrapper: true,
     })
-    const img_src = reactive([
-            {img:'img1.png', title:'Ethiopian Electric Utility Organization'},
-            {img:'img2.png', title:'Ethiopian Chemical and Constructions input industry'},
-            {img:'img3.jpg', title:'Ethiopian Telecommunication'},
-            {img:'img4.jpg', title:'Ethiopian Ministry of Education'},
-            {img:'img5.jpg', title:'this is partner1'},
-            {img:'img6.jpg', title:'this is partner2'}
-    ]);
 
+    onMounted(fetchPartner)
 
 </script>
-
-<style scoped>
-
-</style>

@@ -1,5 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router';
 //cms
+import Profile from '@pages/cms/profile/Profile';
 import CreateCompetency from '@pages/cms/competencies/CreateCompetency';
 import EditCompetency from '@pages/cms/competencies/EditCompetency';
 import ManageCompetency from '@pages/cms/competencies/ManageCompetency';
@@ -41,19 +42,24 @@ import ManageProduct from '@pages/cms/products/ManageProduct';
 import EditProduct from '@pages/cms/products/EditProduct';
 import CreateProduct from '@pages/cms/products/CreateProduct';
 //public
-import ServiceIndex from '../pages/public/services/ServiceIndex';
-import NewsIndex from '../pages/public/news/NewsIndex';
-import CompetencyIndex from '../pages/public/competencies/CompetencyIndex';
 import PageNotFound from '@components/PageNotFound';
-// import PrivacyPolicy from '../pages/public/privacy_policy/PrivacyPolicy';
-import CustomersIndex from '../pages/public/customers/CustomersIndex';
-import Contact from '../pages/public/contact/Contact';
-import ProductIndex from '../pages/public/products/ProductIndex';
-import About from '../pages/public/about/About';
-import Partners from '../pages/public/partners/PartnersIndex';
-import App from '../pages/App';
-import Dashboard from '../pages/Dashboard';
-import Login from '../pages/Auth/Login';
+import ServicesIndex from '@pages/public/services/ServicesIndex';
+import ServicesDetail from '@pages/public/services/ServicesDetail';
+import NewsIndex from '@pages/public/news/NewsIndex';
+import NewsDetail from '@pages/public/news/NewsDetail';
+import CompetencyIndex from '@pages/public/competencies/CompetencyIndex';
+import CompetencyDetail from '@pages/public/competencies/CompetencyDetail';
+import PrivacyPolicyIndex from '@pages/public/privacy_policy/PrivacyPolicy';
+import TermsOfUseIndex from '@pages/public/terms_of_use/TermsOfUse';
+import CustomersIndex from '@pages/public/customers/CustomersIndex';
+import CustomersDetail from '@pages/public/customers/CustomersDetail';
+import ContactUs from '@pages/public/contact/ContactUs';
+import ProductsIndex from '@pages/public/products/ProductsIndex';
+import ProductsDetail from '@pages/public/products/ProductsDetail';
+import AboutIndex from '@pages/public/about/AboutIndex';
+import App from '@pages/App';
+import Dashboard from '@pages/Dashboard';
+import Login from '@pages/Auth/Login';
 import store from "../store";
 
 
@@ -64,6 +70,138 @@ const routes = [
         component: App,
         meta:{
             protected: false,
+            public: true
+        },
+    },
+    {
+        path: '/about_index',
+        name:'about.index',
+        component: AboutIndex,
+        meta:{
+            protected: false,
+            public: true
+        }
+    },
+    {
+        path: '/products_index',
+        name:'products.index',
+        component: ProductsIndex,
+        meta:{
+            protected: false,
+            public: true
+        }
+    },
+    {
+        path: '/products_detail/:id',
+        props:true,
+        name:'products.detail',
+        component: ProductsDetail,
+        meta:{
+            protected: false,
+            public: true
+        }
+    },
+    {
+        path: '/news_index',
+        name:'news.index',
+        component: NewsIndex,
+        meta:{
+            protected: false,
+            public: true
+        }
+    },
+    {
+        path: '/news_detail/:id',
+        props:true,
+        name:'news.detail',
+        component: NewsDetail,
+        meta:{
+            protected: false,
+            public: true
+        }
+    },
+    {
+        path: '/competencies_index',
+        name:'competencies.index',
+        component: CompetencyIndex,
+        meta:{
+            protected: false,
+            public: true
+        }
+    },
+    {
+        path: '/competencies_detail/:id',
+        props:true,
+        name:'competencies.detail',
+        component: CompetencyDetail,
+        meta:{
+            protected: false,
+            public: true
+        }
+    },
+    {
+        path: '/services_index',
+        name:'services.index',
+        component: ServicesIndex,
+        meta:{
+            protected: false,
+            public: true
+        }
+    },
+    {
+        path: '/services_detail/:id',
+        props:true,
+        name:'services.detail',
+        component: ServicesDetail,
+        meta:{
+            protected: false,
+            public: true
+        }
+    },
+    {
+        path: '/customers_index',
+        name:'customers.index',
+        component: CustomersIndex,
+        meta:{
+            protected: false,
+            public: true
+        }
+    },
+    {
+        path: '/customers_detail/:id',
+        props:true,
+        name:'customers.detail',
+        component: CustomersDetail,
+        meta:{
+            protected: false,
+            public: true
+        }
+    },
+    {
+        path: '/contact_us',
+        name:'contact_us.index',
+        component: ContactUs,
+        meta:{
+            protected: false,
+            public: true
+        }
+    },
+    {
+        path: '/privacy_policy',
+        name:'privacy_policy.index',
+        component: PrivacyPolicyIndex,
+        meta:{
+            protected: false,
+            public: true
+        }
+    },
+    {
+        path: '/terms_of_use',
+        name:'terms_of_use.index',
+        component: TermsOfUseIndex,
+        meta:{
+            protected: false,
+            public: true
         }
     },
     {
@@ -420,6 +558,14 @@ const routes = [
                     protected: true,
                 }
             },
+            {
+                path: 'profile',
+                name: 'profile',
+                component: Profile,
+                meta:{
+                    protected: true,
+                }
+            },
         ]
     },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: PageNotFound },
@@ -430,19 +576,6 @@ const router = createRouter({
     routes,
 })
 
-// router.beforeEach((to, from, next) => {
-//     const publicPages = ['/login', '/register', '/home'];
-//     const authRequired = !publicPages.includes(to.path);
-//     const loggedIn = localStorage.getItem('user');
-//     // trying to access a restricted page + not logged in
-//     // redirect to login page
-//     if (authRequired && !loggedIn) {
-//         next('/login');
-//     } else {
-//         next();
-//     }
-// });
-
 router.beforeEach((to,from) => {
     if (localStorage.getItem('auth_user') !== null){
         let user = localStorage.getItem('auth_user');
@@ -451,22 +584,33 @@ router.beforeEach((to,from) => {
         // let auth_token = token;
         let payload = {user:auth_user,token:token}
         store.commit('setAuth', payload);
-        console.log(payload);
     }
     let is_authenticated = store.getters['isLoggedIn'];
     if (to.meta.protected && !is_authenticated){
         return { name: 'login', replace: true }
     }
-
-    // if(to.name === 'NotFound'){
-    //     if (from.name)
+    //
+    // if((!to.meta.protected && is_authenticated) && !to.meta.public){
+    //     console.log(from.name);
+    //     return {name: 'cms', replace: true};
     // }
-    // else if(!to.meta.protected){
+    //
+    // if((!to.meta.protected) && to.meta.public){
+    //     console.log(from.name);
     //     return true;
     // }
+
     else{
         return true;
     }
+
+    // beforeEnter: (to, from) =>{
+    //     let is_authenticated = store.getters['isLoggedIn'];
+    //     if(from.meta.protected && is_authenticated) {
+    //         console.log(from.meta);
+    //         return false;
+    //     }
+    // }
 })
 
 

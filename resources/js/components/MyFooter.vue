@@ -10,18 +10,18 @@
                    <p class="whitespace-normal text-sm p-2 ml-8">is a private business company established in 2012 by a team of experienced professionals whose specializations are Computer Science, Computer Engineering, Communication Engineering, Electronics Engineering, Electrical Engineering, Marketing, Finance and Law and with extensive experience in ICT.</p>
                </div>
                <div class="flex flex-col justify-center items-center text-start">
-                   <a class="p-2 hover:underline" href="#">Home</a>
-                   <a class="p-2 hover:underline" href="#">About us</a>
-                   <a class="p-2 hover:underline" href="#">Products</a>
-                   <a class="p-2 hover:underline" href="#">Services</a>
-                   <a class="p-2 hover:underline" href="#">Customers</a>
-                   <a class="p-2 hover:underline" href="#">Contact us</a>
+                   <router-link :to="{name:'home'}" class="p-2 hover:underline">Home</router-link>
+                   <router-link :to="{name:'about.index'}" class="p-2 hover:underline">About us</router-link>
+                   <router-link :to="{name:'products.index'}" class="p-2 hover:underline">Products</router-link>
+                   <router-link :to="{name:'services.index'}" class="p-2 hover:underline">Services</router-link>
+                   <router-link :to="{name:'customers.index'}" class="p-2 hover:underline">Customers</router-link>
+                   <router-link :to="{name:'contact_us.index'}" class="p-2 hover:underline">Contact us</router-link>
                </div>
                <div class="flex flex-col justify-center items-center text-start">
-                   <a class="p-2 hover:underline" href="#">Privacy Policy</a>
-                   <a class="p-2 hover:underline" href="#">Terms of Use</a>
-                   <a class="p-2 hover:underline" href="#">Site Map</a>
-                   <a class="md:py-2 py-1 md:px-6 px-2 bg-[#078282ff] rounded-full border border-white hover:border-[#078282ff] border-2 text-white hover:bg-gray-100 hover:text-[#078282ff] shadow-md" href="#">Help Desk<i class="ml-2 fas fa-laptop"></i></a>
+                   <router-link :to="{name:'privacy_policy.index'}" class="p-2 hover:underline">Privacy Policy</router-link>
+                   <router-link :to="{name:'terms_of_use.index'}" class="p-2 hover:underline">Terms of Use</router-link>
+                   <router-link :to="{name:'home'}" class="p-2 hover:underline">Site Map</router-link>
+                   <router-link :to="{name:'home'}" class="md:py-2 py-1 md:px-6 px-2 bg-[#078282ff] rounded-full border border-white hover:border-[#078282ff] border-2 text-white hover:bg-gray-100 hover:text-[#078282ff] shadow-md" href="#">Help Desk<i class="ml-2 fas fa-laptop"></i></router-link>
                    <div class="flex justify-around items-center text-[#078282ff]">
                        <a class="p-2" href="#"><i class="fab fa-facebook"></i></a>
                        <a class="p-2" href="#"><i class="fab fa-twitter"></i></a>

@@ -38,7 +38,6 @@ class PartnerController extends Controller
     {
         Log::info($partner);
         return new PartnerResource($partner);
-//        return new JsonResponse($partner);
     }
 
     /**

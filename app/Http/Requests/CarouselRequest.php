@@ -26,7 +26,7 @@ class CarouselRequest extends FormRequest
         return [
             'title' => 'required|string',
             'description' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,jpg,png,gif,svg'
+            'image' => 'required|image|mimes:jpeg,jpg,png,gif,svg',
         ];
     }
 }

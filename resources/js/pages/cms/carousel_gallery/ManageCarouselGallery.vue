@@ -25,7 +25,7 @@
 
             <input v-model="search_key" class="w-32 pl-10 pr-4 rounded-md form-input sm:w-64 focus:border-indigo-600" type="text" placeholder="Search">
         </div>
-        <router-link  :to="{ name:'create_carousel_gallery'}" class="float-right p-2 bg-gray-400 text-white hover:bg-gray-500 rounded-md">Create</router-link>
+        <router-link  :to="{ name:'create_carousel_gallery'}" class="float-right p-2 bg-green-400 text-white hover:bg-green-500 rounded-md">Create</router-link>
     </div>
 
     <div class="flex flex-col mt-6 w-full">
@@ -33,8 +33,8 @@
             <table class="w-full text-sm text-left text-gray-500">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-300">
                 <tr>
-                    <th scope="col" class="px-6 py-3">
-
+                    <th scope="col" class="sr-only px-6 py-3">
+                        image
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Title
@@ -65,7 +65,9 @@
                 <template v-if="allCarousel && allCarousel.length > 0">
                     <tr v-for="carousel in filterCarousel" :key="carousel.id" class="bg-white border-b hover:bg-gray-100">
                         <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                            <img :src="carousel.image" alt="Free unsplash image">
+                            <div class="w-16 h-16 inline-flex">
+                                <img class="w-16 h-16 object-cover rounded-full" :src="carousel.image" alt="Free unsplash image">
+                            </div>
                         </td>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                             {{ carousel.title }}
@@ -74,8 +76,14 @@
                             {{ carousel.is_published === 1 ? 'Yes' : 'No' }}
                         </td>
                         <td class="px-6 py-4 text-center">
+                            <template v-if="!carousel.is_published">
                             <router-link :to="{name:'edit_carousel_gallery', params:{id: carousel.id}}" class="text-blue-400 hover:text-blue-600">
                                 <i class="fas fa-edit cursor-pointer mr-1"></i> Edit </router-link>
+                            </template>
+                            <template v-else>
+                                <button class="cursor-not-allowed text-gray-300" disabled>
+                                    <i class="cursor-not-allowed text-gray-300 fas fa-edit mr-1"></i> Edit </button>
+                            </template>
                         </td>
                         <td class="px-6 py-4">
                             <button @click="showCarousel(carousel.id)" class="text-blue-400 hover:text-blue-600">
