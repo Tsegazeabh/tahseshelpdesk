@@ -21,25 +21,26 @@
                    <router-link :to="{name:'privacy_policy.index'}" class="p-2 hover:underline">Privacy Policy</router-link>
                    <router-link :to="{name:'terms_of_use.index'}" class="p-2 hover:underline">Terms of Use</router-link>
                    <router-link :to="{name:'home'}" class="p-2 hover:underline">Site Map</router-link>
-                   <router-link :to="{name:'home'}" class="md:py-2 py-1 md:px-6 px-2 bg-[#078282ff] rounded-full border border-white hover:border-[#078282ff] border-2 text-white hover:bg-gray-100 hover:text-[#078282ff] shadow-md" href="#">Help Desk<i class="ml-2 fas fa-laptop"></i></router-link>
+                   <a class="md:py-2 py-1 md:px-6 px-2 bg-[#078282ff] rounded-full border border-white hover:border-[#078282ff] border-2 text-white hover:bg-gray-100 hover:text-[#078282ff] shadow-md" :href="constants.information.help_desk_link" target="_blank">Help Desk<i class="ml-2 fas fa-laptop"></i></a>
                    <div class="flex justify-around items-center text-[#078282ff]">
-                       <a class="p-2" href="#"><i class="fab fa-facebook"></i></a>
-                       <a class="p-2" href="#"><i class="fab fa-twitter"></i></a>
-                       <a class="p-2" href="#"><i class="fab fa-telegram"></i></a>
-                       <a class="p-2" href="#"><i class="fab fa-instagram"></i></a>
+                       <a :href="constants.social_media.facebook" target="_blank" class="p-2" href="#"><i class="fab fa-facebook"></i></a>
+                       <a :href="constants.social_media.twitter" target="_blank" class="p-2" href="#"><i class="fab fa-twitter"></i></a>
+                       <a :href="constants.social_media.telegram" target="_blank" class="p-2" href="#"><i class="fab fa-telegram"></i></a>
+                       <a :href="constants.social_media.instagram" target="_blank" class="p-2" href="#"><i class="fab fa-instagram"></i></a>
                    </div>
                </div>
            </footer>
-    <div class="p-3 text-sm font-medium text-center capitalize bg-primary text-white">copy right &copy 2022 Tahses software development and consultancy P.L.C, All Rights Reserved. </div>
+    <div class="p-3 text-sm font-medium text-center capitalize bg-primary text-white">copy right &copy {{year}} Tahses software development and consultancy P.L.C, All Rights Reserved. </div>
 <!--[#00cba9]-->
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import helpers from "@composable/helpers";
 
+const { constants } = helpers();
 let showMenu = ref(false)
+
+let year = ref(new Date().getFullYear());
+
 </script>
-
-<style scoped>
-
-</style>

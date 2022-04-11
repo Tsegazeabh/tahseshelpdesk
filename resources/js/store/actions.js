@@ -1,43 +1,70 @@
 import router from "../router";
 import axios from 'axios';
-import { notify } from "@kyvg/vue3-notification";
+import {notify} from "@kyvg/vue3-notification";
 
 export default {
+    //Login
     login(context,data){
-        let token = '';
         axios.post('api/login',data).then((response) => {
-            let payload = {user:response.data.user,token:response.data.token}
+            let payload = {token:response.data.token}
             context.commit('setAuth', payload);
             router.replace('/cms');
-            let auth_user = context.getters['getUser'];
             let auth_token = context.getters['getToken'];
             localStorage.setItem('auth_token', auth_token);
-            localStorage.setItem('auth_user', JSON.stringify(auth_user));
             axios.defaults.headers.common['Authorization'] = 'Bearer '+ context.getters['getToken'];
-        }).catch((error) => {
-            console.log(error.response.data)
-        });
-    },
-    logout(context){
-        const user = context.getters['getUser'];
-        const token = context.getters['getToken'];
-        axios.post('/api/cms/logout', user,{
-            headers: {
-            'Authorization': 'Bearer '+ token
-        }
-    }).then((response) => {
-            console.log(response.data)
-            context.commit('clearAuth');
-            localStorage.removeItem('auth_token');
-            localStorage.removeItem('auth_user');
-            router.replace('/login');
             notify({
-                title: "Logged Out Successfully! 🎉",
+                title: "Well-come To Tahses CMS 🎉",
                 type:"success"
             });
+        }).catch((error) => {
+            notify({
+                title: error.response.data.message,
+                type:"error"
+            });
+        });
+    },
+
+    // Logout
+    logout(context){
+        axios.get('/api/cms/logout',{
+            headers: {
+            'Authorization': 'Bearer '+ context.getters['getToken']
+        }
+    }).then(() => {
+            context.commit('clearAuth');
+            localStorage.removeItem('auth_token');
+            router.replace('/login');
         }).catch((error) => {
             console.log(error.response)
         });
 
+    },
+
+    // forgot password
+    forgotPassword(context, payload){
+        axios.post('/api/forgot-password', payload).then((response) => {
+            console.log(response.data);
+        }).catch((error) => {
+            console.log(error.response);
+        })
+    },
+
+    // Reset password
+    resetPassword(context, payload){
+        axios.post('/api/reset-password', payload).then((response) => {
+            console.log(response.data);
+            notify({
+                title: response.data.message,
+                type:"success"
+            });
+            router.replace('/login');
+        }).catch((error) => {
+            console.log(error.response);
+            notify({
+                title: error.response.data.message,
+                type:"error"
+            });
+            // router.replace('/forgot-password');
+        })
     }
 }

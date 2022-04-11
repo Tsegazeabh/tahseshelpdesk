@@ -1,5 +1,8 @@
 <template>
-    <template v-if="latest_news && latest_news.length !== 0">
+    <template v-if="isLoading">
+        <base-spinner></base-spinner>
+    </template>
+    <template v-if="latest_news && latest_news.length !== 0 && !isLoading">
         <div class="block grid grid-cols-1 md:grid-cols-2 gap-4 py-6">
             <div v-for="news in latest_news" :key="news.id" class="relative h-[300px] w-[300px] md:w-[350px] lg:w-[400px] xl:w-[500px] rounded-fine shadow-[10px_10px_20px_rgba(0,0,0,0.7)] overflow-hidden max-h-[300px] mx-auto">
                 <img class="w-full h-full object-cover" :src="getFirstImage(news.description)" alt="card img">
@@ -14,9 +17,9 @@
         <router-link class="hover:font-extrabold font-semibold text-gray-900 p-2 float-right pr-20" :to="{name:'news.index'}">View all</router-link>
     </div>
     </template>
-    <template v-else>
-        <div class="min-h-[30vh] flex justify-center items-center">
-            <h2 class="text-2xl capitalize text-pink-600">There Is No Published Content!</h2>
+    <template v-else-if="(!latest_news || latest_news.length <= 0) && !isLoading">
+        <div class="flex justify-center items-center">
+            <h2 class="text-lg capitalize text-pink-600">There Is No Published Content!</h2>
         </div>
     </template>
 </template>
@@ -27,7 +30,7 @@
     import {onMounted} from "vue";
 
     const { getDescriptionShortened, getTitleShortened, getFirstImage } = helpers();
-    const { latest_news, latestNews } = usePublicNews();
+    const { latest_news, latestNews,isLoading } = usePublicNews();
 
     onMounted(latestNews);
 

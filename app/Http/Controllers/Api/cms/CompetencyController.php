@@ -122,4 +122,14 @@ class CompetencyController extends Controller
             return response($exception);
         }
     }
+
+    public function preview($id){
+        try {
+            $competency = Competency::withTrashed()->where('id', $id)->get();
+            return new CompetencyResource($competency);
+        }catch (\Throwable $exception){
+            Log::info($exception);
+            return response($exception);
+        }
+    }
 }

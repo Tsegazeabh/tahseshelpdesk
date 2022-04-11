@@ -30,27 +30,27 @@
                     <div class="grid grid-cols-1 gap-6 mt-4">
                         <div>
                             <label class="text-gray-700" for="title">Title</label>
-                            <p v-if="errors.title && errors.title.length > 0" class="text-red-600 text-sm py-1">
-                                <span v-for="(error,index) in errors.title" :key="index">{{ error }} </span>
+                            <p v-if="v$.title.$error" class="text-red-600 text-sm py-1">
+                                <span>{{ v$.title.$errors[0].$message }} </span>
                             </p>
-                            <input v-model="form.title" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="title">
+                            <input v-model="form.title" :class="{'border border-red-600': v$.title.$error}" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="title">
                         </div>
 
                         <div>
                             <label class="text-gray-700">Description</label>
-                            <p v-if="errors.description && errors.description.length > 0" class="text-red-600 text-sm py-1">
-                                <span v-for="(error,index) in errors.description" :key="index">{{ error }} </span>
+                            <p v-if="v$.description.$error" class="text-red-600 text-sm py-1">
+                                <span>{{ v$.description.$errors[0].$message }} </span>
                             </p>
-                            <textarea v-model="form.description" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="description"></textarea>
+                            <textarea v-model="form.description" :class="{'border border-red-600': v$.description.$error}" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="description"></textarea>
                         </div>
 
-                        <div class="flex items-center">
-                            <p v-if="errors.image && errors.image.length > 0" class="text-red-600 text-sm py-1">
-                                <span v-for="(error,index) in errors.image" :key="index">{{ error }} </span>
+                        <div class="flex flex-col justify-start items-start">
+                            <p v-if="v$.image.$error" class="text-red-600 text-sm py-1">
+                                <span>{{ v$.image.$errors[0].$message }} </span>
                             </p>
                             <label class="block focus:outline-none">
                                 <span class="sr-only">Choose carousel photo</span>
-                                <input @change="Upload" type="file" name="image" class="block w-full text-sm text-slate-500
+                                <input @change="Upload" type="file" name="image" :class="{'file:text-red-600': v$.image.$error}" class="block w-full text-sm text-slate-500
                                   file:mr-4 file:py-2 file:px-4
                                   file:rounded-full file:border-0
                                   file:text-sm file:font-semibold
@@ -70,8 +70,10 @@
 </template>
 
 <script setup>
-import {ref, reactive} from "vue";
+import {ref, reactive, computed} from "vue";
 import useCarousel from "@composable/carousel_gallery";
+import useVuelidate from '@vuelidate/core';
+import { required, requiredIf } from '@vuelidate/validators';
 
 const {createCarousel,errors} = useCarousel();
 
@@ -81,22 +83,32 @@ const form = reactive({
     image: '',
 });
 
+const rules = computed(()=>{
+    return {
+        title:{required},
+        description:{required},
+        image: {
+            required: requiredIf(function () {
+                return form.image === '';
+            })
+        }
+    }
+});
+
+const v$ = useVuelidate(rules,form);
+
+
 // form submit method
 const submitForm = async() => {
-    await createCarousel(form);
+    v$.value.$validate();
+    if(!v$.value.$error){
+        await createCarousel(form);
+    }
 }
 
 //upload image
 function Upload(event) {
      form.image = event.target.files[0];
-    // let img = event.target.files[0];
-    // console.log(img);
-    // axios.post('/api/upload-image',img).then((response) => {
-    //     // form.image = response.data;
-    //     console.log(response.data);
-    // }).catch((error) => {
-    //     console.log(error.response);
-    // })
 }
 </script>
 

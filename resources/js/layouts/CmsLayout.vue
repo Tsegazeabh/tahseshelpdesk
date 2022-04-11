@@ -1,7 +1,6 @@
 <template>
     <div class="flex bg-gray-200 font-roboto overflow-y-hidden m-0 min-h-screen max-h-screen">
         <div :class="sidebarOpen ? 'block' : 'hidden'" @click="sidebarOpen = false" class="fixed inset-0 z-20 transition-opacity bg-black opacity-50 lg:hidden"></div>
-
 <!--        side bar        -->
         <div :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'" class="fixed inset-y-0 left-0 z-30 w-64 min-w-64 overflow-y-auto transition duration-300 transform bg-gray-900 lg:translate-x-0 lg:static lg:inset-0">
             <div class="flex items-center justify-center mt-8">
@@ -88,14 +87,14 @@
                         <div  v-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 z-10 w-full h-full"></div>
 
                         <div  v-show="dropdownOpen" class="absolute right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
-                            <router-link :to="{name:'profile'}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-900 hover:text-white">Profile</router-link>
+                            <button @click="profile"  class="block text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-900 hover:text-white w-full">Profile</button>
                             <button @click="logout" class="block text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-900 hover:text-white w-full">Logout</button>
                         </div>
                     </div>
                 </div>
             </header>
 
-            <main class="flex-1 overflow-y-auto max-h-screen overflow-x-hidden max-w-[80vw] bg-gray-200">
+            <main class="flex-1 overflow-y-auto max-h-screen overflow-x-hidden w-[80vw] bg-gray-200">
                 <div class="container mx-auto px-6 py-8">
                     <div class="m-8">
                         <slot></slot>
@@ -108,18 +107,76 @@
 </template>
 
 <script setup>
-    import { ref } from "vue";
-    import {useStore} from "vuex";
-    import {useRouter} from "vue-router";
+import {onBeforeUnmount, onMounted, onDeactivated, ref, watch} from "vue";
+import {useStore} from "vuex";
+import {useRouter} from "vue-router";
+import {notify} from "@kyvg/vue3-notification";
+import helpers from "@composable/helpers";
+
     let sidebarOpen = ref(false);
     let dropdownOpen = ref(false);
 
     const store = useStore();
     const router = useRouter();
+    const { constants } = helpers();
+    const events = ['click','mousemove','mousedown','scroll','keypress','load'];
+    let warningTimer = null;
+    let logoutTimer = null;
+    let waringZone = ref(false);
 
     const logout = async() => {
             await store.dispatch('logout');
     }
+
+    function profile(){
+        dropdownOpen.value = !dropdownOpen.value;
+        router.push('/cms/profile')
+    }
+
+    onMounted(()=>{
+        events.forEach((event) => {
+            window.addEventListener(event,resetTimer)
+        });
+        setTimers()
+    })
+
+onDeactivated(()=>{
+        events.forEach((event) => {
+            window.removeEventListener(event,resetTimer)
+        });
+        resetTimer()
+    })
+
+    function resetTimer(){
+        clearTimeout(warningTimer);
+        clearTimeout(logoutTimer);
+
+        setTimers();
+    }
+
+    function setTimers(){
+        warningTimer = setTimeout(warningMessage, constants.session_expiration_warning);
+        logoutTimer = setTimeout(logoutUser, constants.session_expiration_time);
+
+        waringZone.value = false;
+    }
+
+    function warningMessage() {
+        waringZone.value = true;
+    }
+
+    function logoutUser(){
+    //    dispatch logout
+        logout()
+    }
+
+    watch(waringZone,(warning)=>{
+        if (warning === true){
+        notify({
+            title:'Are you still with Us?',
+            type:'success'
+        })}
+    })
 
 </script>
 

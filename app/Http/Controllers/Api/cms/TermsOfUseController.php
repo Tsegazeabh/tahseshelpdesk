@@ -102,4 +102,14 @@ class TermsOfUseController extends Controller
             return response($exception);
         }
     }
+
+    public function preview($id){
+        try {
+            $terms_of_use = TermsOfUse::withTrashed()->where('id', $id)->get();
+            return new TermsOfUseResource($terms_of_use);
+        }catch (\Throwable $exception){
+            Log::info($exception);
+            return response($exception);
+        }
+    }
 }

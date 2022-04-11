@@ -122,4 +122,14 @@ class PrivacyPolicyController extends Controller
             return response($exception);
         }
     }
+
+    public function preview($id){
+        try {
+            $privacy_policy = PrivacyPolicy::withTrashed()->where('id', $id)->get();
+            return new PrivacyPolicyResource($privacy_policy);
+        }catch (\Throwable $exception){
+            Log::info($exception);
+            return response($exception);
+        }
+    }
 }

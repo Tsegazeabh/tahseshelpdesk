@@ -30,30 +30,29 @@
                     <div class="grid grid-cols-1 gap-6 mt-4">
                         <div>
                             <label class="text-gray-700" for="title">Title</label>
-                            <p v-if="errors.title && errors.title.length > 0" class="text-red-600 text-sm py-1">
-                                <span v-for="(error,index) in errors.title" :key="index">{{ error }} </span>
+                            <p v-if="v$.title.$error"  class="text-red-600 text-sm py-1">
+                                <span>{{ v$.title.$errors[0].$message }} </span>
                             </p>
-                            <input v-model="carousel.title" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="title">
+                            <input v-model="carousel.title" :class="{'border border-red-600': v$.title.$error}" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="title">
                         </div>
 
                         <div>
                             <label class="text-gray-700">Description</label>
-                            <p v-if="errors.description && errors.description.length > 0" class="text-red-600 text-sm py-1">
-                                <span v-for="(error,index) in errors.description" :key="index">{{ error }} </span>
+                            <p v-if="v$.description.$error" class="text-red-600 text-sm py-1">
+                                <span>{{ v$.description.$errors[0].$message }} </span>
                             </p>
-                            <input v-model="carousel.description" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="description">
+                            <textarea v-model="carousel.description" :class="{'border border-red-600': v$.description.$error}" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="description"></textarea>
                         </div>
 
-                        <div class="flex items-center">
-<!--                            <img :src="carousel.image" alt="Free unsplash image" width="40" height="40">-->
+                        <div class="flex flex-col items-start">
                             <label class="block focus:outline-none">
                                 <span class="sr-only">Choose profile photo</span>
                                 <input @change="Upload" type="file" class="block w-full text-sm text-slate-500
                                   file:mr-4 file:py-2 file:px-4
                                   file:rounded-full file:border-0
                                   file:text-sm file:font-semibold
-                                  file:bg-violet-50 file:text-violet-700
-                                  hover:file:bg-violet-100
+                                  file:bg-violet-200 file:text-violet-700
+                                  hover:file:bg-violet-300
                                 "/>
                             </label>
                         </div>
@@ -69,12 +68,23 @@
 </template>
 
 <script setup>
-import {computed, onMounted} from "vue";
+import {computed, onMounted, ref} from "vue";
 import useCarousel from "@composable/carousel_gallery";
+import useVuelidate from '@vuelidate/core';
+import {required, sameAs, helpers} from '@vuelidate/validators';
 
 
 const { errors, carousel, getCarousel, updateCarousel } = useCarousel();
 
+
+const rules = computed(()=>{
+    return {
+        title:{required},
+        description:{required},
+    }
+});
+
+const v$ = useVuelidate(rules,carousel);
 const props = defineProps(['id']);
 
 onMounted(()=>{
@@ -88,7 +98,10 @@ function Upload(event) {
 
 // form submit method
 const submitForm = async() =>{
-    await updateCarousel(props.id);
+    v$.value.$validate();
+    if(!v$.value.$error){
+        await updateCarousel(props.id);
+    }
 }
 
 </script>

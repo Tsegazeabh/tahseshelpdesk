@@ -8,16 +8,14 @@ use App\Http\Resources\AboutResource;
 use App\Models\About;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 
 class AboutController extends Controller
 {
-    public function paginate(){
-        return About::withTrashed()->paginate(5);
-    }
 
     public function index(){
-        return AboutResource::collection(About::withTrashed()->paginate(5));
+        return AboutResource::collection(About::withTrashed()->paginate(Config::get('custom_config.paginate')));
     }
 
     public function store(AboutRequest $request){
@@ -103,6 +101,22 @@ class AboutController extends Controller
                 return response()->json(['message'=>'successfully Restore']);
             }
         }catch (\Throwable $exception){
+            return response($exception);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+//     * @return \Illuminate\Http\Response
+     * @return AboutResource
+     */
+    public function preview($id){
+        try {
+            $about = About::withTrashed()->where('id', $id)->get();
+            return new AboutResource($about);
+        }catch (\Throwable $exception){
+            Log::info($exception);
             return response($exception);
         }
     }

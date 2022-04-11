@@ -6,7 +6,6 @@ import actions from './actions';
 const store = createStore({
     state() {
         return{
-            user: {},
             isAuthenticated: false,
             authToken: '',
         }

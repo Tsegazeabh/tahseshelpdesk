@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\public;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CompetencyResource;
 use App\Models\Competency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -12,12 +13,12 @@ class CompetencyController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
         try {
-            return response(Competency::published()->orderBy('published_at','desc')->paginate());
+            return CompetencyResource::collection(Competency::published()->orderBy('published_at','desc')->paginate(6));
         }catch (\Throwable $exception){
             Log::info($exception);
             return response($exception);

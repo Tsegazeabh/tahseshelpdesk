@@ -1,70 +1,45 @@
 <template>
-    <ul class="flex list-reset border border-grey-light rounded w-auto font-sans">
-        <li v-if="pagination.current_page > 1">
-            <a class="block hover:text-white hover:bg-blue text-blue border-r border-grey-light px-3 py-2"
-               href="#"
-               @click.prevent="change(pagination.current_page -1)"
-            >
-                Previous
-            </a>
-        </li>
-        <li v-for="page in pages" :key="page" >
-            <a :class="[page === pagination.current_page ? 'text-white bg-blue border-r border-blue':'hover:text-white hover:bg-blue text-blue border-r border-grey-light', 'block px-3 py-2']"
-               href="#"
-               @click.stop="change(page)"
-            >
-                {{ page }}
-            </a>
-        </li>
-        <li v-if="pagination.current_page < pagination.last_page">
-            <a class="block hover:text-white hover:bg-blue text-blue px-3 py-2"
-               href="#"
-               @click.prevent="change(pagination.current_page + 1)"
-            >
-                Next
-            </a>
-        </li>
-    </ul>
+    <section v-if="allAbout && allAbout.length !== 0" class="py-2 w-full bg-white flex justify-center items-center mx-auto">
+        <div class="flex flex-col items-center">
+                        <span class="text-sm text-gray-700">
+                        Showing <span class="font-semibold text-gray-900">{{meta.from}}</span> to <span class="font-semibold text-gray-900">{{meta.to}}</span> of <span class="font-semibold text-gray-900">{{ meta.total }}</span> Entries
+                        </span>
+
+            <div class="inline-flex mt-2 xs:mt-0">
+                <button @click="paginate(pageNumber - 1)" :class="{'bg-gray-400 cursor-not-allowed hover:bg-gray-400': pageNumber <= 1}"  class="py-1 px-2 text-sm font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900"
+                        :disabled="pageNumber <= 1">
+                    Prev
+                </button>
+
+                <span v-for="(item,index) in Math.ceil(meta.total / meta.per_page)" :key="index">
+                                <button @click="paginate(index+1)" class="py-1 px-2 hover:bg-gray-300" :class="{'bg-gray-400 text-white': pageNumber === index+1}">{{index+1}}</button>
+                            </span>
+                <button @click="paginate(pageNumber + 1)" :class="{'bg-gray-400 cursor-not-allowed hover:bg-gray-400': pageNumber >= meta.last_page}" class="py-1 px-2 text-sm font-medium text-white bg-gray-800 rounded-r border-0 border-l border-gray-700 hover:bg-gray-900"
+                        :disabled="pageNumber >= meta.last_page">
+                    Next
+                </button>
+            </div>
+        </div>
+    </section>
 </template>
 
 <script setup>
-import { computed } from "vue";
+import {computed, defineEmits, ref} from "vue";
+import useAbout from "@composable/about";
 
-const props = defineProps({
-            pagination: {
-            type: Object,
-            required: true
-        },
-        offset: {
-            type: Number,
-            default: 4
-        }
-    });
-    const emit = defineEmits(['paginate']);
+// const {perPage, total } = useAbout();
+const pageNumber = ref(1);
+const props = defineProps(['perPage','total'])
+const emit = defineEmits(['pageNumber']);
 
-   const pages = computed(() => {
-       console.log(props);
-            if (!props.pagination.to) {
-                return null;
-            }
-            let from = props.pagination.current_page - props.offset;
-            if (from < 1) {
-                from = 1;
-            }
-            let to = from + (props.offset * 2);
-            if (to >= props.pagination.last_page) {
-                to = props.pagination.last_page;
-            }
-            let pages = [];
-            for (let page = from; page <= to; page++) {
-                pages.push(page);
-            }
-            return pages;
-        }
-    );
+function paginate(pageNum){
+    pageNumber.value = pageNum;
+    emit('pageNumber',pageNumber.value);
+}
+console.log('pagination:',props.perPage,props.total);
+const pages = computed(()=>{
+    return Math.ceil(props.total / props.perPage);
+})
 
-        function change(page) {
-            props.pagination.current_page = page;
-            emit('paginate');
-        }
+
 </script>

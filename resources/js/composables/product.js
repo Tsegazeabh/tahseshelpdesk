@@ -6,32 +6,35 @@ import moment from "moment";
 
 export default function useProduct(){
     const product = ref([]);
+    const isLoading = ref(false);
     const allProduct = ref([]);
+    const meta = ref([]);
     const store = useStore();
     const router = useRouter();
     let errors = ref({});
-    let notification = ref({
-        success: false,
-        warning: false,
-        error: false,
-        message: ''
-    })
+
     // fetch product
     const fetchProduct = async(page=1) => {
+        isLoading.value = false;
+        try {
+            isLoading.value = true;
         const response = await axios.get('/api/cms/products/index?page=' + page, {
                 headers: {
                     'Authorization': 'Bearer ' + store.getters['getToken']
                 }
             }
         )
-        allProduct.value = await response.data.data;
+            isLoading.value = false;
+            allProduct.value = await response.data.data;
+            meta.value = response.data.meta;
+        }catch (error) {
+            isLoading.value = false;
+        }
     }
 
     // create product
     const createProduct = async (data) =>{
         errors.value = {};
-        notification.value.success = false;
-        notification.value.error = false;
         try {
             await axios.post('/api/cms/products/create',data,{
                 headers: {
@@ -39,18 +42,16 @@ export default function useProduct(){
                 }
             })
             await router.push('/cms/products');
-            notification.value.success = true;
-            notification.value.message = 'Record Created Successfully';
-            console.log('error:'+errors);
+            notify({
+                title: "Record Created Successfully 🎉",
+                type:"success"
+            });
         }catch (error) {
             errors.value = error.response.data.errors;
-            console.log('error:'+errors);
-            notification.value.error = true;
-            notification.value.message = 'Something went wrong please try again!';
-            // Object.keys(error.response.data.errors).forEach(key => {
-            //     errors.value += error.response.data.errors[key][0] + ' ';
-            //     console.log(error.response.data.errors[key][0])
-            // })
+            notify({
+                title: "Validation Error",
+                type:"error"
+            });
         }
 
     }
@@ -62,15 +63,12 @@ export default function useProduct(){
                 'Authorization': 'Bearer '+ store.getters['getToken']
             }
         })
-        console.log(response.data.data);
         product.value = await response.data.data;
     }
 
     // update product
     const updateProduct = async(id) =>{
         errors.value = {};
-        notification.value.success = false;
-        notification.value.error = false;
         try {
             await axios.put('/api/cms/products/update/'+ id, product.value,{
                 headers: {
@@ -78,40 +76,67 @@ export default function useProduct(){
                 }
             });
             await router.push('/cms/products');
-            notification.value.success = true;
-            notification.value.message = 'Record Updated Successfully';
+            notify({
+                title: "Record Updated Successfully 🎉",
+                type:"success"
+            });
         }catch (error) {
             errors.value = error.response.data.errors;
-            notification.value.error = true;
-            notification.value.message = 'Something went wrong please try again!';
+            notify({
+                title: "Validation Error",
+                type:"error"
+            });
         }
     }
 
     // delete product
     const deleteProduct = async(id) =>{
-        await axios.get('/api/cms/products/delete/'+id, {
-            headers: {
-                'Authorization': 'Bearer ' + store.getters['getToken']
-            }
-        });
-        notification.value.success = true;
-        notification.value.message = 'Record Deleted Successfully';
+        errors.value = {};
+        try {
+            await axios.get('/api/cms/products/delete/'+id, {
+                headers: {
+                    'Authorization': 'Bearer ' + store.getters['getToken']
+                }
+            });
+            notify({
+                title: "Record Deleted Successfully 🎉",
+                type:"success"
+            });
+        }catch (error){
+            errors.value = error.response.data.errors;
+            notify({
+                title: "Sorry, Something Went Wrong!",
+                type:"warning"
+            });
+        }
     }
 
     // restore product
     const restoreProduct = async(id) =>{
-        await axios.get('/api/cms/products/restore/'+ id, {
-            headers: {
-                'Authorization': 'Bearer ' + store.getters['getToken']
-            }
-        });
-        notification.value.success = true;
-        notification.value.message = 'Record Restored Successfully';
+        errors.value = {};
+        try {
+            await axios.get('/api/cms/products/restore/'+ id, {
+                headers: {
+                    'Authorization': 'Bearer ' + store.getters['getToken']
+                }
+            });
+            notify({
+                title: "Record Restored Successfully 🎉",
+                type:"success"
+            });
+        }catch (error){
+            errors.value = error.response.data.errors;
+            notify({
+                title: "Sorry, Something Went Wrong!",
+                type:"warning"
+            });
+        }
     }
 
     // publish or un-publish product
     const publishProduct = async(data,status) =>{
-        errors.value = {}
+        errors.value = {};
+        let notifyStatus = status === 1 ? 'Published' : 'UnPublished';
         let update_product = ref([]);
         update_product.value = data;
         update_product.value.is_published = status;
@@ -128,12 +153,16 @@ export default function useProduct(){
                     'Authorization': 'Bearer '+ store.getters['getToken']
                 }
             });
-            console.log('successfully ended try block');
-            notification.value.success = true;
-            notification.value.message = 'Record Published/Unpublished Successfully';
+            notify({
+                title: "Record " + notifyStatus + " Successfully 🎉",
+                type:"success"
+            });
         }catch (error) {
-            console.log('catch block');
             errors.value = error.response.data.errors;
+            notify({
+                title: "Sorry, Something Went Wrong!",
+                type:"warning"
+            });
         }
     }
 
@@ -141,6 +170,8 @@ export default function useProduct(){
         allProduct,
         product,
         errors,
+        isLoading,
+        meta,
         fetchProduct,
         getProduct,
         createProduct,
@@ -148,6 +179,5 @@ export default function useProduct(){
         deleteProduct,
         restoreProduct,
         publishProduct,
-        notification
     }
 }

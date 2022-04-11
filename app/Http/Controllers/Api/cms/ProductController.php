@@ -9,12 +9,13 @@ use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
     public function index(){
-        return ProductResource::collection(Product::withTrashed()->paginate(5));
+        return ProductResource::collection(Product::withTrashed()->paginate(Config::get('custom_config.paginate')));
     }
 
     public function store(ProductRequest $request){
@@ -94,13 +95,21 @@ class ProductController extends Controller
         try {
             $product = Product::onlyTrashed()->where('id', $id)->firstOrFail();
             if ($product->trashed()){
-                Log::info('if');
-                Log::info($product);
                 $product->restore();
 
                 return response()->json(['message'=>'successfully Restore']);
             }
         }catch (\Throwable $exception){
+            return response($exception);
+        }
+    }
+
+    public function preview($id){
+        try {
+            $product = Product::withTrashed()->where('id', $id)->get();
+            return new ProductResource($product);
+        }catch (\Throwable $exception){
+            Log::info($exception);
             return response($exception);
         }
     }

@@ -62,7 +62,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <template v-if="allCarousel && allCarousel.length > 0">
+                <template v-if="isLoading">
+                    <base-spinner></base-spinner>
+                </template>
+                <template v-if="allCarousel && allCarousel.length !== 0 && !isLoading">
                     <tr v-for="carousel in filterCarousel" :key="carousel.id" class="bg-white border-b hover:bg-gray-100">
                         <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                             <div class="w-16 h-16 inline-flex">
@@ -85,8 +88,9 @@
                                     <i class="cursor-not-allowed text-gray-300 fas fa-edit mr-1"></i> Edit </button>
                             </template>
                         </td>
-                        <td class="px-6 py-4">
-                            <button @click="showCarousel(carousel.id)" class="text-blue-400 hover:text-blue-600">
+                        <td class="px-6 py-4 text-center">
+                            <button @click="showCarousel(carousel.id)"
+                                    class="text-blue-400 hover:text-blue-600">
                                 <i class="fas fa-eye cursor-pointer mr-1"></i> preview </button>
                         </td>
                         <td v-if="carousel.deleted_at === null" class="px-6 py-4">
@@ -128,17 +132,41 @@
 
                     </tr>
                 </template>
-                <template v-else>
-                    <p class="text-center p-2"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        No Published Contents Yet!
-                    </p>
+                <template v-else-if="(!allCarousel || allCarousel.length <= 0) && !isLoading">
+                    <tr>
+                        <td class="p-2 mx-auto flex justify-center items-center text-red-400"><svg class="mr-3 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            No Published Contents Yet!
+                        </td>
+                    </tr>
                 </template>
-                <tr>
-                </tr>
                 </tbody>
             </table>
-            <pagination :pagination="allCarousel" @pagination-change-page="fetchCarousel" :offset="4">
-            </pagination>
+            <div class="flex justify-center items-center mx-auto w-full">
+                <section v-if="allCarousel && allCarousel.length !== 0 && meta.total > 5" class="py-2 w-full bg-white flex justify-center items-center mx-auto">
+                    <div class="flex flex-col items-center">
+                        <span class="text-sm text-gray-700">
+                        Showing <span class="font-semibold text-gray-900">{{meta.from}}</span> to <span class="font-semibold text-gray-900">{{meta.to}}</span> of <span class="font-semibold text-gray-900">{{ meta.total }}</span> Entries
+                        </span>
+
+                        <div class="inline-flex mt-2 xs:mt-0">
+                            <button @click="paginate(pageNumber - 1)" :class="{'bg-gray-400 cursor-not-allowed hover:bg-gray-400': pageNumber <= 1}"  class="py-1 px-2 text-sm font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900"
+                                    :disabled="pageNumber <= 1">
+                                Prev
+                            </button>
+
+                            <span v-for="(item,index) in Math.ceil(meta.total / meta.per_page)" :key="index">
+                                <button @click="paginate(index+1)" class="py-1 px-2 hover:bg-gray-300" :class="{'bg-gray-400 text-white': pageNumber === index+1}">{{index+1}}</button>
+                            </span>
+                            <button @click="paginate(pageNumber + 1)" :class="{'bg-gray-400 cursor-not-allowed hover:bg-gray-400': pageNumber >= meta.last_page}" class="py-1 px-2 text-sm font-medium text-white bg-gray-800 rounded-r border-0 border-l border-gray-700 hover:bg-gray-900"
+                                    :disabled="pageNumber >= meta.last_page">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                <!--               end pagination -->
+
+            </div>
 
         </div>
     </div>
@@ -151,10 +179,15 @@ import useCarousel from "@composable/carousel_gallery";
 
 
 const search_key = ref('');
-const { allCarousel, publishCarousel, fetchCarousel, deleteCarousel, restoreCarousel, notification } = useCarousel();
+const pageNumber = ref(0);
+const { allCarousel, publishCarousel, fetchCarousel, deleteCarousel, restoreCarousel, isLoading, meta } = useCarousel();
 
 onMounted(fetchCarousel);
-console.log(allCarousel);
+
+function paginate(pageNum){
+    pageNumber.value = pageNum;
+    fetchCarousel(pageNum);
+}
 
 const filterCarousel = computed(() => {
     return allCarousel.value.filter((carousel) => {
@@ -187,7 +220,9 @@ const restoreCarouselMethod = async (id) => {
 }
 
 const statusCarousel = async (data,status) => {
-    if(!window.confirm('Are You sure you want to publish this?')){
+    let my_status = status === true ? 'Publish' : 'UnPublish';
+
+    if(!window.confirm('Are You sure you want to '+ my_status +' this?')){
         return
     }
     await publishCarousel(data,status);

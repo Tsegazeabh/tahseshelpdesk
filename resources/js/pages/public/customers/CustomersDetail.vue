@@ -11,7 +11,10 @@
             </div>
             <div class="col-span-3 md:col-span-1 pt-16 px-4 bg-gray-100 mb-0 pb-0">
                 <h2 class="capitalize my-2 text-gray-800 font-bold text-md">Related Contents</h2>
-                <div v-if="allCustomer && allCustomer.length !== 0" class="overflow-x-hidden overflow-y-auto space-y-4 h-[70vh] w-full bg-gray-200 rounded-md p-2">
+                <template v-if="isLoading">
+                    <base-spinner></base-spinner>
+                </template>
+                <div v-if="allCustomer && allCustomer.length !== 0 && !isLoading" class="overflow-x-hidden overflow-y-auto space-y-4 h-[70vh] w-full bg-gray-200 rounded-md p-2">
                     <template v-for="customers in allCustomer" :key="customers.id">
                         <button v-if="customers.id !== customer.id" @click="navigate(customers)" class="flex bg-white h-32 overflow-hidden rounded-md">
                             <div class="h-full w-1/4">
@@ -29,7 +32,7 @@
                         </button>
                     </template>
                 </div>
-                <div v-else class="flex justify-center items-center">
+                <div v-else-if="(!allCustomer || allCustomer.length <= 0) && !isLoading" class="flex justify-center items-center">
                     <h2 class="text-lg capitalize text-pink-600">There Is No Published Content!</h2>
                 </div>
             </div>
@@ -50,7 +53,7 @@ import {onMounted} from "vue";
 import helpers from "@composable/helpers";
 import {useRouter} from "vue-router";
 
-const { customer, allCustomer, getCustomer, fetchCustomer } = usePublicCustomer();
+const { customer, allCustomer, getCustomer, fetchCustomer, isLoading } = usePublicCustomer();
 const { getDate, getFirstImage, getTitleShortened, getDescriptionShort, getDescriptionShortened } = helpers();
 const router = useRouter();
 

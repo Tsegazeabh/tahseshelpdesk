@@ -97,9 +97,19 @@ class ServiceController extends Controller
                 Log::info($service);
                 $service->restore();
 
-                return response()->json(['message'=>'successfully Restore']);
+                return response()->json(['message'=>'successfully Restored']);
             }
         }catch (\Throwable $exception){
+            return response($exception);
+        }
+    }
+
+    public function preview($id){
+        try {
+            $service = Service::withTrashed()->where('id', $id)->get();
+            return new ServiceResource($service);
+        }catch (\Throwable $exception){
+            Log::info($exception);
             return response($exception);
         }
     }

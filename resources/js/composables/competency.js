@@ -7,31 +7,34 @@ import moment from "moment";
 export default function useCompetency(){
     const competency = ref([]);
     const allCompetency = ref([]);
+    const meta = ref([]);
+    const isLoading = ref(false);
     const store = useStore();
     const router = useRouter();
     let errors = ref({});
-    let notification = ref({
-        success: false,
-        warning: false,
-        error: false,
-        message: ''
-    })
+
     // fetch competency
     const fetchCompetency = async(page=1) => {
+        isLoading.value =false;
+        try {
+            isLoading.value = true;
         const response = await axios.get('/api/cms/competencies/index?page='+ page, {
                 headers: {
                     'Authorization': 'Bearer ' + store.getters['getToken']
                 }
             }
         )
+            isLoading.value = false
         allCompetency.value = await response.data.data;
+        meta.value = response.data.meta;
+        }catch (error) {
+            isLoading.value= false;
+        }
     }
 
     // create competency
     const createCompetency = async (data) =>{
         errors.value = {};
-        notification.value.success = false;
-        notification.value.error = false;
         try {
             await axios.post('/api/cms/competencies/create',data,{
                 headers: {
@@ -39,17 +42,16 @@ export default function useCompetency(){
                 }
             })
             await router.push('/cms/competencies');
-            notification.value.success = true;
-            notification.value.message = 'Record Created Successfully';
+            notify({
+                title: "Record Created Successfully 🎉",
+                type:"success"
+            });
         }catch (error) {
             errors.value = error.response.data.errors;
-            console.log(errors.value);
-            notification.value.error = true;
-            notification.value.message = 'Something went wrong please try again!';
-            // Object.keys(error.response.data.errors).forEach(key => {
-            //     errors.value += error.response.data.errors[key][0] + ' ';
-            //     console.log(error.response.data.errors[key][0])
-            // })
+            notify({
+                title: "Validation Error",
+                type:"error"
+            });
         }
 
     }
@@ -73,8 +75,6 @@ export default function useCompetency(){
 
     // update competency
     const updateCompetency = async(id) =>{
-        notification.value.success = false;
-        notification.value.error = false;
         errors.value = {};
         try {
             await axios.put('/api/cms/competencies/update/'+ id, competency.value,{
@@ -83,40 +83,67 @@ export default function useCompetency(){
                 }
             });
             await router.push('/cms/competencies');
-            notification.value.success = true;
-            notification.value.message = 'Record Updated Successfully';
+            notify({
+                title: "Record Updated Successfully 🎉",
+                type:"success"
+            });
         }catch (error) {
             errors.value = error.response.data.errors;
-            notification.value.error = true;
-            notification.value.message = 'Something went wrong please try again!';
+            notify({
+                title: "Validation Error",
+                type:"error"
+            });
         }
     }
 
     // delete competency
     const deleteCompetency = async(id) =>{
-        await axios.get('/api/cms/competencies/delete/'+ id, {
-            headers: {
-                'Authorization': 'Bearer ' + store.getters['getToken']
-            }
-        });
-        notification.value.success = true;
-        notification.value.message = 'Record Deleted Successfully';
+        errors.value = {};
+        try {
+            await axios.get('/api/cms/competencies/delete/'+ id, {
+                headers: {
+                    'Authorization': 'Bearer ' + store.getters['getToken']
+                }
+            });
+            notify({
+                title: "Record Deleted Successfully 🎉",
+                type:"success"
+            });
+        }catch (error){
+            errors.value = error.response.data.errors;
+            notify({
+                title: "Sorry, Something Went Wrong!",
+                type:"warning"
+            });
+        }
     }
 
     // restore competency
     const restoreCompetency = async(id) =>{
-        await axios.get('/api/cms/competencies/restore/'+ id, {
-            headers: {
-                'Authorization': 'Bearer ' + store.getters['getToken']
-            }
-        });
-        notification.value.success = true;
-        notification.value.message = 'Record Restored Successfully';
+        errors.value = {};
+        try {
+            await axios.get('/api/cms/competencies/restore/'+ id, {
+                headers: {
+                    'Authorization': 'Bearer ' + store.getters['getToken']
+                }
+            });
+            notify({
+                title: "Record Restored Successfully 🎉",
+                type:"success"
+            });
+        }catch (error){
+            errors.value = error.response.data.errors;
+            notify({
+                title: "Sorry, Something Went Wrong!",
+                type:"warning"
+            });
+        }
     }
 
     // publish or un-publish competency
     const publishCompetency = async(data,status) =>{
         errors.value = {}
+        let notifyStatus = status === 1 ? 'Published' : 'UnPublished';
         let update_competency = ref([]);
         update_competency.value = data;
         update_competency.value.is_published = status;
@@ -126,19 +153,22 @@ export default function useCompetency(){
         }else{
             update_competency.value.published_at = null;
         }
-        console.log(update_competency.value);
         try {
             await axios.put('/api/cms/competencies/update/'+ update_competency.value.id, update_competency.value,{
                 headers: {
                     'Authorization': 'Bearer '+ store.getters['getToken']
                 }
             });
-            console.log('successfully ended try block');
-            notification.value.success = true;
-            notification.value.message = 'Record Published/Unpublished Successfully';
+            notify({
+                title: "Record " + notifyStatus + " Successfully 🎉",
+                type:"success"
+            });
         }catch (error) {
-            console.log('catch block');
             errors.value = error.response.data.errors;
+            notify({
+                title: "Sorry, Something Went Wrong!",
+                type:"warning"
+            });
         }
     }
 
@@ -147,6 +177,7 @@ export default function useCompetency(){
         allCompetency,
         competency,
         errors,
+        meta,
         restoreCompetency,
         publishCompetency,
         fetchCompetency,
@@ -154,6 +185,6 @@ export default function useCompetency(){
         createCompetency,
         updateCompetency,
         deleteCompetency,
-        notification
+        isLoading
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\public;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ServiceResource;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -12,12 +13,12 @@ class ServiceController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
         try {
-            return response(Service::published()->paginate());
+            return ServiceResource::collection(Service::published()->paginate(6));
         }catch (\Throwable $exception){
             Log::info($exception);
             return response($exception);

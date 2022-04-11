@@ -6,32 +6,35 @@ import moment from "moment";
 
 export default function usePartner(){
     const partner = ref([]);
+    const isLoading = ref(false);
     const allPartner = ref([]);
+    const meta = ref([]);
     const store = useStore();
     const router = useRouter();
     let errors = ref({});
-    let notification = ref({
-        success: false,
-        warning: false,
-        error: false,
-        message: ''
-    })
+
     // fetch partner
     const fetchPartner = async(page=1) => {
+        isLoading.value = false;
+        try {
+         isLoading.value = true;
         const response = await axios.get('/api/cms/partners/index?page=' + page, {
                 headers: {
                     'Authorization': 'Bearer ' + store.getters['getToken']
                 }
             }
         )
+            isLoading.value = false;
         allPartner.value = await response.data.data;
+        meta.value = response.data.meta;
+        }catch (error) {
+            isLoading.value = false;
+        }
     }
 
     // create partner
     const createPartner = async (data) =>{
         errors.value = {};
-        notification.value.success = false;
-        notification.value.error = false;
         try {
             await axios.post('/api/cms/partners/create',data,{
                 headers: {
@@ -39,17 +42,16 @@ export default function usePartner(){
                 }
             })
             await router.push('/cms/partners');
-            notification.value.success = true;
-            notification.value.message = 'Record Created Successfully';
+            notify({
+                title: "Record Created Successfully 🎉",
+                type:"success"
+            });
         }catch (error) {
             errors.value = error.response.data.errors;
-            console.log(errors.value);
-            notification.value.error = true;
-            notification.value.message = 'Something went wrong please try again!';
-            // Object.keys(error.response.data.errors).forEach(key => {
-            //     errors.value += error.response.data.errors[key][0] + ' ';
-            //     console.log(error.response.data.errors[key][0])
-            // })
+            notify({
+                title: "Validation Error",
+                type:"error"
+            });
         }
 
     }
@@ -73,8 +75,6 @@ export default function usePartner(){
 
     // update partner
     const updatePartner = async(id) =>{
-        notification.value.success = false;
-        notification.value.error = false;
         errors.value = {};
         try {
             await axios.put('/api/cms/partners/update/'+ id, partner.value,{
@@ -83,62 +83,91 @@ export default function usePartner(){
                 }
             });
             await router.push('/cms/partners');
-            notification.value.success = true;
-            notification.value.message = 'Record Updated Successfully';
+            notify({
+                title: "Record Updated Successfully 🎉",
+                type:"success"
+            });
         }catch (error) {
             errors.value = error.response.data.errors;
-            notification.value.error = true;
-            notification.value.message = 'Something went wrong please try again!';
+            notify({
+                title: "Validation Error",
+                type:"error"
+            });
         }
     }
 
     // delete partner
     const deletePartner = async(id) =>{
-        await axios.get('/api/cms/partners/delete/'+ id, {
-            headers: {
-                'Authorization': 'Bearer ' + store.getters['getToken']
-            }
-        });
-        notification.value.success = true;
-        notification.value.message = 'Record Deleted Successfully';
+        errors.value = {};
+        try {
+            await axios.get('/api/cms/partners/delete/'+ id, {
+                headers: {
+                    'Authorization': 'Bearer ' + store.getters['getToken']
+                }
+            });
+            notify({
+                title: "Record Deleted Successfully 🎉",
+                type:"success"
+            });
+        }catch (error){
+            errors.value = error.response.data.errors;
+            notify({
+                title: "Sorry, Something Went Wrong!",
+                type:"warning"
+            });
+        }
     }
 
     // restore partner
     const restorePartner = async(id) =>{
-        await axios.get('/api/cms/partners/restore/'+ id, {
-            headers: {
-                'Authorization': 'Bearer ' + store.getters['getToken']
-            }
-        });
-        notification.value.success = true;
-        notification.value.message = 'Record Restored Successfully';
+        errors.value = {};
+        try {
+            await axios.get('/api/cms/partners/restore/'+ id, {
+                headers: {
+                    'Authorization': 'Bearer ' + store.getters['getToken']
+                }
+            });
+            notify({
+                title: "Record Restored Successfully 🎉",
+                type:"success"
+            });
+        }catch (error){
+            errors.value = error.response.data.errors;
+            notify({
+                title: "Sorry, Something Went Wrong!",
+                type:"warning"
+            });
+        }
     }
 
     // publish or un-publish partner
     const publishPartner = async(data,status) =>{
-        errors.value = {}
+        errors.value = {};
+        let notifyStatus = status === 1 ? 'Published' : 'UnPublished';
         let update_partner = ref([]);
         update_partner.value = data;
         update_partner.value.is_published = status;
         if (status === true){
             update_partner.value.published_at = moment().format();
-            console.log(moment().format());
         }else{
             update_partner.value.published_at = null;
         }
-        console.log(update_partner.value);
         try {
             await axios.put('/api/cms/partners/update/'+ update_partner.value.id, update_partner.value,{
                 headers: {
                     'Authorization': 'Bearer '+ store.getters['getToken']
                 }
             });
-            console.log('successfully ended try block');
-            notification.value.success = true;
-            notification.value.message = 'Record Published/Unpublished Successfully';
+            notify({
+                title: "Record " + notifyStatus + " Successfully 🎉",
+                type:"success"
+            });
         }catch (error) {
-            console.log('catch block');
             errors.value = error.response.data.errors;
+            notify({
+                title: "Sorry, Something Went Wrong!",
+                type:"warning"
+            });
         }
     }
 
@@ -146,6 +175,8 @@ export default function usePartner(){
         allPartner,
         partner,
         errors,
+        isLoading,
+        meta,
         fetchPartner,
         getPartner,
         createPartner,
@@ -153,6 +184,5 @@ export default function usePartner(){
         deletePartner,
         restorePartner,
         publishPartner,
-        notification
     }
 }

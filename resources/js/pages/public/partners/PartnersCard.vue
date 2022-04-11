@@ -1,7 +1,7 @@
 <template>
 <!--    competency cards-->
     <div class="mx-auto my-4 py-6">
-        <slider :options="options" :img_src="allPartner" :partners="true"></slider>
+        <slider :options="options" :img_src="allPartner" :partners="true" :isLoading="isLoading"></slider>
     </div>
 
 </template>
@@ -12,7 +12,7 @@
     import usePublicPartner from "@composable/public/public_partner";
 
 
-    const { fetchPartner, allPartner } = usePublicPartner();
+    const { fetchPartner, allPartner,isLoading } = usePublicPartner();
 
     const options = reactive({
         rewind: true,

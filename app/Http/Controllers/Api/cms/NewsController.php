@@ -120,4 +120,14 @@ class NewsController extends Controller
             return response($exception);
         }
     }
+
+    public function preview($id){
+        try {
+            $news = News::withTrashed()->where('id', $id)->get();
+            return new NewsResource($news);
+        }catch (\Throwable $exception){
+            Log::info($exception);
+            return response($exception);
+        }
+    }
 }

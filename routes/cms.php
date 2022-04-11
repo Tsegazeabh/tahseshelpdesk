@@ -13,8 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('pagination', [\App\Http\Controllers\Api\cms\AboutController::class, 'paginate']);
-
 Route::middleware(['auth:sanctum'])->prefix('cms')->group(function (){
     Route::get('dashboard', [\App\Http\Controllers\Api\AuthController::class,'index']);
     Route::get('logout/{id}', [AuthController::class, 'logout']);
@@ -27,6 +25,7 @@ Route::middleware(['auth:sanctum'])->prefix('cms')->group(function (){
         Route::put('update/{service}',[\App\Http\Controllers\Api\cms\ServiceController::class,'update']);
         Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\ServiceController::class,'destroy']);
         Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\ServiceController::class,'restore']);
+        Route::get('preview/{id}',[\App\Http\Controllers\Api\cms\ServiceController::class,'preview']);
     });
 //products
     Route::prefix('products')->group(function (){
@@ -36,6 +35,7 @@ Route::middleware(['auth:sanctum'])->prefix('cms')->group(function (){
         Route::put('update/{product}',[\App\Http\Controllers\Api\cms\ProductController::class,'update']);
         Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\ProductController::class,'destroy']);
         Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\ProductController::class,'restore']);
+        Route::get('preview/{id}',[\App\Http\Controllers\Api\cms\ProductController::class,'preview']);
     });
 //customers
     Route::prefix('customers')->group(function (){
@@ -45,6 +45,7 @@ Route::middleware(['auth:sanctum'])->prefix('cms')->group(function (){
         Route::put('update/{customer}',[\App\Http\Controllers\Api\cms\CustomerController::class,'update']);
         Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\CustomerController::class,'destroy']);
         Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\CustomerController::class,'restore']);
+        Route::get('preview/{id}',[\App\Http\Controllers\Api\cms\CustomerController::class,'preview']);
     });
 //competencies
     Route::prefix('competencies')->group(function (){
@@ -54,6 +55,7 @@ Route::middleware(['auth:sanctum'])->prefix('cms')->group(function (){
         Route::put('update/{competency}',[\App\Http\Controllers\Api\cms\CompetencyController::class,'update']);
         Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\CompetencyController::class,'destroy']);
         Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\CompetencyController::class,'restore']);
+        Route::get('preview/{id}',[\App\Http\Controllers\Api\cms\CompetencyController::class,'preview']);
     });
 //privacy_policy
     Route::prefix('privacy_policy')->group(function (){
@@ -63,6 +65,7 @@ Route::middleware(['auth:sanctum'])->prefix('cms')->group(function (){
         Route::put('update/{privacy_policy}',[\App\Http\Controllers\Api\cms\PrivacyPolicyController::class,'update']);
         Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\PrivacyPolicyController::class,'destroy']);
         Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\PrivacyPolicyController::class,'restore']);
+        Route::get('preview/{id}',[\App\Http\Controllers\Api\cms\PrivacyPolicyController::class,'preview']);
     });
 //terms_of_use
     Route::prefix('terms_of_use')->group(function (){
@@ -72,6 +75,7 @@ Route::middleware(['auth:sanctum'])->prefix('cms')->group(function (){
         Route::put('update/{terms_of_use}',[\App\Http\Controllers\Api\cms\TermsOfUseController::class,'update']);
         Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\TermsOfUseController::class,'destroy']);
         Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\TermsOfUseController::class,'restore']);
+        Route::get('preview/{id}',[\App\Http\Controllers\Api\cms\TermsOfUseController::class,'preview']);
     });
 //about
     Route::prefix('about')->group(function (){
@@ -81,6 +85,7 @@ Route::middleware(['auth:sanctum'])->prefix('cms')->group(function (){
         Route::put('update/{about}',[\App\Http\Controllers\Api\cms\AboutController::class,'update']);
         Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\AboutController::class,'destroy']);
         Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\AboutController::class,'restore']);
+        Route::get('preview/{id}',[\App\Http\Controllers\Api\cms\AboutController::class,'preview']);
     });
 //news
     Route::prefix('news')->group(function (){
@@ -90,6 +95,7 @@ Route::middleware(['auth:sanctum'])->prefix('cms')->group(function (){
         Route::put('update/{news}',[\App\Http\Controllers\Api\cms\NewsController::class,'update']);
         Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\NewsController::class,'destroy']);
         Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\NewsController::class,'restore']);
+        Route::get('preview/{id}',[\App\Http\Controllers\Api\cms\NewsController::class,'preview']);
     });
 //partners
     Route::prefix('partners')->group(function (){
@@ -115,13 +121,15 @@ Route::middleware(['auth:sanctum'])->prefix('cms')->group(function (){
 //contact-us
     Route::prefix('contact_us')->group(function (){
         Route::get('index', [\App\Http\Controllers\Api\cms\ContactUsController::class,'index']);
-        Route::get('archive/{id}',[\App\Http\Controllers\Api\cms\ContactUsController::class,'archive']);
+        Route::get('show/{contact_us}',[\App\Http\Controllers\Api\cms\ContactUsController::class,'show']);
         Route::get('delete/{id}',[\App\Http\Controllers\Api\cms\ContactUsController::class,'destroy']);
         Route::get('restore/{id}',[\App\Http\Controllers\Api\cms\ContactUsController::class,'restore']);
     });
 
 //logout
-    Route::post('logout', [AuthController::class, 'logout']);
+    Route::get('logout', [AuthController::class, 'logout']);
+    Route::post('change-password',[AuthController::class,'changePassword']);
+
 });
 
 //Route::middleware('guest')->group(function () {

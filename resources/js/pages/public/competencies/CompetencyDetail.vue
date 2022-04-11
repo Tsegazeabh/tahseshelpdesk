@@ -11,7 +11,10 @@
             </div>
             <div class="col-span-3 md:col-span-1 pt-16 px-4 bg-gray-100 mb-0 pb-0">
                 <h2 class="capitalize my-2 text-gray-800 font-bold text-md">Related Contents</h2>
-                <div class="overflow-x-hidden overflow-y-auto space-y-4 max-h-[70vh] w-full bg-gray-200 rounded-md p-2">
+                <div v-if="isLoading">
+                    <base-spinner></base-spinner>
+                </div>
+                <div v-if="allCompetency && allCompetency.length !== 0 && !isLoading" class="overflow-x-hidden overflow-y-auto space-y-4 max-h-[70vh] w-full bg-gray-200 rounded-md p-2">
                     <template v-for="competencies in allCompetency" :key="competencies.id">
                         <button v-if="competencies.id !== competency.id" @click="navigate(competencies)" class="flex bg-white h-32 overflow-hidden rounded-md">
                             <div class="h-full w-1/4">
@@ -28,6 +31,9 @@
                             </div>
                         </button>
                     </template>
+                </div>
+                <div v-else-if="(!allCompetency || allCompetency.length <= 0) && !isLoading" class="flex justify-center items-center">
+                    <h2 class="text-2xl capitalize text-pink-600">There Is No Published Content!</h2>
                 </div>
             </div>
         </div>
@@ -47,7 +53,7 @@ import {onMounted} from "vue";
 import helpers from "@composable/helpers";
 import {useRouter} from "vue-router";
 
-const { competency, allCompetency, getCompetency, fetchCompetency } = usePublicCompetency();
+const { competency, allCompetency, getCompetency, fetchCompetency, isLoading } = usePublicCompetency();
 const { getDate, getFirstImage, getTitleShortened, getDescriptionShort, getDescriptionShortened } = helpers();
 const router = useRouter();
 

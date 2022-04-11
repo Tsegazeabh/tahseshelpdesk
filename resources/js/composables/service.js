@@ -6,32 +6,35 @@ import moment from "moment";
 
 export default function useService(){
     const service = ref([]);
+    const isLoading = ref(false);
     const allService = ref([]);
+    const meta = ref([]);
     const store = useStore();
     const router = useRouter();
     let errors = ref({});
-    let notification = ref({
-        success: false,
-        warning: false,
-        error: false,
-        message: ''
-    })
+
     // fetch service
     const fetchService = async(page=1) => {
+            isLoading.value = false;
+        try {
+            isLoading.value = true;
         const response = await axios.get('/api/cms/services/index?page=' + page, {
                 headers: {
                     'Authorization': 'Bearer ' + store.getters['getToken']
                 }
             }
         )
+            isLoading.value = false;
         allService.value = await response.data.data;
+            meta.value = response.data.meta;
+        }catch (error) {
+            isLoading.value = false;
+        }
     }
 
     // create service
     const createService = async (data) =>{
         errors.value = {};
-        notification.value.success = false;
-        notification.value.error = false;
         try {
             await axios.post('/api/cms/services/create',data,{
                 headers: {
@@ -39,17 +42,16 @@ export default function useService(){
                 }
             })
             await router.push('/cms/services');
-            notification.value.success = true;
-            notification.value.message = 'Record Created Successfully';
+            notify({
+                title: "Record Created Successfully 🎉",
+                type:"success"
+            });
         }catch (error) {
             errors.value = error.response.data.errors;
-            console.log(errors.value);
-            notification.value.error = true;
-            notification.value.message = 'Something went wrong please try again!';
-            // Object.keys(error.response.data.errors).forEach(key => {
-            //     errors.value += error.response.data.errors[key][0] + ' ';
-            //     console.log(error.response.data.errors[key][0])
-            // })
+            notify({
+                title: "Validation Error",
+                type:"error"
+            });
         }
 
     }
@@ -71,8 +73,6 @@ export default function useService(){
 
     // update service
     const updateService = async(id) =>{
-        notification.value.success = false;
-        notification.value.error = false;
         errors.value = {};
         try {
             await axios.put('/api/cms/services/update/'+ id, service.value,{
@@ -81,62 +81,91 @@ export default function useService(){
                 }
             });
             await router.push('/cms/services');
-            notification.value.success = true;
-            notification.value.message = 'Record Updated Successfully';
+            notify({
+                title: "Record Updated Successfully 🎉",
+                type:"success"
+            });
         }catch (error) {
             errors.value = error.response.data.errors;
-            notification.value.error = true;
-            notification.value.message = 'Something went wrong please try again!';
+            notify({
+                title: "Validation Error",
+                type:"error"
+            });
         }
     }
 
     // delete service
     const deleteService = async(id) =>{
-        await axios.get('/api/cms/services/delete/'+ id, {
-            headers: {
-                'Authorization': 'Bearer ' + store.getters['getToken']
-            }
-        });
-        notification.value.success = true;
-        notification.value.message = 'Record Deleted Successfully';
+        errors.value = {};
+        try {
+            await axios.get('/api/cms/services/delete/'+ id, {
+                headers: {
+                    'Authorization': 'Bearer ' + store.getters['getToken']
+                }
+            });
+            notify({
+                title: "Record Deleted Successfully 🎉",
+                type:"success"
+            });
+        }catch (error){
+            errors.value = error.response.data.errors;
+            notify({
+                title: "Sorry, Something Went Wrong!",
+                type:"warning"
+            });
+        }
     }
 
     // restore service
     const restoreService = async(id) =>{
-        await axios.get('/api/cms/services/restore/'+ id, {
-            headers: {
-                'Authorization': 'Bearer ' + store.getters['getToken']
-            }
-        });
-        notification.value.success = true;
-        notification.value.message = 'Record Restored Successfully';
+        errors.value = {};
+        try {
+            await axios.get('/api/cms/services/restore/'+ id, {
+                headers: {
+                    'Authorization': 'Bearer ' + store.getters['getToken']
+                }
+            });
+            notify({
+                title: "Record Restored Successfully 🎉",
+                type:"success"
+            });
+        }catch (error){
+            errors.value = error.response.data.errors;
+            notify({
+                title: "Sorry, Something Went Wrong!",
+                type:"warning"
+            });
+        }
     }
 
     // publish or un-publish service
     const publishService = async(data,status) =>{
-        errors.value = {}
+        errors.value = {};
+        let notifyStatus = status === 1 ? 'Published' : 'UnPublished';
         let update_service = ref([]);
         update_service.value = data;
         update_service.value.is_published = status;
         if (status === true){
             update_service.value.published_at = moment().format();
-            console.log(moment().format());
         }else{
             update_service.value.published_at = null;
         }
-        console.log(update_service.value);
         try {
             await axios.put('/api/cms/services/update/'+ update_service.value.id, update_service.value,{
                 headers: {
                     'Authorization': 'Bearer '+ store.getters['getToken']
                 }
             });
-            console.log('successfully ended try block');
-            notification.value.success = true;
-            notification.value.message = 'Record Published/Unpublished Successfully';
+            notify({
+                title: "Record " + notifyStatus + " Successfully 🎉",
+                type:"success"
+            });
         }catch (error) {
-            console.log('catch block');
             errors.value = error.response.data.errors;
+            notify({
+                title: "Sorry, Something Went Wrong!",
+                type:"warning"
+            });
         }
     }
 
@@ -144,6 +173,8 @@ export default function useService(){
         allService,
         service,
         errors,
+        isLoading,
+        meta,
         fetchService,
         getService,
         createService,
@@ -151,6 +182,5 @@ export default function useService(){
         deleteService,
         restoreService,
         publishService,
-        notification
     }
 }

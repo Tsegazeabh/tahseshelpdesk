@@ -29,16 +29,16 @@
                 <div class="grid grid-cols-1 gap-6 mt-4">
                     <div>
                         <label class="text-gray-700" for="title">Title</label>
-                        <p v-if="errors.title && errors.title.length > 0" class="text-red-600 text-sm py-1">
-                            <span v-for="(error,index) in errors.title" :key="index">{{ error }} </span>
+                        <p v-if="v$.title.$error"  class="text-red-600 text-sm py-1">
+                            <span>{{ v$.title.$errors[0].$message }} </span>
                         </p>
-                        <input v-model="service.title" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="title">
+                        <input v-model="service.title" :class="{'border border-red-600': v$.title.$error}" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="title">
                     </div>
 
                     <div>
                         <label class="text-gray-700">Description</label>
-                        <p v-if="errors.description && errors.description.length > 0" class="text-red-600 text-sm py-1">
-                            <span v-for="(error,index) in errors.description" :key="index">{{ error }} </span>
+                        <p v-if="v$.description.$error" class="text-red-600 text-sm py-1">
+                            <span>{{ v$.description.$errors[0].$message }} </span>
                         </p>
                         <editor
                             v-model="service.description"
@@ -52,7 +52,7 @@
                                        'insertdatetime media table imagetools paste code help wordcount'
                                      ],
                                      toolbar:
-                                       'undo redo | link image | formatselect | bold italic backcolor | \
+                                       'undo redo | link image | formatselect | underline bold italic backcolor code | subscript superscript | \
                                        alignleft aligncenter alignright alignjustify | \
                                        bullist numlist outdent indent | removeformat | help',
                                      image_advtab: true,
@@ -83,27 +83,34 @@
 </template>
 
 <script setup>
-import {ref, reactive, onMounted} from "vue";
+import {ref, reactive, onMounted, computed} from "vue";
 import Editor from '@tinymce/tinymce-vue';
-import BreadCrumb from '@components/BreadCrumb';
 import useService from "@composable/service";
+import useVuelidate from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
 
 const { errors, service, getService, updateService } = useService();
+const rules = computed(()=>{
+    return {
+        title:{required},
+        description:{required}
+    }
+});
+const v$ = useVuelidate(rules,service);
 
 const props = defineProps(['id']);
 
-// function description(data){
-//     return data.replace(/\./g, '')
-// }
 
 onMounted(()=>{
     getService(props.id);
-    console.log(props.id);
 });
 
 // form submit method
 const submitForm = async() =>{
-    await updateService(props.id);
+    v$.value.$validate();
+    if(!v$.value.$error) {
+        await updateService(props.id);
+    }
 }
 
 </script>

@@ -1,7 +1,6 @@
 <template>
     <home-layout id="homelayout">
-        <notifications position="top center"/>
-        <slider :options="options" :img_src="allCarousel"></slider>
+        <slider :options="options" :img_src="allCarousel" :isLoading="isLoading"></slider>
         <the-header title="Our Core Competencies"></the-header>
         <competency-card></competency-card>
         <the-header title="Our News"></the-header>
@@ -14,25 +13,28 @@
         <customer-card></customer-card>
         <the-header title="Our Partners"></the-header>
         <partners-card></partners-card>
+        <scroll-up></scroll-up>
         <router-view></router-view>
     </home-layout>
 </template>
 
 <script setup>
-import HomeLayout from '../layouts/HomeLayout.vue';
-import slider from '../components/Slider';
-import CompetencyCard from './public/competencies/CompetencyCard';
-import NewsCard from './public/news/NewsCard';
-import ProductCard from './public/products/ProductCard';
-import ServiceCard from './public/services/ServiceCard';
-import CustomerCard from './public/customers/CustomerCard';
-import PartnersCard from './public/partners/PartnersCard';
-import TheHeader from '../components/TheHeader'
+import HomeLayout from '@layouts/HomeLayout.vue';
+import slider from '@components/Slider';
+import CompetencyCard from '@pages/public/competencies/CompetencyCard';
+import NewsCard from '@pages/public/news/NewsCard';
+import ProductCard from '@pages/public/products/ProductCard';
+import ServiceCard from '@pages/public/services/ServiceCard';
+import CustomerCard from '@pages/public/customers/CustomerCard';
+import PartnersCard from '@pages/public/partners/PartnersCard';
+import TheHeader from '@components/TheHeader'
+import ScrollUp from '@components/ScrollUp'
 import {onMounted, reactive} from 'vue';
 import usePublicCarousel from "@composable/public/public_carousel";
+import { notify } from "@kyvg/vue3-notification";
 
 
-const { allCarousel, fetchCarousel } = usePublicCarousel();
+const { allCarousel, fetchCarousel,isLoading } = usePublicCarousel();
 
 const options = reactive({
     rewind: true,
@@ -44,9 +46,12 @@ const options = reactive({
     width: '100%',
 })
 
-onMounted(fetchCarousel);
+onMounted(()=>{
+    fetchCarousel();
+    notify({
+        title: "Welcome to Tahses Software Development and Consultancy 🎉",
+        type:"success"
+    });
+})
+
 </script>
-
-<style scoped>
-
-</style>

@@ -72,30 +72,52 @@ class CarouselController extends Controller
      * @param  \App\Models\CarouselGallery  $carousel
     //     * @return CarouselResource
      */
-    public function update(CarouselRequest $request,CarouselGallery $carousel){
+    public function update(Request $request,CarouselGallery $carousel){
         try {
-            $root_path = 'MyImages';
-            $root_path_thumbnail = 'MyImages\carousel';
-            $image = $request->file('image');
-            $imagename = time() . '.' . $image->extension();
-            $destinationPath = public_path($root_path_thumbnail);
+            if($request->hasFile('image')){
 
-            if(!file_exists($destinationPath)){
-                mkdir($destinationPath, 0777, true);
+                $request->validate([
+                    'title'=>'required | string',
+                    'description'=>'required | string',
+                    'image'=>'required | image | mimes:jpeg,jpg,png,gif,svg',
+                ]);
+
+                $root_path = 'MyImages';
+                $root_path_thumbnail = 'MyImages\carousel';
+                $image = $request->file('image');
+                $imagename = time() . '.' . $image->extension();
+                $destinationPath = public_path($root_path_thumbnail);
+
+                if(!file_exists($destinationPath)){
+                    mkdir($destinationPath, 0777, true);
+                }
+
+                $img = Image::make($image->path());
+                $img->save($destinationPath . '/' . $imagename);
+                $destinationPath = public_path($root_path);
+                $image->move($destinationPath, $imagename);
+
+                    Log::info($request);
+                    $carousel->update([
+                        'title' => $request->title,
+                        'description' => $request->description,
+                        'image' => url($root_path . '/' . $imagename),
+                    ]);
+                return new CarouselResource($carousel);
             }
 
-            $img = Image::make($image->path());
-            $img->save($destinationPath . '/' . $imagename);
-            $destinationPath = public_path($root_path);
-            $image->move($destinationPath, $imagename);
+            $request->validate([
+                'title'=>'required | string',
+                'description'=>'required | string',
+                'image'=>'required | string',
+            ]);
 
-            Log::info($request);
             $carousel->update([
                 'title' => $request->title,
                 'description' => $request->description,
-                'image' => url($root_path . '/' . $imagename),
+                'image' => $request->image,
             ]);
-            Log::info('why this shit not working');
+
             return new CarouselResource($carousel);
         }catch (\Throwable $exception){
             Log::error($exception);

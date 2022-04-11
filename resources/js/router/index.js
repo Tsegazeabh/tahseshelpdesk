@@ -1,5 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router';
 //cms
+
 import Profile from '@pages/cms/profile/Profile';
 import CreateCompetency from '@pages/cms/competencies/CreateCompetency';
 import EditCompetency from '@pages/cms/competencies/EditCompetency';
@@ -30,6 +31,8 @@ import EditCustomer from '@pages/cms/customers/EditCustomer';
 import ManageCustomer from '@pages/cms/customers/ManageCustomer';
 import Customer from '@pages/cms/customers/Customer';
 import ContactCms from '@pages/cms/contact/Contact';
+import ManageContactUs from '@pages/cms/contact/ManageContactUs';
+import ViewRequest from '@pages/cms/contact/ViewRequest';
 import ManageAbout from '@pages/cms/about/ManageAbout';
 import EditAbout from '@pages/cms/about/EditAbout';
 import CreateAbout from '@pages/cms/about/CreateAbout';
@@ -45,22 +48,33 @@ import CreateProduct from '@pages/cms/products/CreateProduct';
 import PageNotFound from '@components/PageNotFound';
 import ServicesIndex from '@pages/public/services/ServicesIndex';
 import ServicesDetail from '@pages/public/services/ServicesDetail';
+import PreviewService from '@pages/public/services/PreviewService';
 import NewsIndex from '@pages/public/news/NewsIndex';
 import NewsDetail from '@pages/public/news/NewsDetail';
+import PreviewNews from '@pages/public/news/PreviewNews';
 import CompetencyIndex from '@pages/public/competencies/CompetencyIndex';
 import CompetencyDetail from '@pages/public/competencies/CompetencyDetail';
+import PreviewCompetency from '@pages/public/competencies/PreviewCompetency';
 import PrivacyPolicyIndex from '@pages/public/privacy_policy/PrivacyPolicy';
+import PreviewPrivacyPolicy from '@pages/public/privacy_policy/PreviewPrivacyPolicy';
 import TermsOfUseIndex from '@pages/public/terms_of_use/TermsOfUse';
+import PreviewTermsOfUse from '@pages/public/terms_of_use/PreviewTermsOfUse';
 import CustomersIndex from '@pages/public/customers/CustomersIndex';
 import CustomersDetail from '@pages/public/customers/CustomersDetail';
+import PreviewCustomer from '@pages/public/customers/PreviewCustomer';
 import ContactUs from '@pages/public/contact/ContactUs';
 import ProductsIndex from '@pages/public/products/ProductsIndex';
 import ProductsDetail from '@pages/public/products/ProductsDetail';
+import PreviewProduct from '@pages/public/products/PreviewProduct';
 import AboutIndex from '@pages/public/about/AboutIndex';
+import PreviewAbout from '@pages/public/about/PreviewAbout';
 import App from '@pages/App';
 import Dashboard from '@pages/Dashboard';
 import Login from '@pages/Auth/Login';
+import ForgotPassword from '@pages/Auth/ForgotPassword';
+import ResetPassword from '@pages/Auth/ResetPassword';
 import store from "../store";
+import {notify} from "@kyvg/vue3-notification";
 
 
 const routes = [
@@ -83,6 +97,15 @@ const routes = [
         }
     },
     {
+        path: '/preview_about/:id',
+        name: 'preview_about',
+        props: true,
+        component: PreviewAbout,
+        meta:{
+            protected: true,
+        }
+    },
+    {
         path: '/products_index',
         name:'products.index',
         component: ProductsIndex,
@@ -99,6 +122,15 @@ const routes = [
         meta:{
             protected: false,
             public: true
+        }
+    },
+    {
+        path: '/preview_product/:id',
+        name: 'preview_product',
+        props: true,
+        component: PreviewProduct,
+        meta:{
+            protected: true,
         }
     },
     {
@@ -121,6 +153,15 @@ const routes = [
         }
     },
     {
+        path: '/preview_news/:id',
+        name: 'preview_news',
+        props: true,
+        component: PreviewNews,
+        meta:{
+            protected: true,
+        }
+    },
+    {
         path: '/competencies_index',
         name:'competencies.index',
         component: CompetencyIndex,
@@ -137,6 +178,15 @@ const routes = [
         meta:{
             protected: false,
             public: true
+        }
+    },
+    {
+        path: '/preview_competency/:id',
+        name: 'preview_competency',
+        props: true,
+        component: PreviewCompetency,
+        meta:{
+            protected: true,
         }
     },
     {
@@ -159,6 +209,15 @@ const routes = [
         }
     },
     {
+        path: '/preview_service/:id',
+        name: 'preview_service',
+        props: true,
+        component: PreviewService,
+        meta:{
+            protected: true,
+        }
+    },
+    {
         path: '/customers_index',
         name:'customers.index',
         component: CustomersIndex,
@@ -175,6 +234,15 @@ const routes = [
         meta:{
             protected: false,
             public: true
+        }
+    },
+    {
+        path: '/preview_customer/:id',
+        name: 'preview_customer',
+        props: true,
+        component: PreviewCustomer,
+        meta:{
+            protected: true,
         }
     },
     {
@@ -196,6 +264,15 @@ const routes = [
         }
     },
     {
+        path: '/preview_privacy_policy/:id',
+        name: 'preview_privacy_policy',
+        props: true,
+        component: PreviewPrivacyPolicy,
+        meta:{
+            protected: true,
+        }
+    },
+    {
         path: '/terms_of_use',
         name:'terms_of_use.index',
         component: TermsOfUseIndex,
@@ -205,9 +282,37 @@ const routes = [
         }
     },
     {
+        path: '/preview_terms_of_use/:id',
+        name: 'preview_terms_of_use',
+        props: true,
+        component: PreviewTermsOfUse,
+        meta:{
+            protected: true,
+        }
+    },
+    {
         path: '/login',
         name: 'login',
         component: Login,
+        meta:{
+            protected: false,
+            isLogin: true
+        }
+    },
+    {
+        path: '/forgot-password',
+        name: 'forgot_password',
+        component: ForgotPassword,
+        meta:{
+            protected: false,
+            isForgotPassword: true
+        }
+    },
+    {
+        path: '/reset-password/:token',
+        name: 'reset_password',
+        props: true,
+        component: ResetPassword,
         meta:{
             protected: false,
         }
@@ -217,6 +322,14 @@ const routes = [
         component: Dashboard,
         meta:{
             protected: true,
+        },
+        beforeEnter:(to,from)=>{
+            if (from.name === 'login'){
+                notify({
+                    title: "Well-come To Tahses CMS 🎉",
+                    type:"success"
+                });
+            }
         },
         children:[
             {
@@ -552,11 +665,29 @@ const routes = [
             },
             {
                 path: 'contact_us',
-                name: 'contact_us',
                 component: ContactCms,
                 meta:{
                     protected: true,
-                }
+                },
+                children: [
+                    {
+                        path: '',
+                        name: 'contact_us',
+                        component: ManageContactUs,
+                        meta:{
+                            protected: true
+                        }
+                    },
+                    {
+                        path: 'view_request/:id',
+                        name: 'view_request',
+                        component: ViewRequest,
+                        props: true,
+                        meta:{
+                            protected: true
+                        }
+                    }
+                ]
             },
             {
                 path: 'profile',
@@ -577,40 +708,29 @@ const router = createRouter({
 })
 
 router.beforeEach((to,from) => {
-    if (localStorage.getItem('auth_user') !== null){
-        let user = localStorage.getItem('auth_user');
+    if (localStorage.getItem('auth_token') !== null){
         let token = localStorage.getItem('auth_token');
-        let auth_user = JSON.parse(user);
-        // let auth_token = token;
-        let payload = {user:auth_user,token:token}
+        let payload = {token:token}
         store.commit('setAuth', payload);
     }
+
     let is_authenticated = store.getters['isLoggedIn'];
     if (to.meta.protected && !is_authenticated){
         return { name: 'login', replace: true }
     }
-    //
-    // if((!to.meta.protected && is_authenticated) && !to.meta.public){
-    //     console.log(from.name);
-    //     return {name: 'cms', replace: true};
-    // }
-    //
-    // if((!to.meta.protected) && to.meta.public){
-    //     console.log(from.name);
-    //     return true;
-    // }
+
+    else if(to.meta.isLogin && is_authenticated){
+        return { name:'cms', replace:true};
+    }
+
+    else if(to.meta.isForgotPassword && is_authenticated){
+        return { name:'cms', replace:true};
+    }
 
     else{
         return true;
     }
 
-    // beforeEnter: (to, from) =>{
-    //     let is_authenticated = store.getters['isLoggedIn'];
-    //     if(from.meta.protected && is_authenticated) {
-    //         console.log(from.meta);
-    //         return false;
-    //     }
-    // }
 })
 
 

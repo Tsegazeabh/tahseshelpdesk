@@ -121,4 +121,14 @@ class CustomerController extends Controller
             return response($exception);
         }
     }
+
+    public function preview($id){
+        try {
+            $customer = Customer::withTrashed()->where('id', $id)->get();
+            return new CustomerResource($customer);
+        }catch (\Throwable $exception){
+            Log::info($exception);
+            return response($exception);
+        }
+    }
 }

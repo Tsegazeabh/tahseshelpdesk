@@ -3,6 +3,7 @@
 <!-- nabar -->
 
         <nav-bar></nav-bar>
+        <notifications position="top center" class="mt-10"/>
 
 <!-- content goes here -->
         <slot></slot>
@@ -15,24 +16,9 @@
 import { ref,onMounted } from 'vue';
 import NavBar from '../components/Navbar';
 import MyFooter from '../components/MyFooter';
-import { notify } from "@kyvg/vue3-notification";
 
  let showMenu = ref(false)
 
-onMounted(()=>{
-    notify({
-        title: "Vue 3 notificationVue 3 notificationVue 3 notificationVue 3 notification 🎉",
-        type:"success"
-    });
-    notify({
-        title: "Vue 3 notification 🎉",
-        type:"warn"
-    });
-    notify({
-        title: "Vue 3 notification 🎉",
-        type:"error"
-    });
-})
 </script>
 
 <style scoped>

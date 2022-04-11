@@ -1,6 +1,8 @@
 <template>
-<!--    competency cards-->
-    <template v-if="latest_competency && latest_competency.length !== 0">
+    <template v-if="isLoading">
+        <base-spinner></base-spinner>
+    </template>
+    <template v-if="latest_competency && latest_competency.length !== 0 && !isLoading">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 gap-x-4 py-6">
         <div v-for="competency in latest_competency" :key="competency.id"
              class="m-3 w-[300px] h-[300px] md:h-[350px] grid grid-cols-1 grid-rows-2 shadow-xl shadow-gray-600 rounded-large border border-1 border-[#00cba9] p-6 mx-auto">
@@ -19,21 +21,20 @@
         <router-link :to="{name:'competencies.index'}" class="hover:font-extrabold font-semibold text-gray-900 p-2 float-right pr-20">View all</router-link>
     </div>
     </template>
-    <template v-else>
-        <div class="min-h-[30vh]">
-            <h2 class="text-2xl capitalize text-pink-600">There Is No Published Content!</h2>
+    <template v-else-if="(!latest_competency || latest_competency.length <= 0) && !isLoading">
+        <div class="flex justify-center items-center">
+            <h2 class="text-lg capitalize text-pink-600">There Is No Published Content!</h2>
         </div>
     </template>
 </template>
 
 <script setup>
-    import  BaseButton from '@components/BaseButton';
     import usePublicCompetency from "@composable/public/public_competency";
     import {onMounted} from "vue";
     import helpers from "@composable/helpers";
 
     const {getFirstImage, getTitleShortened,getDescriptionShort} = helpers();
-    const { latestCompetency, latest_competency } = usePublicCompetency();
+    const { latestCompetency, latest_competency, isLoading } = usePublicCompetency();
 
 
     onMounted(latestCompetency)

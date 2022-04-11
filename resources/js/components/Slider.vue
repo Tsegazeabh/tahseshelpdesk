@@ -1,5 +1,8 @@
 <template>
-    <div v-if="img_src && img_src.length !== 0" class="flex justify-center">
+    <div v-if="isLoading">
+        <base-spinner></base-spinner>
+    </div>
+    <div v-if="img_src && img_src.length !== 0 && !isLoading" class="flex justify-center">
         <Splide v-if="!partners" :options="options">
             <SplideSlide class="relative" v-for="partner in img_src" :key="partner.id">
 
@@ -12,7 +15,7 @@
 
             </SplideSlide>
         </Splide>
-        <Splide v-else :options="options">
+        <Splide v-else-if="(!img_src || img_src.length <= 0) && !isLoading" :options="options">
                 <SplideSlide class="bg-gray-200 rounded-lg overflow-hidden" v-for="partner in img_src" key="partner.img">
                 <a :href="partner.url" target="_blank" class="hover:shadow-xl hover:shadow-gray-900">
                     <img class="object-cover h-3/5 w-full" :src="getFirstImage(partner.description)" alt="Sample 1">
@@ -35,7 +38,7 @@ import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import helpers from "@composable/helpers";
 
 const { getDescriptionShort, getTitleShortened, getFirstImage } = helpers();
-const props = defineProps(['options','img_src','partners'])
+const props = defineProps(['options','img_src','partners','isLoading'])
 
 </script>
 

@@ -29,24 +29,24 @@
                 <div class="grid grid-cols-1 gap-6 mt-4">
                     <div>
                         <label class="text-gray-700" for="title">Title</label>
-                        <p v-if="errors.title && errors.title.length > 0" class="text-red-600 text-sm py-1">
-                            <span v-for="(error,index) in errors.title" :key="index">{{ error }} </span>
+                        <p v-if="v$.title.$error"  class="text-red-600 text-sm py-1">
+                            <span>{{ v$.title.$errors[0].$message }} </span>
                         </p>
-                        <input v-model="customer.title" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="title">
+                        <input v-model="customer.title" :class="{'border border-red-600': v$.title.$error}" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="title">
                     </div>
 
                     <div>
                         <label class="text-gray-700" for="title">Url</label>
-                        <p v-if="errors.url && errors.url.length > 0" class="text-red-600 text-sm py-1">
-                            <span v-for="(error,index) in errors.url" :key="index">{{ error }} </span>
+                        <p v-if="v$.url.$error"  class="text-red-600 text-sm py-1">
+                            <span>{{ v$.url.$errors[0].$message }} </span>
                         </p>
-                        <input v-model="customer.url" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="url">
+                        <input v-model="customer.url" :class="{'border border-red-600': v$.url.$error}" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="url">
                     </div>
 
                     <div>
                         <label class="text-gray-700">Description</label>
-                        <p v-if="errors.description && errors.description.length > 0" class="text-red-600 text-sm py-1">
-                            <span v-for="(error,index) in errors.description" :key="index">{{ error }} </span>
+                        <p v-if="v$.description.$error" class="text-red-600 text-sm py-1">
+                            <span>{{ v$.description.$errors[0].$message }} </span>
                         </p>
                         <editor
                             v-model="customer.description"
@@ -60,7 +60,7 @@
                                        'insertdatetime media table imagetools paste code help wordcount'
                                      ],
                                      toolbar:
-                                       'undo redo | link image | formatselect | bold italic backcolor | \
+                                      'undo redo | link image | formatselect | underline bold italic backcolor code | subscript superscript | \
                                        alignleft aligncenter alignright alignjustify | \
                                        bullist numlist outdent indent | removeformat | help',
                                      image_advtab: true,
@@ -91,13 +91,22 @@
 </template>
 
 <script setup>
-import {ref, reactive, onMounted} from "vue";
+import {ref, reactive, onMounted, computed} from "vue";
 import Editor from '@tinymce/tinymce-vue';
 import BreadCrumb from '@components/BreadCrumb';
 import useCustomer from "@composable/customer";
+import useVuelidate from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
 
 const { errors, customer, getCustomer, updateCustomer } = useCustomer();
-
+const rules = computed(()=>{
+    return {
+        title:{required},
+        url:{required},
+        description:{required}
+    }
+});
+const v$ = useVuelidate(rules,customer);
 const props = defineProps(['id']);
 
 // function description(data){
@@ -111,7 +120,10 @@ onMounted(()=>{
 
 // form submit method
 const submitForm = async() =>{
-    await updateCustomer(props.id);
+    v$.value.$validate();
+    if(!v$.value.$error) {
+        await updateCustomer(props.id);
+    }
 }
 
 </script>
