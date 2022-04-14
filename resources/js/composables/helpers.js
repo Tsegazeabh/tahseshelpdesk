@@ -11,7 +11,6 @@ export default function helpers(){
             'session_expiration_warning': 15 * 60 * 1000, //user will receive a warning after 15 minutes of idle time
             'session_expiration_time': 15 * 60 * 5000, //user will be logged out after 5 seconds of receiving warning
             'tiny_mce_api_key':'rtjncvw6lujg8x1sordmdwp5jnwcl3pyiztsoi216anokyu4',
-            'map_source': "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3940.492958416255!2d38.775536314772616!3d9.018714791633283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b8562f5dfb7cf%3A0x4f9ddc8e1f9cf00!2sTahses%20Information%20Communication%20Technology%20And%20Consultancy%20Plc!5e0!3m2!1sen!2set!4v1648816365211!5m2!1sen!2set",
             'social_media':{
                 'facebook': 'https://www.facebook.com/thetahses',
                 'telegram': 'https://www.telegram.com/thetahses',

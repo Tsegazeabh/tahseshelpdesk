@@ -1,7 +1,7 @@
 <template>
     <home-layout>
         <div class="flex flex-col justify-center items-center p-6 bg-gray-100 overflow-x-hidden">
-            <h2 class="text-center font-bold p-4 m-2 uppercase text-xl font-normal tracking-wide">Our Gallery</h2>
+            <h2 class="text-center font-bold p-4 m-2 uppercase text-xl font-normal tracking-wide">What is New?</h2>
             <template v-if="isLoading">
                 <base-spinner></base-spinner>
             </template>

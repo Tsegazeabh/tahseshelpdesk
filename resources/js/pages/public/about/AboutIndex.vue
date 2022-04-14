@@ -16,7 +16,7 @@
                <h1 class="p-3 text-red-400 text-2xl">No Published Content Yet!</h1>
            </template>
            <div class="border border-2 border-primary bg-gray-400">
-                   <iframe :src="constants.map_source" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                   <iframe :src="constants.source_map" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
            </div>
        </div>
     </home-layout>

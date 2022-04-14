@@ -3,6 +3,7 @@
         <base-spinner></base-spinner>
     </template>
     <template v-if="latest_news && latest_news.length !== 0 && !isLoading">
+        <the-header title="Our News"></the-header>
         <div class="flex justify-around items-center flex-wrap py-6">
             <div v-for="news in latest_news" :key="news.id" class="mx-4 md:mx-0 my-8 relative h-[300px] w-[300px] md:w-[350px] lg:w-[450px] xl:w-[500px] rounded-fine shadow-[10px_10px_20px_rgba(0,0,0,0.7)] overflow-hidden max-h-[300px] mx-auto">
                 <img class="w-full h-full object-cover" :src="getFirstImage(news.description)" alt="card img">
@@ -17,17 +18,18 @@
         <router-link class="hover:font-extrabold font-semibold text-gray-900 p-2 float-right pr-20" :to="{name:'news.index'}">View all</router-link>
     </div>
     </template>
-    <template v-else-if="(!latest_news || latest_news.length <= 0) && !isLoading">
-        <div class="flex justify-center items-center">
-            <h2 class="text-lg capitalize text-pink-600">There Is No Published Content!</h2>
-        </div>
-    </template>
+<!--    <template v-else-if="(!latest_news || latest_news.length <= 0) && !isLoading">-->
+<!--        <div class="flex justify-center items-center">-->
+<!--            <h2 class="text-lg capitalize text-pink-600">There Is No Published Content!</h2>-->
+<!--        </div>-->
+<!--    </template>-->
 </template>
 
 <script setup>
     import helpers from "@composable/helpers";
     import usePublicNews from '@composable/public/public_news';
     import {onMounted} from "vue";
+    import TheHeader from '@components/TheHeader'
 
     const { getDescriptionShortened, getTitleShortened, getFirstImage } = helpers();
     const { latest_news, latestNews,isLoading } = usePublicNews();

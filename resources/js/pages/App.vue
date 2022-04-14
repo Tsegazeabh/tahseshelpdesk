@@ -1,7 +1,6 @@
 <template>
     <home-layout id="homelayout">
         <slider :options="options" :img_src="allCarousel" :partners="false" :isLoading="isLoading"></slider>
-        <the-header title="Our News"></the-header>
         <news-card></news-card>
         <the-header title="Our Core Competencies"></the-header>
         <competency-card></competency-card>

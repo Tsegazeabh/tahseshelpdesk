@@ -11,29 +11,18 @@
                                 <label for="full_name" :class="{'text-red-600': v$.full_name.$error}" class="absolute text-md text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Full Name</label>
                             </div>
                             <div class="relative z-0 mb-6 w-full group">
-<!--                                <p v-if="v$.email.$error" class="text-red-600 text-sm py-1">-->
-<!--                                    <span>{{ v$.email.$errors[0].$message }} </span>-->
-<!--                                </p>-->
+
                                 <input v-model="data.email" type="email" name="my_email" :class="{'border-red-600 focus:border-red-600': v$.email.$error}" class="block py-2.5 px-0 w-full text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " />
                                 <label :class="{'text-red-600': v$.email.$error}" class="absolute text-md text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
                             </div>
                             <div class="relative z-0 mb-6 w-full group">
-<!--                                <p v-if="v$.phone.$error" class="text-red-600 text-sm py-1">-->
-<!--                                    <span>{{ v$.phone.$errors[0].$message }} </span>-->
-<!--                                </p>-->
                                 <input v-model="data.phone" type="text" name="phone" id="phone" :class="{'border-red-600 focus:border-red-600': v$.phone.$error}" class="block py-2.5 px-0 w-full text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " />
                                 <label for="phone" :class="{'text-red-600': v$.phone.$error}" class="absolute text-md text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone</label>
                             </div>
                             <div class="relative z-0 mb-6 w-full group">
-<!--                                <p v-if="v$.place.$error" class="text-red-600 text-sm py-1">-->
-<!--                                    <span>{{ v$.place.$errors[0].$message }} </span>-->
-<!--                                </p>-->
                                 <input v-model="data.place" type="text" name="place" id="place" :class="{'border-red-600 focus:border-red-600': v$.place.$error}" class="block py-2.5 px-0 w-full text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " />
                                 <label for="place" :class="{'text-red-600': v$.place.$error}" class="absolute text-md text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Place</label>
                             </div>
-<!--                            <p v-if="v$.comment.$error" class="text-red-600 text-sm py-1">-->
-<!--                                <span>{{ v$.comment.$errors[0].$message }} </span>-->
-<!--                            </p>-->
                             <label for="message" :class="{'text-red-600': v$.comment.$error}" class="block mb-2 text-md text-gray-500">Your message</label>
                             <textarea v-model="data.comment" id="message" rows="4" :class="{'border-red-600 focus:border-red-600': v$.comment.$error}" class="mb-4 block p-2.5 w-full text-md text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary" placeholder="Leave a comment..."></textarea>
 
@@ -48,8 +37,8 @@
                         <p class="text-white text-base md:text-md lg:text-lg font-normal">Phone:<span class="text-white font-normal text-sm lg:text-md ml-2">{{company.phone}}</span></p>
                         <p class="text-white text-base md:text-md lg:text-lg font-normal">Location:<span class="text-white font-normal text-sm lg:text-md ml-2">{{company.location}}</span></p>
                     </div>
-                    <div class="border border-2 border-primary bg-gray-100 flex justify-center">
-                        <iframe :src="constants.map_source" width="230" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <div v-if="company" class="border border-2 border-primary bg-gray-100 flex justify-center">
+                        <iframe :src="company.source_map" width="230" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </div>

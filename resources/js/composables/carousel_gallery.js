@@ -159,7 +159,7 @@ export default function useCarousel(){
     // publish or un-publish carousel
     const publishCarousel = async(data,status) =>{
         errors.value = {}
-        let notifyStatus = status === 1 ? 'Published' : 'UnPublished';
+        let notifyStatus = status === true ? 'Published' : 'UnPublished';
         let update_carousel = ref([]);
         update_carousel.value = data;
         update_carousel.value.is_published = status;

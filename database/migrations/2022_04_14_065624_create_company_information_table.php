@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('phone');
             $table->string('title');
+            $table->text('source_map')->nullable();
             $table->text('description');
             $table->timestamps();
         });

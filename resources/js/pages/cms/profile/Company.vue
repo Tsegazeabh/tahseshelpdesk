@@ -41,6 +41,14 @@
                         </div>
 
                         <div>
+                            <label class="text-gray-700">Company Source Map</label>
+                            <p v-if="v$.source_map.$error" class="text-red-600 text-sm py-1">
+                                <span>{{ v$.source_map.$errors[0].$message }} </span>
+                            </p>
+                            <input v-model="company.source_map" :class="{'border border-red-600': v$.source_map.$error}" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text">
+                        </div>
+
+                        <div>
                             <label class="text-gray-700">Company Summary</label>
                             <p v-if="v$.description.$error" class="text-red-600 text-sm py-1">
                                 <span>{{ v$.description.$errors[0].$message }} </span>
@@ -62,7 +70,7 @@
 
 <script setup>
 import useVuelidate from "@vuelidate/core";
-import { required, email } from '@vuelidate/validators';
+import { required, email, url } from '@vuelidate/validators';
 import {computed, onMounted} from "vue";
 import useProfile from "@composable/profile";
 
@@ -74,6 +82,7 @@ const rules = computed(()=>{
         email:{required, email},
         phone:{required},
         title:{required},
+        source_map:{required,url},
         description:{required},
     }
 })

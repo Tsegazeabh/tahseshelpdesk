@@ -66,6 +66,7 @@ class ContactUsController extends Controller
                 'location'=>'required|string',
                 'phone'=>'required|string',
                 'email'=>'required|email',
+                'source_map'=>'required',
             ]);
 
             $company = companyInformation::all()->first();
@@ -73,6 +74,7 @@ class ContactUsController extends Controller
                 $company['description'] = $request->description;
                 $company['location'] = $request->location;
                 $company['phone'] = $request->phone;
+                $company['source_map'] = $request->source_map;
                 $company['email'] = $request->email;
                 $company->update();
             return response(['message'=>'Successfully Updated Company Information.']);
