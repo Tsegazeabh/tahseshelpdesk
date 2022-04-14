@@ -28,22 +28,6 @@
 
                 <form @submit.prevent="submitForm">
                     <div class="grid grid-cols-1 gap-6 mt-4">
-                        <div>
-                            <label class="text-gray-700" for="title">Title</label>
-                            <p v-if="v$.title.$error" class="text-red-600 text-sm py-1">
-                                <span>{{ v$.title.$errors[0].$message }} </span>
-                            </p>
-                            <input v-model="form.title" :class="{'border border-red-600': v$.title.$error}" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="title">
-                        </div>
-
-                        <div>
-                            <label class="text-gray-700">Description</label>
-                            <p v-if="v$.description.$error" class="text-red-600 text-sm py-1">
-                                <span>{{ v$.description.$errors[0].$message }} </span>
-                            </p>
-                            <textarea v-model="form.description" :class="{'border border-red-600': v$.description.$error}" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="description"></textarea>
-                        </div>
-
                         <div class="flex flex-col justify-start items-start">
                             <p v-if="v$.image.$error" class="text-red-600 text-sm py-1">
                                 <span>{{ v$.image.$errors[0].$message }} </span>
@@ -58,6 +42,54 @@
                                   hover:file:bg-violet-300"/>
                             </label>
                         </div>
+
+                        <div>
+                            <label class="text-gray-700" for="title">Title</label>
+                            <p v-if="v$.title.$error" class="text-red-600 text-sm py-1">
+                                <span>{{ v$.title.$errors[0].$message }} </span>
+                            </p>
+                            <input v-model="form.title" :class="{'border border-red-600': v$.title.$error}" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="title">
+                        </div>
+
+
+                        <div class="overflow-y-auto max-h-screen h-full">
+                            <label class="text-gray-700">Description</label>
+                            <p v-if="v$.description.$error" class="text-red-600 text-sm py-1">
+                                <span>{{ v$.description.$errors[0].$message }} </span>
+                            </p>
+                            <editor
+                                v-model="form.description"
+                                api-key='rtjncvw6lujg8x1sordmdwp5jnwcl3pyiztsoi216anokyu4'
+                                :init="{
+                                     height: 400,
+                                     menubar: false,
+                                     plugins: [
+                                       'advlist autolink lists link image charmap print preview anchor',
+                                       'searchreplace visualblocks code fullscreen',
+                                       'insertdatetime media table imagetools paste code help wordcount'
+                                     ],
+                                     toolbar:
+                                       'undo redo | link image | formatselect | underline bold italic backcolor code | subscript superscript | \
+                                       alignleft aligncenter alignright alignjustify | \
+                                       bullist numlist outdent indent | removeformat | help',
+                                     image_advtab: true,
+                                     image_title: true,
+                                     images_upload_url: '/api/upload-image',
+                                     style_formats: [
+                                          {title: 'Image Left', selector: 'img', styles: {
+                                            'float' : 'left',
+                                            'margin': '0 10px'
+                                          }},
+                                          {title: 'Image Right', selector: 'img', styles: {
+                                            'float' : 'right',
+                                            'margin': '0 10px'
+                                          }}
+                                        ]
+                                   }"
+                            />
+                        </div>
+
+
                     </div>
 
                     <div class="flex justify-end mt-4">
@@ -70,11 +102,14 @@
 </template>
 
 <script setup>
-import {ref, reactive, computed} from "vue";
+import { reactive, computed} from "vue";
 import useCarousel from "@composable/carousel_gallery";
 import useVuelidate from '@vuelidate/core';
 import { required, requiredIf } from '@vuelidate/validators';
+import helpers from "@composable/helpers";
+import Editor from '@tinymce/tinymce-vue';
 
+const { constants } = helpers();
 const {createCarousel,errors} = useCarousel();
 
 const form = reactive({

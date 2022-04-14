@@ -111,7 +111,6 @@ const props = defineProps(['id']);
 
 onMounted(()=>{
     getProduct(props.id);
-    console.log(props.id);
 });
 
 // form submit method

@@ -5,8 +5,8 @@
             <template v-if="about && about.length > 0" v-for="content in about" :key="content.id">
                 <!-- title and description -->
                 <div class="p-6 w-[80vw] mx-auto">
-                    <h3 class="text-left uppercase my-2 text-gray-600">{{  content.title }}</h3>
-                    <div class="flex-wrap text-left py-2 px-4 text-gray-400" v-html="content.description"></div>
+                    <h3 class="text-left uppercase my-2 text-gray-800">{{  content.title }}</h3>
+                    <div class="flex-wrap text-left py-2 px-4 text-gray-700" v-html="content.description"></div>
                 </div>
             </template>
             <template v-else>

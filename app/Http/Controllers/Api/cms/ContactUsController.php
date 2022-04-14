@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactUsRequest;
 use App\Http\Resources\ContactUsResource;
 use App\Http\Resources\ServiceResource;
+use App\Models\companyInformation;
 use App\Models\ContactUs;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -48,6 +49,33 @@ class ContactUsController extends Controller
 
                 return response()->json(['message'=>'Request Successfully Restored']);
             }
+        }catch (\Throwable $exception){
+            return response($exception);
+        }
+    }
+
+    public function fetch(){
+        return response(companyInformation::all());
+    }
+
+    public function store(Request $request){
+        try {
+            $request->validate([
+                'title'=>'required|string',
+                'description'=>'required|string',
+                'location'=>'required|string',
+                'phone'=>'required|string',
+                'email'=>'required|email',
+            ]);
+
+            $company = companyInformation::all()->first();
+                $company['title'] = $request->title;
+                $company['description'] = $request->description;
+                $company['location'] = $request->location;
+                $company['phone'] = $request->phone;
+                $company['email'] = $request->email;
+                $company->update();
+            return response(['message'=>'Successfully Updated Company Information.']);
         }catch (\Throwable $exception){
             return response($exception);
         }

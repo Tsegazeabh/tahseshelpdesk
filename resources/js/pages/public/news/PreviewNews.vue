@@ -2,10 +2,10 @@
     <home-layout>
         <div class="grid grid-cols-3">
             <div v-for="ne in news" :key="ne.id" class="col-span-3 md:col-span-2 py-16 px-16">
-                <h2 class="capitalize my-2 text-gray-700 text-md font-semibold my-0">{{ne.title}}</h2>
+                <h2 class="capitalize my-2 text-gray-800 text-md font-semibold my-0">{{ne.title}}</h2>
                 <p class="text-gray-400 text-sm my-0">{{getDate(ne.published_at) }}</p>
                 <div class="mt-3 ">
-                    <div class="text-gray-500 description" v-html="ne.description">
+                    <div class="text-gray-700 description" v-html="ne.description">
                     </div>
                 </div>
             </div>

@@ -1,10 +1,10 @@
 <template>
     <home-layout id="homelayout">
-        <slider :options="options" :img_src="allCarousel" :isLoading="isLoading"></slider>
-        <the-header title="Our Core Competencies"></the-header>
-        <competency-card></competency-card>
+        <slider :options="options" :img_src="allCarousel" :partners="false" :isLoading="isLoading"></slider>
         <the-header title="Our News"></the-header>
         <news-card></news-card>
+        <the-header title="Our Core Competencies"></the-header>
+        <competency-card></competency-card>
         <the-header title="Our Products"></the-header>
         <product-card></product-card>
         <the-header title="Our Services"></the-header>
@@ -48,10 +48,6 @@ const options = reactive({
 
 onMounted(()=>{
     fetchCarousel();
-    notify({
-        title: "Welcome to Tahses Software Development and Consultancy 🎉",
-        type:"success"
-    });
 })
 
 </script>

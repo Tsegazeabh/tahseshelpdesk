@@ -4,9 +4,9 @@
             <h2 class="text-center font-bold p-4 m-2 uppercase text-xl font-normal tracking-wide">Privacy Policy</h2>
             <!-- title and description -->
             <div v-for="privacy_policies in privacy_policy" :key="privacy_policies.id" class="p-6 w-[80vw] mx-auto">
-                <h3 class="text-left uppercase mt-2 text-gray-600">{{ privacy_policies.title }}</h3>
+                <h3 class="text-left uppercase mt-2 text-gray-800">{{ privacy_policies.title }}</h3>
                 <p class="text-gray-400 text-sm mb-2">{{getDate(privacy_policies.published_at) }}</p>
-                <div class="flex-wrap text-left py-2 px-4 text-gray-400" v-html="privacy_policies.description"></div>
+                <div class="flex-wrap text-left py-2 px-4 text-gray-700" v-html="privacy_policies.description"></div>
             </div>
         </div>
         <div v-else class="flex justify-center items-center min-h-[30vh]">

@@ -142,7 +142,7 @@ export default function useTermsOfUse(){
     // publish or un-publish terms_of_use
     const publishTermsOfUse = async(data,status) =>{
         errors.value = {};
-        let notifyStatus = status === 1 ? 'Published' : 'UnPublished';
+        let notifyStatus = status ? 'Published' : 'UnPublished';
         let update_terms_of_use = ref([]);
         update_terms_of_use.value = data;
         update_terms_of_use.value.is_published = status;

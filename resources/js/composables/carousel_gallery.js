@@ -55,7 +55,7 @@ export default function useCarousel(){
         }catch (error) {
             errors.value = error.response.data.errors;
             notify({
-                title: "Validation Error 🎉",
+                title: errors.value.image[1],
                 type:"error"
             });
             // Object.keys(error.response.data.errors).forEach(key => {

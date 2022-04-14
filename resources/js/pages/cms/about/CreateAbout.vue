@@ -77,9 +77,8 @@
 </template>
 
 <script setup>
-import {ref, reactive, computed, onMounted} from "vue";
+import {reactive, computed} from "vue";
 import Editor from '@tinymce/tinymce-vue';
-import BreadCrumb from '@components/BreadCrumb';
 import useAbout from "@composable/about";
 import useVuelidate from '@vuelidate/core';
 import { required } from '@vuelidate/validators';

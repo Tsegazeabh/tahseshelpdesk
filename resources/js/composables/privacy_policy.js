@@ -141,7 +141,7 @@ export default function usePrivacyPolicy(){
     // publish or un-publish privacy_policy
     const publishPrivacyPolicy = async(data,status) =>{
         errors.value = {};
-        let notifyStatus = status === 1 ? 'Published' : 'UnPublished';
+        let notifyStatus = status ? 'Published' : 'UnPublished';
         let update_privacy_policy = ref([]);
         update_privacy_policy.value = data;
         update_privacy_policy.value.is_published = status;

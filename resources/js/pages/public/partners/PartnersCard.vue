@@ -12,7 +12,7 @@
     import usePublicPartner from "@composable/public/public_partner";
 
 
-    const { fetchPartner, allPartner,isLoading } = usePublicPartner();
+    const { fetchPartner, allPartner, isLoading } = usePublicPartner();
 
     const options = reactive({
         rewind: true,
@@ -29,7 +29,7 @@
         },
         perMove: 1,
         autoplay: 'play',
-        height: '28vh',
+        height: '40vh',
         width: '80%',
         hasSliderWrapper: true,
     })

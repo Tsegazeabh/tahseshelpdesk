@@ -40,9 +40,6 @@
                     <th scope="col" class="px-6 py-3">
                         Title
                     </th>
-<!--                    <th scope="col" class="px-6 py-3">-->
-<!--                        Description-->
-<!--                    </th>-->
                     <th scope="col" class="px-6 py-3">
                         Published
                     </th>
@@ -57,11 +54,9 @@
                     </th>
                     <th scope="col" class="px-6 py-3">
                         <span class="sr-only">Delete</span>
-                        <!--                        <span class="sr-only">Restore</span>-->
                     </th>
                     <th scope="col" class="px-6 py-3">
                         <span class="sr-only">Restore</span>
-                        <!--                        <span class="sr-only">Restore</span>-->
                     </th>
                 </tr>
                 </thead>
@@ -77,8 +72,6 @@
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                             {{ privacy_policy.title }}
                         </th>
-<!--                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap" v-html="filteredDescription(privacy_policy.description)">-->
-<!--                        </td>-->
                         <td class="px-6 py-4 text-red-400" :class="{'text-green-400': privacy_policy.is_published === 1}">
                             {{ privacy_policy.is_published === 1 ? 'Yes' : 'No' }}
                         </td>
@@ -181,7 +174,6 @@
 
 <script setup>
 import {ref, onMounted, reactive, computed } from 'vue';
-import BreadCrumb from '@components/BreadCrumb';
 import usePrivacyPolicy from "@composable/privacy_policy";
 
 const search_key = ref('');

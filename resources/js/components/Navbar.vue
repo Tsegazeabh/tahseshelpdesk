@@ -2,10 +2,10 @@
     <teleport to="#app">
         <!-- header -->
             <header class="md:flex block p-1  mx-auto flex-wrap md:justify-between md:items-center bg-primary">
-                <div class="info ml-6 pl-4 flex flex-wrap items-center md:space-y-0 md:space-x-8 text-white text-sm">
-                    <p class="mr-2 py-2 md:py-0"><i class="fas fa-envelope"></i> {{ constants.information.email }}</p>
-                    <p class="mr-2 py-2 md:py-0"><i class="fas fa-location"></i> {{ constants.information.location }}</p>
-                    <p class="py-2 md:py-0"><i class="fas fa-phone"></i> {{ constants.information.phone }}</p>
+                <div v-if="company" class="info ml-6 pl-4 flex flex-wrap items-center md:space-y-0 md:space-x-8 text-white text-sm">
+                    <p class="mr-2 py-2 md:py-0"><i class="fas fa-envelope"></i> {{ company.email }}</p>
+                    <p class="mr-2 py-2 md:py-0"><i class="fas fa-location"></i> {{ company.location }}</p>
+                    <p class="py-2 md:py-0"><i class="fas fa-phone"></i> {{ company.phone }}</p>
                 </div>
                 <!-- social media icons -->
                 <div class="social ml-4 pl-6 pt-2 flex md:justify-evenly justify-items-center items-center mb-2 space-x-4 md:space-x-4 md:mr-8 md:pr-4 text-white">
@@ -35,9 +35,11 @@
 </template>
 
 <script setup>
-import {ref, onMounted, onBeforeMount, onBeforeUpdate} from 'vue';
+import { ref, onMounted } from 'vue';
+import useCompanyInfo from "@composable/public/public_company_info";
 import helpers from "@composable/helpers";
 
+const { company, fetchCompanyInfo } = useCompanyInfo();
 const { constants } = helpers();
 
 let showMenu = ref(false);
@@ -48,8 +50,6 @@ let index = 0;
 var sleepDuration = 400;
 const autoWrite = document.createElement('span');
 function updater(){
-        // autoWrite.innerText = tahses.slice(0, index) + '_';
-        // logo.value.appendChild(autoWrite);
         logo.value = tahses.slice(0, index) + '_';
         index++;
         if (index > tahses.length) {
@@ -57,7 +57,7 @@ function updater(){
         }
 }
 setInterval(updater,sleepDuration);
-
+onMounted(fetchCompanyInfo)
 
 </script>
 

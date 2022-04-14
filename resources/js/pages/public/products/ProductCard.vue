@@ -9,7 +9,7 @@
                     <img class="w-full h-full object-cover" :src="getFirstImage(product.description)" alt="card img">
                 </div>
                 <div class="relative bg-white text-dark p-6">
-                    <h2 class="font-bold my-3">{{ getTitleShortened(product.title) }}</h2>
+                    <h2 class="font-bold my-3 whitespace-normal">{{ product.title }}</h2>
                     <router-link :to="{name:'products.detail',params:{id: product.id}}" class="absolute -top-8 right-6 font-bold hover:bg-primary hover:text-white bg-white rounded-bl-fine rounded-tr-fine px-4 py-4 border border-1 shadow-[10px_5px_20px_rgba(0,0,0,0.7)] border-[#00cba9]">Read more</router-link>
                 </div>
             </div>

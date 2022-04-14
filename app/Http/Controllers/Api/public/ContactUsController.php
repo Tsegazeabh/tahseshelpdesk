@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\public;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactUsRequest;
+use App\Models\companyInformation;
 use App\Models\ContactUs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -26,6 +27,10 @@ class ContactUsController extends Controller
             Log::info($exception);
             return response($exception);
         }
+    }
+
+    public function fetch(){
+        return response(companyInformation::all());
     }
 
 }

@@ -141,7 +141,7 @@ export default function useService(){
     // publish or un-publish service
     const publishService = async(data,status) =>{
         errors.value = {};
-        let notifyStatus = status === 1 ? 'Published' : 'UnPublished';
+        let notifyStatus = status === true ? 'Published' : 'UnPublished';
         let update_service = ref([]);
         update_service.value = data;
         update_service.value.is_published = status;

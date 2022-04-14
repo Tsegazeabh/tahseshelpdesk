@@ -52,14 +52,6 @@
                         <th scope="col" class="px-6 py-3">
                             <span class="sr-only">View</span>
                         </th>
-<!--                        <th scope="col" class="px-6 py-3">-->
-<!--                            <span class="sr-only">Archive</span>-->
-<!--                            &lt;!&ndash;                        <span class="sr-only">Restore</span>&ndash;&gt;-->
-<!--                        </th>-->
-<!--                        <th scope="col" class="px-6 py-3">-->
-<!--                            <span class="sr-only">Restore</span>-->
-<!--                            &lt;!&ndash;                        <span class="sr-only">Restore</span>&ndash;&gt;-->
-<!--                        </th>-->
                     </tr>
                     </thead>
                     <tbody>
@@ -71,15 +63,15 @@
                             <td class="px-6 py-4 whitespace-nowrap text-left">
                                 {{ request.id }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-left">
+                            <th scope="row" class="px-6 py-4 whitespace-normal text-left">
                                 {{ request.full_name }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-left">
+                            </th>
+                            <th scope="row" class="px-6 py-4 whitespace-nowrap text-left">
                                 {{ request.email }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-left">
+                            </th>
+                            <th scope="row" class="px-6 py-4 whitespace-nowrap text-left">
                                 {{ request.phone }}
-                            </td>
+                            </th>
                             <td v-if="request.deleted_at === null" class="px-6 py-4 whitespace-nowrap text-left">
                                 <button @click="destroyRequest(request.id)" class="px-6 py-4 text-gray-900 hover:text-gray-600 ">
                                     <i class="fa-solid fa-box-archive cursor-pointer mr-1"></i> Close </button>
@@ -97,23 +89,6 @@
                                 <button class="text-gray-400 cursor-not-allowed" disabled>
                                     <i class="fas fa-eye cursor-not-allowed mr-1"></i>Read</button >
                             </td>
-
-<!--                            <td v-if="request.deleted_at === null" class="px-6 py-4">-->
-<!--                                <button @click="destroyRequest(request.id)" class="px-6 py-4 text-blue-400 hover:text-blue-600 ">-->
-<!--                                    <i class="fa-solid fa-box-archive cursor-pointer mr-1"></i> Archive </button>-->
-<!--                            </td>-->
-<!--                            <td v-if="request.deleted_at !== null" class="px-6 py-4">-->
-<!--                                <button @click="restoreCompetencyMethod(request.id)" class="px-6 py-4 text-blue-400 hover:text-blue-600 ">-->
-<!--                                    <i class="fas fa-trash-arrow-up cursor-pointer mr-1"></i> Restore </button>-->
-<!--                            </td>-->
-<!--                            <td v-if="request.deleted_at !== null" class="px-6 py-4">-->
-<!--                                <button @click="destroyCompetency(request.id)" class="px-6 py-4 text-red-400 hover:text-red-600 ">-->
-<!--                                    <i class="fa-solid fa-trash-can cursor-pointer mr-1"></i> Delete </button>-->
-<!--                            </td>-->
-<!--                            <td v-else class="px-6 py-4">-->
-<!--                                <button class="cursor-not-allowed text-gray-300 px-6 py-4" disabled>-->
-<!--                                    <i class="fa-solid fa-trash-can text-gray-300 cursor-not-allowed mr-1"></i> Delete </button>-->
-<!--                            </td>-->
 
                         </tr>
                     </template>
@@ -160,7 +135,7 @@
 
 <script setup>
 import {computed, onMounted, ref} from 'vue';
-    import useContactUs from '@composable/contact_us';
+import useContactUs from '@composable/contact_us';
 
     const search_key = ref('');
     const { allRequest, fetchRequest, deleteRequest, restoreRequest, isLoading, meta } = useContactUs();

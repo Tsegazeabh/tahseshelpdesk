@@ -72,7 +72,7 @@
                                 <img class="w-16 h-16 object-cover rounded-full" :src="carousel.image" alt="Free unsplash image">
                             </div>
                         </td>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-normal">
                             {{ carousel.title }}
                         </th>
                         <td class="px-6 py-4 text-red-400 text-center" :class="{'text-green-400': carousel.is_published === 1}">
@@ -89,9 +89,9 @@
                             </template>
                         </td>
                         <td class="px-6 py-4 text-center">
-                            <button @click="showCarousel(carousel.id)"
-                                    class="text-blue-400 hover:text-blue-600">
-                                <i class="fas fa-eye cursor-pointer mr-1"></i> preview </button>
+                            <router-link :to="{name:'preview_carousel', params:{id: carousel.id}}"
+                                         class="text-blue-400 hover:text-blue-600">
+                                <i class="fas fa-eye cursor-pointer mr-1"></i> preview </router-link>
                         </td>
                         <td v-if="carousel.deleted_at === null" class="px-6 py-4">
                             <template v-if="carousel.is_published">

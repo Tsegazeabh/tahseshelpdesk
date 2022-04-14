@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Intervention\Image\Facades\Image;
 
@@ -34,17 +35,15 @@ class CarouselController extends Controller
             $img->save($destinationPath . '/' . $imagename);
             $destinationPath = public_path($root_path);
             $image->move($destinationPath, $imagename);
-            Log::info('upload');
 
             CarouselGallery::create([
                 'title' => $request->title,
                 'description' => $request->description,
                 'image' => url($root_path . '/' . $imagename)
             ]);
-            $carousel = CarouselGallery::withTrashed()->firstOrFail();
 
             return response()->json([
-                'message' => $carousel
+                'message' => 'Successfully Created Record.'
             ]);
         } catch (\Throwable $ex) {
             Log::error($ex);
@@ -62,13 +61,11 @@ class CarouselController extends Controller
     {
         Log::info($carousel);
         return new CarouselResource($carousel);
-//        return new JsonResponse($carousel);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\CarouselGallery  $carousel
     //     * @return CarouselResource
      */
@@ -177,6 +174,17 @@ class CarouselController extends Controller
                 return response()->json(['message'=>'successfully Restore']);
             }
         }catch (\Throwable $exception){
+            return response($exception);
+        }
+    }
+
+    public function preview($id){
+        try {
+            $carousel = CarouselGallery::withTrashed()->where('id', $id)->get();
+            Log::info($carousel);
+            return new CarouselResource($carousel);
+        }catch (\Throwable $exception){
+            Log::info($exception);
             return response($exception);
         }
     }

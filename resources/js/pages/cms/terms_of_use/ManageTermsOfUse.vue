@@ -40,9 +40,6 @@
                     <th scope="col" class="px-6 py-3">
                         Title
                     </th>
-<!--                    <th scope="col" class="px-6 py-3">-->
-<!--                        Description-->
-<!--                    </th>-->
                     <th scope="col" class="px-6 py-3">
                         Published
                     </th>
@@ -57,11 +54,9 @@
                     </th>
                     <th scope="col" class="px-6 py-3">
                         <span class="sr-only">Delete</span>
-                        <!--                        <span class="sr-only">Restore</span>-->
                     </th>
                     <th scope="col" class="px-6 py-3">
                         <span class="sr-only">Restore</span>
-                        <!--                        <span class="sr-only">Restore</span>-->
                     </th>
                 </tr>
                 </thead>
@@ -74,11 +69,9 @@
                         <td class="w-4 p-4">
                             {{ terms_of_use.id }}
                         </td>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-normal">
                             {{ terms_of_use.title }}
                         </th>
-<!--                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap" v-html="filteredDescription(terms_of_use.description)">-->
-<!--                        </td>-->
                         <td class="px-6 py-4 text-red-400" :class="{'text-green-400': terms_of_use.is_published === 1}">
                             {{ terms_of_use.is_published === 1 ? 'Yes' : 'No' }}
                         </td>
@@ -180,8 +173,7 @@
 </template>
 
 <script setup>
-import {ref, onMounted, reactive, computed } from 'vue';
-import BreadCrumb from '@components/BreadCrumb';
+import {ref, onMounted, computed } from 'vue';
 import useTermsOfUse from "@composable/terms_of_use";
 
 const search_key = ref('');

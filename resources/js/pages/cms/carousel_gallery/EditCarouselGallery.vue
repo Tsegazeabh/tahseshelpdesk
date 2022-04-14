@@ -41,7 +41,36 @@
                             <p v-if="v$.description.$error" class="text-red-600 text-sm py-1">
                                 <span>{{ v$.description.$errors[0].$message }} </span>
                             </p>
-                            <textarea v-model="carousel.description" :class="{'border border-red-600': v$.description.$error}" class="form-input w-full mt-2 rounded-md focus:border-indigo-600" type="text" id="description"></textarea>
+                            <editor
+                                v-model="carousel.description"
+                                api-key='rtjncvw6lujg8x1sordmdwp5jnwcl3pyiztsoi216anokyu4'
+                                :init="{
+                                     height: 500,
+                                     menubar: false,
+                                     plugins: [
+                                       'advlist autolink lists link image charmap print preview anchor',
+                                       'searchreplace visualblocks code fullscreen',
+                                       'insertdatetime media table imagetools paste code help wordcount'
+                                     ],
+                                     toolbar:
+                                       'undo redo | link image | formatselect | underline bold italic backcolor code | subscript superscript | \
+                                       alignleft aligncenter alignright alignjustify | \
+                                       bullist numlist outdent indent | removeformat | help',
+                                     image_advtab: true,
+                                     image_title: true,
+                                     images_upload_url: '/api/upload-image',
+                                     style_formats: [
+                                          {title: 'Image Left', selector: 'img', styles: {
+                                            'float' : 'left',
+                                            'margin': '0 10px'
+                                          }},
+                                          {title: 'Image Right', selector: 'img', styles: {
+                                            'float' : 'right',
+                                            'margin': '0 10px'
+                                          }}
+                                        ]
+                                   }"
+                            />
                         </div>
 
                         <div class="flex flex-col items-start">
@@ -69,6 +98,7 @@
 
 <script setup>
 import {computed, onMounted, ref} from "vue";
+import Editor from '@tinymce/tinymce-vue';
 import useCarousel from "@composable/carousel_gallery";
 import useVuelidate from '@vuelidate/core';
 import {required, sameAs, helpers} from '@vuelidate/validators';
@@ -94,6 +124,7 @@ onMounted(()=>{
 //upload image
 function Upload(event) {
     carousel.value.image = event.target.files[0];
+    console.log(carousel.value)
 }
 
 // form submit method

@@ -29,7 +29,6 @@ export default function usePublicService(){
     const getService = async(id) =>{
         const response = await axios.get('/api/public/services/show/'+ id)
         service.value = await response.data;
-        console.log(response.data);
     }
 
     // latest service
@@ -55,7 +54,6 @@ export default function usePublicService(){
             service.value = await response.data.data;
             console.log(response.data.data)
         }catch (error) {
-            console.log(error.response);
         }
     }
 

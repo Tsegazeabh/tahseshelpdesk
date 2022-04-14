@@ -2,10 +2,10 @@
     <home-layout>
         <div class="grid grid-cols-3">
             <div class="col-span-3 md:col-span-2 py-16 px-16">
-                <h2 class="capitalize my-2 text-gray-700 text-md font-semibold my-0">{{news.title}}</h2>
+                <h2 class="capitalize my-2 text-gray-800 text-md font-semibold my-0">{{news.title}}</h2>
                 <p class="text-gray-400 text-sm my-0">{{getDate(news.published_at) }}</p>
                 <div class="mt-3 ">
-                    <div class="text-gray-500 description" v-html="news.description">
+                    <div class="text-gray-700 description" v-html="news.description">
                     </div>
                 </div>
             </div>
@@ -16,7 +16,7 @@
                 </template>
                 <div v-if="allNews && allNews.length !== 0 && !isLoading" class="overflow-x-hidden overflow-y-auto space-y-4 h-[70vh] w-full bg-gray-200 rounded-md p-2">
                     <template v-for="news_all in allNews" :key="news_all.id">
-                        <button v-if="news_all.id !== news.id" @click="navigate(news_all)" class="flex bg-white h-32 overflow-hidden rounded-md">
+                        <button v-if="news_all.id !== news.id" @click="navigate(news_all)" class="flex bg-white h-32 overflow-hidden rounded-md hover:border hover:border-primary">
                             <div class="h-full w-1/4">
                                 <img :src="getFirstImage(news_all.description)" alt="image" class="w-full h-full object-cover">
                             </div>
@@ -37,17 +37,13 @@
                 </div>
             </div>
         </div>
-        <div class="flex justify-center items-center w-full my-6">
-            <div class="w-[40vw] bg-gray-200 p-6 rounded-md text-center shadow-md shadow-gray-600">
-                <h3 class="text-md md:text-lg tracking-wider text-primary my-2">Contact Us For More Information.</h3>
-                <router-link :to="{name:'contact_us.index'}" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"><i class="fas fa-leaf mr-2"></i> Contact Us</router-link>
-            </div>
-        </div>
+        <contact-us-comp></contact-us-comp>
     </home-layout>
 </template>
 
 <script setup>
 import HomeLayout from '@layouts/HomeLayout.vue';
+import ContactUsComp from '@components/contact_us_comp';
 import usePublicNews from "@composable/public/public_news";
 import {onMounted} from "vue";
 import helpers from "@composable/helpers";

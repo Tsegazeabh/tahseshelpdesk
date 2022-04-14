@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router';
 //cms
 
+import Company from '@pages/cms/profile/Company';
 import Profile from '@pages/cms/profile/Profile';
 import CreateCompetency from '@pages/cms/competencies/CreateCompetency';
 import EditCompetency from '@pages/cms/competencies/EditCompetency';
@@ -68,6 +69,7 @@ import ProductsDetail from '@pages/public/products/ProductsDetail';
 import PreviewProduct from '@pages/public/products/PreviewProduct';
 import AboutIndex from '@pages/public/about/AboutIndex';
 import PreviewAbout from '@pages/public/about/PreviewAbout';
+import PreviewCarousel from '@pages/public/carousel/PreviewCarousel';
 import App from '@pages/App';
 import Dashboard from '@pages/Dashboard';
 import Login from '@pages/Auth/Login';
@@ -286,6 +288,15 @@ const routes = [
         name: 'preview_terms_of_use',
         props: true,
         component: PreviewTermsOfUse,
+        meta:{
+            protected: true,
+        }
+    },
+    {
+        path: '/preview_carousel/:id',
+        name: 'preview_carousel',
+        props: true,
+        component: PreviewCarousel,
         meta:{
             protected: true,
         }
@@ -693,6 +704,14 @@ const routes = [
                 path: 'profile',
                 name: 'profile',
                 component: Profile,
+                meta:{
+                    protected: true,
+                }
+            },
+            {
+                path: 'company_information',
+                name: 'company_info',
+                component: Company,
                 meta:{
                     protected: true,
                 }

@@ -3,11 +3,11 @@
         <base-spinner></base-spinner>
     </template>
     <template v-if="latest_competency && latest_competency.length !== 0 && !isLoading">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 gap-x-4 py-6">
+    <div class="flex flex-wrap justify-center items-center py-6">
         <div v-for="competency in latest_competency" :key="competency.id"
-             class="m-3 w-[300px] h-[300px] md:h-[350px] grid grid-cols-1 grid-rows-2 shadow-xl shadow-gray-600 rounded-large border border-1 border-[#00cba9] p-6 mx-auto">
+             class="m-8 h-[300px] w-[280px] md:h-[350px] md:w-[27vw] grid grid-cols-1 grid-rows-2 shadow-xl shadow-gray-600 rounded-large border border-1 border-[#00cba9] p-6 mx-auto">
             <div class="w-11/12 mx-auto rounded-large overflow-hidden border border-1 border-[#00cba9]">
-                <img class="w-full h-full object-cover" :src="getFirstImage(competency.image)" alt="card image">
+                <img class="w-full h-full object-cover" :src="getFirstImage(competency.description)" alt="card image">
             </div>
             <div class="flex flex-col justify-between items-center">
                 <h3 class="pl-4 my-3 mx-3 text-center font-bold text-base">{{ getDescriptionShort(competency.title) }}</h3>

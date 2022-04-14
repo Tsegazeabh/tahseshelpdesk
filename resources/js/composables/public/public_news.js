@@ -1,5 +1,4 @@
 import {ref} from 'vue';
-import {notify} from "@kyvg/vue3-notification";
 import {useStore} from "vuex";
 
 export default function usePublicNews(){
@@ -29,7 +28,6 @@ export default function usePublicNews(){
     const getNews = async(id) =>{
         const response = await axios.get('/api/public/news/show/'+ id)
         news.value = await response.data;
-        console.log(response.data);
     }
 
     // latest news
@@ -55,7 +53,6 @@ export default function usePublicNews(){
             news.value = await response.data.data;
             console.log(response.data.data)
         }catch (error) {
-            console.log(error.response);
         }
     }
 

@@ -86,10 +86,10 @@ class AuthController extends Controller
 //            send mail with this token $token and email
             Mail::to($request->email)->send(new ResetPassword($detail));
 
-            return response(['token'=>$password_reset_token]);
+            return response(['message' => 'Password Reset Link Sent Successfully']);
         }
 
-        return response(['message' => 'Invalid Email.']);
+        return response(['message' => 'Password Reset Link Sent Successfully']);
     }
 
     public function resetPassword(Request $request){

@@ -28,7 +28,6 @@ export default function usePublicCompetency(){
     const getCompetency = async(id) =>{
         const response = await axios.get('/api/public/competencies/show/'+ id)
         competency.value = await response.data;
-        console.log(response.data);
     }
 
     // latest competency
@@ -52,9 +51,7 @@ export default function usePublicCompetency(){
                 }
             })
             competency.value = await response.data.data;
-            console.log(response.data.data)
         }catch (error) {
-            console.log(error.response);
         }
     }
 

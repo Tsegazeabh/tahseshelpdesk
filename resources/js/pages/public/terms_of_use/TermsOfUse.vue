@@ -4,9 +4,9 @@
             <h2 class="text-center font-bold p-4 m-2 uppercase text-xl font-normal tracking-wide">Terms Of Use</h2>
             <!-- title and description -->
             <div v-for="terms in terms_of_use" :key="terms.id" class="p-6 w-[80vw] mx-auto">
-                <h3 class="text-left uppercase mt-2 text-gray-600">{{ terms.title }}</h3>
+                <h3 class="text-left uppercase mt-2 text-gray-800">{{ terms.title }}</h3>
                 <p class="text-gray-400 text-sm mb-2">{{getDate(terms.published_at) }}</p>
-                <div class="flex-wrap text-left py-2 px-4 text-gray-400" v-html="terms.description"></div>
+                <div class="flex-wrap text-left py-2 px-4 text-gray-700" v-html="terms.description"></div>
             </div>
         </div>
         <div v-else class="flex justify-center items-center min-h-[30vh]">

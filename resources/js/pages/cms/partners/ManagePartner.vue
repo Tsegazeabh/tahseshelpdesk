@@ -43,9 +43,6 @@
                     <th scope="col" class="px-6 py-3">
                         Url
                     </th>
-<!--                    <th scope="col" class="px-6 py-3">-->
-<!--                        Description-->
-<!--                    </th>-->
                     <th scope="col" class="px-6 py-3">
                         Published
                     </th>
@@ -60,11 +57,9 @@
                     </th>
                     <th scope="col" class="px-6 py-3">
                         <span class="sr-only">Delete</span>
-                        <!--                        <span class="sr-only">Restore</span>-->
                     </th>
                     <th scope="col" class="px-6 py-3">
                         <span class="sr-only">Restore</span>
-                        <!--                        <span class="sr-only">Restore</span>-->
                     </th>
                 </tr>
                 </thead>
@@ -77,12 +72,12 @@
                         <td class="w-4 p-4">
                             {{ partner.id }}
                         </td>
-                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-normal">
                             {{ partner.title }}
-                        </td>
-                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-normal">
                             {{ partner.url }}
-                        </td>
+                        </th>
 <!--                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap" v-html="filteredDescription(partner.description)">-->
 <!--                        </td>-->
                         <td class="px-6 py-4 text-red-400" :class="{'text-green-400': partner.is_published === 1}">
@@ -184,8 +179,7 @@
 </template>
 
 <script setup>
-import {ref, onMounted, reactive, computed } from 'vue';
-import BreadCrumb from '@components/BreadCrumb';
+import {ref, onMounted, computed } from 'vue';
 import usePartner from "@composable/partner";
 
 const search_key = ref('');

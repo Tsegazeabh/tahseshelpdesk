@@ -12,10 +12,12 @@ export default {
             let auth_token = context.getters['getToken'];
             localStorage.setItem('auth_token', auth_token);
             axios.defaults.headers.common['Authorization'] = 'Bearer '+ context.getters['getToken'];
-            notify({
-                title: "Well-come To Tahses CMS 🎉",
-                type:"success"
-            });
+            setTimeout(()=>{
+                notify({
+                    title: "Well-come To Tahses CMS 🎉",
+                    type:"success"
+                });
+            },3000)
         }).catch((error) => {
             notify({
                 title: error.response.data.message,
@@ -34,37 +36,44 @@ export default {
             context.commit('clearAuth');
             localStorage.removeItem('auth_token');
             router.replace('/login');
-        }).catch((error) => {
-            console.log(error.response)
-        });
+        }).catch(() => {});
 
     },
 
     // forgot password
     forgotPassword(context, payload){
         axios.post('/api/forgot-password', payload).then((response) => {
-            console.log(response.data);
+            notify({
+                title: response.data.message,
+                type:"success"
+            });
+
+            setTimeout(()=>{
+                router.replace('/login');
+            } ,2000)
         }).catch((error) => {
-            console.log(error.response);
+            notify({
+                title: error.response.data.message,
+                type:"error"
+            });
         })
     },
 
     // Reset password
     resetPassword(context, payload){
         axios.post('/api/reset-password', payload).then((response) => {
-            console.log(response.data);
             notify({
                 title: response.data.message,
                 type:"success"
             });
-            router.replace('/login');
+            setTimeout(()=>{
+                router.replace('/login');
+            },2000)
         }).catch((error) => {
-            console.log(error.response);
             notify({
                 title: error.response.data.message,
                 type:"error"
             });
-            // router.replace('/forgot-password');
         })
     }
 }

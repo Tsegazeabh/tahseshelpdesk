@@ -9,7 +9,7 @@
                     <img class="rounded-md w-full h-full object-cover" :src="getFirstImage(customer.description)" alt="card img">
                 </a>
                 <div class="text-dark p-6 flex flex-col justify-between items-start">
-                    <router-link :to="{name:'customers.detail',params:{id: customer.id}}" class="font-bold my-3 hover:underline cursor-pointer">{{ getTitleShortened(customer.title) }}</router-link>
+                    <router-link :to="{name:'customers.detail',params:{id: customer.id}}" class="font-bold my-3 hover:underline cursor-pointer whitespace-normal">{{ getDescriptionShort(customer.title) }}</router-link>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
     import usePublicCustomer from "@composable/public/public_customer";
     import {onMounted} from "vue";
 
-    const { getFirstImage, getTitleShortened } = helpers();
+    const { getFirstImage, getDescriptionShort } = helpers();
     const { latest_customer, latestCustomer,isLoading} = usePublicCustomer();
 
     onMounted(latestCustomer)

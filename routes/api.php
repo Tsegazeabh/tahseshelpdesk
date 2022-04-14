@@ -90,6 +90,12 @@ Route::prefix('public')->group(function (){
     Route::prefix('contact_us')->group(function (){
         Route::post('/request', [\App\Http\Controllers\Api\public\ContactUsController::class,'store']);
     });
+
+//company information
+    Route::prefix('company')->group(function (){
+        Route::get('/info', [\App\Http\Controllers\Api\public\ContactUsController::class,'fetch']);
+    });
+
 });
 
 Route::post('/upload-image',[\App\Http\Controllers\UploadController::class, 'index']);

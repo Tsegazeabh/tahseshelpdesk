@@ -1,5 +1,6 @@
 <template>
     <section class="flex justify-center items-center h-screen bg-gray-100">
+        <notifications position="top center" class="mt-10"/>
         <form @submit.prevent="forgotPassword" class="max-w-md w-full bg-white rounded p-6 space-y-4">
             <div class="mb-4">
                 <p class="text-gray-600">Forgot Password</p>

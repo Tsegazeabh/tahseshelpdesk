@@ -9,7 +9,6 @@
             </li>
         </ol>
     </nav>
-
     <div class="flex items-center justify-between">
         <div class="relative mx-4 lg:mx-0">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -35,9 +34,6 @@
                     <th scope="col" class="px-6 py-3">
                         Title
                     </th>
-<!--                    <th scope="col" class="px-6 py-3">-->
-<!--                        Description-->
-<!--                    </th>-->
                     <th scope="col" class="px-6 py-3">
                         Published
                     </th>
@@ -52,11 +48,9 @@
                     </th>
                     <th scope="col" class="px-6 py-3">
                         <span class="sr-only">Delete</span>
-<!--                        <span class="sr-only">Restore</span>-->
                     </th>
                     <th scope="col" class="px-6 py-3">
                         <span class="sr-only">Restore</span>
-<!--                        <span class="sr-only">Restore</span>-->
                     </th>
                 </tr>
                 </thead>
@@ -69,11 +63,9 @@
                     <td class="w-4 p-4">
                         {{ about.id }}
                     </td>
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                    <th scope="row" class="max-w-4 px-6 py-4 font-medium text-gray-900 whitespace-normal">
                         {{ about.title }}
                     </th>
-<!--                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap" v-html="filteredDescription(about.description)">-->
-<!--                    </td>-->
                     <td class="px-6 py-4 text-red-400" :class="{'text-green-400': about.is_published === 1}">
                         {{ about.is_published === 1 ? 'Yes' : 'No' }}
                     </td>

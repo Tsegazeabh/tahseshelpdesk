@@ -19,10 +19,8 @@ export default function usePublicTermsOfUse(){
                     'Authorization': 'Bearer '+ store.getters['getToken']
                 }
             })
-            terms_of_use.value = await response.data.data;
-            console.log(response.data.data)
+            terms_of_use.value = await response.data.data;s
         }catch (error) {
-            console.log(error.response);
         }
     }
 

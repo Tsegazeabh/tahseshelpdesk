@@ -5,7 +5,7 @@
                 <base-spinner></base-spinner>
             </template>
             <template v-if="allService && allService.length !== 0 && !isLoading">
-            <h2 class="text-center font-bold p-4 m-2 uppercase text-xl font-normal tracking-wide">All The list Goes Below</h2>
+            <h2 class="text-center font-bold p-4 m-2 uppercase text-xl font-normal tracking-wide">Our Services</h2>
             <div class="w-[80vw] mx-auto flex justify-end">
                 <div class="relative">
                     <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none text-gray-600">

@@ -42,11 +42,11 @@
                     </div>
                 </div>
                 <div class="col-span-3 md:col-span-1 pt-4 md:pt-12 px-8 md:px-4">
-                    <div class="my-3 bg-primary p-3">
+                    <div v-if="company" class="my-3 bg-primary p-3">
                         <p class="text-white text-base md:text-md lg:text-lg font-normal">Business Hour: <span class="text-white font-normal text-sm lg:text-md ml-2">Monday – Saturday: 8:30am to 5:30pm</span></p>
-                        <p class="text-white text-base md:text-md lg:text-lg font-normal">Email: <span class="text-white font-normal text-sm lg:text-md ml-2">info@thetahses.com</span></p>
-                        <p class="text-white text-base md:text-md lg:text-lg font-normal">Phone:<span class="text-white font-normal text-sm lg:text-md ml-2">+251-11-896-43-43</span></p>
-                        <p class="text-white text-base md:text-md lg:text-lg font-normal">Location:<span class="text-white font-normal text-sm lg:text-md ml-2">22 Rewina building 4th floor</span></p>
+                        <p class="text-white text-base md:text-md lg:text-lg font-normal">Email: <span class="text-white font-normal text-sm lg:text-md ml-2">{{ company.email }}</span></p>
+                        <p class="text-white text-base md:text-md lg:text-lg font-normal">Phone:<span class="text-white font-normal text-sm lg:text-md ml-2">{{company.phone}}</span></p>
+                        <p class="text-white text-base md:text-md lg:text-lg font-normal">Location:<span class="text-white font-normal text-sm lg:text-md ml-2">{{company.location}}</span></p>
                     </div>
                     <div class="border border-2 border-primary bg-gray-100 flex justify-center">
                         <iframe :src="constants.map_source" width="230" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -62,10 +62,12 @@
 import HomeLayout from '@layouts/HomeLayout.vue';
 import helpers from "@composable/helpers";
 import usePublicContactUs from "@composable/public/public_contact_us";
+import useCompanyInfo from "@composable/public/public_company_info";
 import useVuelidate from "@vuelidate/core";
 import { required,email } from '@vuelidate/validators';
-import {computed, reactive} from "vue";
+import {computed, onMounted, reactive} from "vue";
 
+const { company, fetchCompanyInfo } = useCompanyInfo();
 const { constants } = helpers();
 const { sendRequest } = usePublicContactUs();
 
@@ -102,7 +104,7 @@ const submitForm = async()=>{
     }
 
 }
-
+onMounted(fetchCompanyInfo);
 
 </script>
 

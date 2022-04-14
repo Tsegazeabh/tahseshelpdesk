@@ -1,6 +1,4 @@
 window._ = require('lodash');
-window.md5 = require("blueimp-md5");
-
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

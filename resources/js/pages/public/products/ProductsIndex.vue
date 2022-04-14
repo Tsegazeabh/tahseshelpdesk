@@ -5,7 +5,7 @@
                 <base-spinner></base-spinner>
             </template>
             <template v-if="allProduct && allProduct.length !== 0 && !isLoading">
-            <h2 class="text-center font-bold p-4 m-2 uppercase text-xl font-normal tracking-wide">All The list Goes Below</h2>
+            <h2 class="text-center font-bold p-4 m-2 uppercase text-xl font-normal tracking-wide">Our Products</h2>
             <div class="w-[80vw] mx-auto flex justify-end">
                 <div class="relative">
                     <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none text-gray-600">
@@ -64,7 +64,7 @@
             </div>
             </template>
             <template v-else-if="(!allProduct || allProduct.length <= 0) && !isLoading">
-                <div class="min-h-[30vh]">
+                <div class="min-h-[30vh] flex justify-center items-center">
                     <h2 class="text-2xl capitalize text-pink-600">There Is No Published Content!</h2>
                 </div>
             </template>

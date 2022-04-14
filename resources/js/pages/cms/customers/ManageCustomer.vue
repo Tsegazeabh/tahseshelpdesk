@@ -77,14 +77,12 @@
                         <td class="w-4 p-4">
                             {{ customer.id }}
                         </td>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-normal">
                             {{ customer.title }}
                         </th>
-                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-normal">
                             {{ customer.url }}
-                        </td>
-<!--                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap" v-html="filteredDescription(customer.description)">-->
-<!--                        </td>-->
+                        </th>
                         <td class="px-6 py-4 text-red-400" :class="{'text-green-400': customer.is_published === 1}">
                             {{ customer.is_published === 1 ? 'Yes' : 'No' }}
                         </td>
@@ -160,7 +158,7 @@
                         </span>
 
                         <div class="inline-flex mt-2 xs:mt-0">
-                            <button @click="paginate(pageNumber - 1)" :class="{'bg-gray-400 cursor-not-allowed hover:bg-gray-400': pageNumber <= 1}"  class="py-1 px-2 text-sm font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900"
+                            <button @click="paginate(pageNumber - 1)" :class="{'bg-gray-400 cursor-not-allowed pointer-events-none': pageNumber <= 1}"  class="py-1 px-2 text-sm font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900"
                                     :disabled="pageNumber <= 1">
                                 Prev
                             </button>
@@ -168,7 +166,7 @@
                             <span v-for="(item,index) in Math.ceil(meta.total / meta.per_page)" :key="index">
                                 <button @click="paginate(index+1)" class="py-1 px-2 hover:bg-gray-300" :class="{'bg-gray-400 text-white': pageNumber === index+1}">{{index+1}}</button>
                             </span>
-                            <button @click="paginate(pageNumber + 1)" :class="{'bg-gray-400 cursor-not-allowed hover:bg-gray-400': pageNumber >= meta.last_page}" class="py-1 px-2 text-sm font-medium text-white bg-gray-800 rounded-r border-0 border-l border-gray-700 hover:bg-gray-900"
+                            <button @click="paginate(pageNumber + 1)" :class="{'bg-gray-400 cursor-not-allowed pointer-events-none': pageNumber >= meta.last_page}" class="py-1 px-2 text-sm font-medium text-white bg-gray-800 rounded-r border-0 border-l border-gray-700 hover:bg-gray-900"
                                     :disabled="pageNumber >= meta.last_page">
                                 Next
                             </button>
@@ -185,8 +183,7 @@
 </template>
 
 <script setup>
-import {ref, onMounted, reactive, computed } from 'vue';
-import BreadCrumb from '@components/BreadCrumb';
+import {ref, onMounted, computed } from 'vue';
 import useCustomer from "@composable/customer";
 
 const search_key = ref('');

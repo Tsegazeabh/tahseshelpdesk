@@ -9,6 +9,7 @@ use App\Models\Partner;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 
 class PartnerController extends Controller
@@ -36,7 +37,7 @@ class PartnerController extends Controller
      */
     public function show(Partner $partner)
     {
-        Log::info($partner);
+//        Log::info(Config::get('custom_config.base_url').');
         return new PartnerResource($partner);
     }
 

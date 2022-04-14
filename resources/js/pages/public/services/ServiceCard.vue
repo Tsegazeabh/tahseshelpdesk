@@ -4,12 +4,12 @@
     </template>
     <template v-if="latest_service && latest_service.length !== 0 && !isLoading">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 gap-x-4 py-6">
-        <div v-for="service in latest_service" :key="service.id" class="grayscale hover:grayscale-0 mx-auto w-[300px] h-[350px] md:h-[400px] flex flex-col justify-start items-center overflow-hidden hover:shadow-2xl hover:shadow-black/90 rounded-md">
+        <div v-for="service in latest_service" :key="service.id" class="mx-auto w-[300px] h-[350px] md:h-[400px] flex flex-col justify-start items-center overflow-hidden hover:shadow-2xl hover:shadow-black/90 rounded-md">
             <div class="w-full h-[180px]">
                 <img class="w-full h-full object-cover" :src="getFirstImage(service.description)" alt="card img">
             </div>
             <div class="text-dark p-6 flex flex-col justify-between items-start w-full">
-                <h2 class="font-bold my-3">{{ getTitleShortened(service.title) }}</h2>
+                <h2 class="font-bold my-3 whitespace-normal">{{ service.title }}</h2>
                 <router-link :to="{name:'services.detail', params:{id: service.id}}" class="font-bold bg-primary text-white rounded-bl-fine rounded-tr-fine px-4 py-4 border border-1 hover:shadow-lg hover:shadow-gray-600 border-[#00cba9]">Read more</router-link>
             </div>
         </div>
