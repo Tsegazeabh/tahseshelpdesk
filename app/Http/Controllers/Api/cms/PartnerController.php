@@ -72,7 +72,7 @@ class PartnerController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Partner  $partner
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id){
         try {
@@ -80,10 +80,10 @@ class PartnerController extends Controller
             if ($partner->trashed()){
 
                 $partner->forceDelete();
-                return response()->json(['message'=>'successfully deleted']);
+                return response()->json(['message'=>'Record Successfully Deleted']);
             }
             $partner->delete();
-            return response()->json(['message'=>'Record successfully deleted']);
+            return response()->json(['message'=>'Record successfully Archived']);
 
         }catch (\Throwable $exception){
             return response($exception);

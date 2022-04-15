@@ -3,6 +3,7 @@
         <base-spinner></base-spinner>
     </template>
     <template v-if="latest_competency && latest_competency.length !== 0 && !isLoading">
+        <the-header title="Our Core Competencies"></the-header>
     <div class="flex flex-wrap justify-center items-center py-6">
         <div v-for="competency in latest_competency" :key="competency.id"
              class="m-8 h-[300px] w-[280px] md:h-[350px] md:w-[27vw] grid grid-cols-1 grid-rows-2 shadow-xl shadow-gray-600 rounded-large border border-1 border-[#00cba9] p-6 mx-auto">
@@ -32,6 +33,7 @@
     import usePublicCompetency from "@composable/public/public_competency";
     import {onMounted} from "vue";
     import helpers from "@composable/helpers";
+    import TheHeader from '@components/TheHeader';
 
     const {getFirstImage, getTitleShortened,getDescriptionShort} = helpers();
     const { latestCompetency, latest_competency, isLoading } = usePublicCompetency();

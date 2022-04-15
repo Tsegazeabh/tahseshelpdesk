@@ -2,15 +2,10 @@
     <home-layout id="homelayout">
         <slider :options="options" :img_src="allCarousel" :partners="false" :isLoading="isLoading"></slider>
         <news-card></news-card>
-        <the-header title="Our Core Competencies"></the-header>
         <competency-card></competency-card>
-        <the-header title="Our Products"></the-header>
         <product-card></product-card>
-        <the-header title="Our Services"></the-header>
         <service-card></service-card>
-        <the-header title="Our Customers"></the-header>
         <customer-card></customer-card>
-        <the-header title="Our Partners"></the-header>
         <partners-card></partners-card>
         <scroll-up></scroll-up>
         <router-view></router-view>

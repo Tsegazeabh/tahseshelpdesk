@@ -98,10 +98,10 @@ class CompetencyController extends Controller
             if ($competency->trashed()){
 
                 $competency->forceDelete();
-                return response()->json(['message'=>'successfully deleted']);
+                return response()->json(['message'=>'Record Successfully Deleted']);
             }
             $competency->delete();
-            return response()->json(['message'=>'Record successfully deleted']);
+            return response()->json(['message'=>'Record Successfully Archived']);
 
         }catch (\Throwable $exception){
             return response($exception);

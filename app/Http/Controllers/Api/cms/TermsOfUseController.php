@@ -79,10 +79,10 @@ class TermsOfUseController extends Controller
             if ($terms_of_use->trashed()){
 
                 $terms_of_use->forceDelete();
-                return response()->json(['message'=>'successfully deleted']);
+                return response()->json(['message'=>'Record Successfully Deleted']);
             }
             $terms_of_use->delete();
-            return response()->json(['message'=>'Record successfully deleted']);
+            return response()->json(['message'=>'Record Successfully Archived']);
 
         }catch (\Throwable $exception){
             return response($exception);

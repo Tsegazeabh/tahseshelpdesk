@@ -3,6 +3,7 @@
         <base-spinner></base-spinner>
     </template>
     <template v-if="latest_customer && latest_customer.length !== 0 && !isLoading">
+        <the-header title="Our Customers"></the-header>
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-x-4 py-6">
             <div v-for="customer in latest_customer" :key="customer.id" class="mx-auto rounded-md p-2 w-[200px] h-[250px] md:h-[300px] flex flex-col justify-center items-center overflow-hidden bg-gray-100">
                 <a :href="customer.url" target="_blank" class="w-[80%] h-[180px]">
@@ -24,6 +25,7 @@
 <script setup>
     import helpers from "@composable/helpers";
     import usePublicCustomer from "@composable/public/public_customer";
+    import TheHeader from '@components/TheHeader';
     import {onMounted} from "vue";
 
     const { getFirstImage, getDescriptionShort } = helpers();

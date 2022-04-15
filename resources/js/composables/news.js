@@ -99,13 +99,14 @@ export default function useNews(){
     const deleteNews = async(id) =>{
         errors.value = {};
         try {
-            await axios.get('/api/cms/news/delete/'+ id, {
+            const response = await axios.get('/api/cms/news/delete/'+ id, {
                 headers: {
                     'Authorization': 'Bearer ' + store.getters['getToken']
                 }
             });
+            const message = response.data.message;
             notify({
-                title: "Record Deleted Successfully 🎉",
+                title: message,
                 type:"success"
             });
         }catch (error){

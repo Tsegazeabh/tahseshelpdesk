@@ -3,6 +3,7 @@
         <base-spinner></base-spinner>
     </template>
     <template v-if="latest_product && latest_product.length !== 0 && !isLoading">
+        <the-header title="Our Products"></the-header>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-16 py-6 mx-16">
             <div v-for="product in latest_product" :key="product.id" class="mx-auto w-[270px] h-[350px] md:h-[400px] grid grid-rows-3 grid-cols-1 overflow-hidden shadow-xl shadow-gray-600 rounded-fine border border-[#00cba9] border-1">
                 <div class="row-span-2">
@@ -28,6 +29,7 @@
 <script setup>
     import helpers from "@composable/helpers";
     import usePublicProduct from "@composable/public/public_product";
+    import TheHeader from '@components/TheHeader';
     import {onMounted} from "vue";
 
     const { getFirstImage,getTitleShortened} = helpers();

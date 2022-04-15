@@ -112,7 +112,7 @@
                             </template>
                         </td>
                         <td v-if="terms_of_use.deleted_at === null" class="px-6 py-4">
-                            <button @click="destroyTermsOfUse(terms_of_use.id)" class="px-6 py-4 text-blue-400 hover:text-blue-600 ">
+                            <button @click="destroyTermsOfUse(terms_of_use.id, true)" class="px-6 py-4 text-blue-400 hover:text-blue-600 ">
                                 <i class="fa-solid fa-box-archive cursor-pointer mr-1"></i> Archive </button>
                         </td>
                         <td v-if="terms_of_use.deleted_at !== null" class="px-6 py-4">
@@ -120,7 +120,7 @@
                                 <i class="fas fa-trash-arrow-up cursor-pointer mr-1"></i> Restore </button>
                         </td>
                         <td v-if="terms_of_use.deleted_at !== null" class="px-6 py-4">
-                            <button @click="destroyTermsOfUse(terms_of_use.id)" class="px-6 py-4 text-red-400 hover:text-red-600 ">
+                            <button @click="destroyTermsOfUse(terms_of_use.id, false)" class="px-6 py-4 text-red-400 hover:text-red-600 ">
                                 <i class="fa-solid fa-trash-can cursor-pointer mr-1"></i> Delete </button>
                         </td>
                         <td v-else class="px-6 py-4">
@@ -197,8 +197,9 @@ const filter_terms_of_use = computed(() => {
     });
 });
 
-const destroyTermsOfUse = async (id) => {
-    if(!window.confirm('Are You Sure You want to delete this Permanently?')){
+const destroyTermsOfUse = async (id, status) => {
+    let my_status = status ? 'Archive' : 'Delete';
+    if(!window.confirm('Are You Sure You want to '+ my_status +' this?')){
         return
     }
     await deleteTermsOfUse(id);

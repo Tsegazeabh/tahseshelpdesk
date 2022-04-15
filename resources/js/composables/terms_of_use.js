@@ -99,13 +99,14 @@ export default function useTermsOfUse(){
     const deleteTermsOfUse = async(id) =>{
         errors.value = {};
         try {
-            await axios.get('/api/cms/terms_of_use/delete/'+ id, {
+            const response = await axios.get('/api/cms/terms_of_use/delete/'+ id, {
                 headers: {
                     'Authorization': 'Bearer ' + store.getters['getToken']
                 }
             });
+            const message = response.data.message;
             notify({
-                title: "Record Deleted Successfully 🎉",
+                title: message,
                 type:"success"
             });
         }catch (error){

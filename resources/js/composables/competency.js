@@ -100,13 +100,14 @@ export default function useCompetency(){
     const deleteCompetency = async(id) =>{
         errors.value = {};
         try {
-            await axios.get('/api/cms/competencies/delete/'+ id, {
+            const response = await axios.get('/api/cms/competencies/delete/'+ id, {
                 headers: {
                     'Authorization': 'Bearer ' + store.getters['getToken']
                 }
             });
+            const message = response.data.message;
             notify({
-                title: "Record Deleted Successfully 🎉",
+                title: message,
                 type:"success"
             });
         }catch (error){

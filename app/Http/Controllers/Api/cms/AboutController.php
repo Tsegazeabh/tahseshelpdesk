@@ -80,10 +80,10 @@ class AboutController extends Controller
             if ($about->trashed()){
 
                 $about->forceDelete();
-                return response()->json(['message'=>'successfully deleted']);
+                return response()->json(['message'=>'Record Successfully Deleted']);
             }
                 $about->delete();
-                return response()->json(['message'=>'Record successfully deleted']);
+                return response()->json(['message'=>'Record Successfully Archived']);
 
         }catch (\Throwable $exception){
             return response($exception);

@@ -98,10 +98,10 @@ class PrivacyPolicyController extends Controller
             if ($privacy_policy->trashed()){
 
                 $privacy_policy->forceDelete();
-                return response()->json(['message'=>'successfully deleted']);
+                return response()->json(['message'=>'Record Successfully Deleted']);
             }
             $privacy_policy->delete();
-            return response()->json(['message'=>'Record successfully deleted']);
+            return response()->json(['message'=>'Record Successfully Archived']);
 
         }catch (\Throwable $exception){
             return response($exception);

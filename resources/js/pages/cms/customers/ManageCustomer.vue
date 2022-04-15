@@ -43,9 +43,6 @@
                     <th scope="col" class="px-6 py-3">
                         Url
                     </th>
-<!--                    <th scope="col" class="px-6 py-3">-->
-<!--                        Description-->
-<!--                    </th>-->
                     <th scope="col" class="px-6 py-3">
                         Published
                     </th>
@@ -60,11 +57,9 @@
                     </th>
                     <th scope="col" class="px-6 py-3">
                         <span class="sr-only">Delete</span>
-                        <!--                        <span class="sr-only">Restore</span>-->
                     </th>
                     <th scope="col" class="px-6 py-3">
                         <span class="sr-only">Restore</span>
-                        <!--                        <span class="sr-only">Restore</span>-->
                     </th>
                 </tr>
                 </thead>
@@ -123,7 +118,7 @@
                             </template>
                         </td>
                         <td v-if="customer.deleted_at === null" class="px-6 py-4">
-                            <button @click="destroyCustomer(customer.id)" class="px-6 py-4 text-blue-400 hover:text-blue-600 ">
+                            <button @click="destroyCustomer(customer.id, true)" class="px-6 py-4 text-blue-400 hover:text-blue-600 ">
                                 <i class="fa-solid fa-box-archive cursor-pointer mr-1"></i> Archive </button>
                         </td>
                         <td v-if="customer.deleted_at !== null" class="px-6 py-4">
@@ -131,7 +126,7 @@
                                 <i class="fas fa-trash-arrow-up cursor-pointer mr-1"></i> Restore </button>
                         </td>
                         <td v-if="customer.deleted_at !== null" class="px-6 py-4">
-                            <button @click="destroyCustomer(customer.id)" class="px-6 py-4 text-red-400 hover:text-red-600 ">
+                            <button @click="destroyCustomer(customer.id,false)" class="px-6 py-4 text-red-400 hover:text-red-600 ">
                                 <i class="fa-solid fa-trash-can cursor-pointer mr-1"></i> Delete </button>
                         </td>
                         <td v-else class="px-6 py-4">
@@ -207,8 +202,9 @@ const filterCustomer = computed(() => {
     });
 });
 
-const destroyCustomer = async (id) => {
-    if(!window.confirm('Are You Sure You want to delete this Permanently?')){
+const destroyCustomer = async (id, status) => {
+    let my_status = status ? 'Archive' : 'Delete';
+    if(!window.confirm('Are You Sure You want to '+ my_status +' this?')){
         return
     }
     await deleteCustomer(id);

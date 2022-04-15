@@ -96,10 +96,10 @@ class NewsController extends Controller
             if ($news->trashed()){
 
                 $news->forceDelete();
-                return response()->json(['message'=>'successfully deleted']);
+                return response()->json(['message'=>'Record Successfully Deleted']);
             }
             $news->delete();
-            return response()->json(['message'=>'Record successfully deleted']);
+            return response()->json(['message'=>'Record Successfully Archived']);
 
         }catch (\Throwable $exception){
             return response($exception);

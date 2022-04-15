@@ -98,13 +98,14 @@ export default function usePrivacyPolicy(){
     const deletePrivacyPolicy = async(id) =>{
         errors.value = {};
         try {
-            await axios.get('/api/cms/privacy_policy/delete/'+ id, {
+            const response = await axios.get('/api/cms/privacy_policy/delete/'+ id, {
                 headers: {
                     'Authorization': 'Bearer ' + store.getters['getToken']
                 }
             });
+            const message = response.data.message;
             notify({
-                title: "Record Deleted Successfully 🎉",
+                title: message,
                 type:"success"
             });
         }catch (error){

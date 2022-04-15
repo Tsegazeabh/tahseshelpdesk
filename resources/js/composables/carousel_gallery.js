@@ -116,13 +116,15 @@ export default function useCarousel(){
     const deleteCarousel = async(id) =>{
         errors.value = {};
         try {
-            await axios.get('/api/cms/carousels/delete/'+ id, {
+            const response = await axios.get('/api/cms/carousels/delete/'+ id, {
                 headers: {
                     'Authorization': 'Bearer ' + store.getters['getToken']
                 }
             });
-            notify({
-                title: "Record Deleted Successfully 🎉",
+
+            const message = await response.data.message;
+            await notify({
+                title: message,
                 type:"success"
             });
         }catch (error) {
