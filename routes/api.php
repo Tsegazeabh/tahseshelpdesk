@@ -84,6 +84,7 @@ Route::prefix('public')->group(function (){
 //carousel
     Route::prefix('carousel_galley')->group(function (){
         Route::get('/', [\App\Http\Controllers\Api\public\CarouselController::class,'index']);
+        Route::get('preview/{id}',[\App\Http\Controllers\Api\public\CarouselController::class,'preview']);
     });
 
 //contact-us

@@ -21,7 +21,7 @@
         <!-- nav -->
            <nav class="sticky top-0 z-50 md:flex md:justify-between md:items-center bg-white py-3 mt-2 px-12 shadow-[3px_5px_5px_rgba(0,0,0,0.3)]">
 <!--               <div><i class="text-primary fas fa-leaf fa-xl md:fa-2xl mr-1 md:mr-2"></i><a id="logo" class="pl-2 mr-2 font-bold uppercase text-primary" href="/">{{logo}}</a></div>-->
-               <span class="h-12 w-28 inline-flex"><img class="object-cover w-full h-full" src="MyImages/1650006374.png" alt=""><a id="logo" class="pl-2 mr-2 font-bold uppercase text-primary" href="/">{{logo}}</a></span>
+               <span class="h-12 w-28 inline-flex"><img class="object-cover w-full h-full" src="/MyImages/1650006374.png" alt=""><a id="logo" class="pl-2 mr-2 font-bold uppercase text-primary" href="/">{{logo}}</a></span>
                <button @click="showMenu = !showMenu" class="md:hidden absolute top-3 right-3 text-dark"><i class="fas fa-bars p-2 text-primary rounded hover:text-white hover:bg-primary"></i></button>
                <ul :class="{'hidden': !showMenu,'block':showMenu }" class="mt-2 md:mt-0 md:flex md:justify-evenly md:items-center space-x-0 space-y-1 md:space-y-0 lg:space-x-6">
                    <li class="hover:bg-primary font-bold rounded-md text-primary hover:text-[#fff] p-1 md:p-2"><router-link :to="{name:'home'}">Home</router-link></li>

@@ -26,7 +26,7 @@
 
 <script setup>
 import HomeLayout from '@layouts/HomeLayout.vue';
-import usePublicCarousel from '@composable/public/public_carousel';
+import usePublicCarousel from "@composable/public/public_carousel";
 import {onMounted} from "vue";
 import helpers from "@composable/helpers";
 

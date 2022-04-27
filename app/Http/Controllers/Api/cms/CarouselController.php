@@ -59,7 +59,6 @@ class CarouselController extends Controller
      */
     public function show(CarouselGallery $carousel)
     {
-        Log::info($carousel);
         return new CarouselResource($carousel);
     }
 
@@ -94,7 +93,6 @@ class CarouselController extends Controller
                 $destinationPath = public_path($root_path);
                 $image->move($destinationPath, $imagename);
 
-                    Log::info($request);
                     $carousel->update([
                         'title' => $request->title,
                         'description' => $request->description,
@@ -130,9 +128,7 @@ class CarouselController extends Controller
             }
             $carousel->is_published = $request->is_published;
             $carousel->published_at = $date;
-            Log::info($carousel);
             $carousel->save();
-            Log::info($carousel);
 
             return response()->json(['message'=>'successfully published!']);
         }catch (\Throwable $exception){
@@ -167,8 +163,6 @@ class CarouselController extends Controller
         try {
             $carousel = CarouselGallery::onlyTrashed()->where('id', $id)->firstOrFail();
             if ($carousel->trashed()){
-                Log::info('if');
-                Log::info($carousel);
                 $carousel->restore();
 
                 return response()->json(['message'=>'successfully Restore']);
@@ -181,7 +175,6 @@ class CarouselController extends Controller
     public function preview($id){
         try {
             $carousel = CarouselGallery::withTrashed()->where('id', $id)->get();
-            Log::info($carousel);
             return new CarouselResource($carousel);
         }catch (\Throwable $exception){
             Log::info($exception);

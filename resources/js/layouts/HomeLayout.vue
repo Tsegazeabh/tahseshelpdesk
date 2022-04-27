@@ -1,12 +1,12 @@
 <template>
     <div class="overflow-y-auto">
-<!-- nabar -->
-
+<!-- navbar -->
         <nav-bar></nav-bar>
         <notifications position="top center" class="mt-10"/>
 
 <!-- content goes here -->
         <slot></slot>
+
 <!-- footer -->
         <my-footer></my-footer>
     </div>

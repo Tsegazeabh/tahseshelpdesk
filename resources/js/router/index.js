@@ -298,7 +298,7 @@ const routes = [
         props: true,
         component: PreviewCarousel,
         meta:{
-            protected: true,
+            protected: false,
         }
     },
     {
