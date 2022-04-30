@@ -1,4 +1,4 @@
-import {ref,reactive} from 'vue';
+import {ref} from 'vue';
 import {useStore} from "vuex";
 import {useRouter} from "vue-router";
 import {notify} from "@kyvg/vue3-notification";
@@ -65,10 +65,8 @@ export default function useCompetency(){
                     'Authorization': 'Bearer '+ store.getters['getToken']
                 }
             })
-            console.log('response: '+ response.data.data);
             competency.value = await response.data.data;
         }catch (error) {
-            console.log('error: '+error.response.data);
             errors.value = error.response.data.errors;
         }
     }
@@ -150,7 +148,6 @@ export default function useCompetency(){
         update_competency.value.is_published = status;
         if (status === true){
             update_competency.value.published_at = moment().format();
-            console.log(moment().format());
         }else{
             update_competency.value.published_at = null;
         }

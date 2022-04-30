@@ -1,4 +1,4 @@
-import {ref,reactive} from 'vue';
+import {ref} from 'vue';
 import {useStore} from "vuex";
 import {useRouter} from "vue-router";
 import {notify} from "@kyvg/vue3-notification";
@@ -58,10 +58,6 @@ export default function useCarousel(){
                 title: errors.value.image[1],
                 type:"error"
             });
-            // Object.keys(error.response.data.errors).forEach(key => {
-            //     errors.value += error.response.data.errors[key][0] + ' ';
-            //     console.log(error.response.data.errors[key][0])
-            // })
         }
 
     }

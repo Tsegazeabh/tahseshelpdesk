@@ -143,11 +143,9 @@ export default function useProduct(){
         update_product.value.is_published = status;
         if (status === true){
             update_product.value.published_at = moment().format();
-            console.log(moment().format());
         }else{
             update_product.value.published_at = null;
         }
-        console.log(update_product.value);
         try {
             await axios.put('/api/cms/products/update/'+ update_product.value.id, update_product.value,{
                 headers: {

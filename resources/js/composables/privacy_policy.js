@@ -148,7 +148,6 @@ export default function usePrivacyPolicy(){
         update_privacy_policy.value.is_published = status;
         if (status === true){
             update_privacy_policy.value.published_at = moment().format();
-            console.log(moment().format());
         }else{
             update_privacy_policy.value.published_at = null;
         }

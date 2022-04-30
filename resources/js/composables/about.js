@@ -2,7 +2,6 @@ import {ref, reactive, computed} from 'vue';
 import {useStore} from "vuex";
 import {useRouter} from "vue-router";
 import {notify} from "@kyvg/vue3-notification";
-import formatDate from '@composable/dateFormat';
 import moment from "moment";
 
 
@@ -57,10 +56,6 @@ export default function useAbout(){
                 type:"error"
             });
 
-            // Object.keys(error.response.data.errors).forEach(key => {
-            //     errors.value += error.response.data.errors[key][0] + ' ';
-            //     console.log(error.response.data.errors[key][0])
-            // })
         }
 
     }
@@ -75,7 +70,6 @@ export default function useAbout(){
                 }
             })
             about.value = await response.data.data;
-            console.log(typeof about.value);
         }catch (error) {
             errors.value = error.response.data.errors;
         }

@@ -1,4 +1,4 @@
-import {ref,reactive} from 'vue';
+import {ref} from 'vue';
 import {useStore} from "vuex";
 import {useRouter} from "vue-router";
 import {notify} from "@kyvg/vue3-notification";
@@ -65,7 +65,6 @@ export default function usePartner(){
                     'Authorization': 'Bearer '+ store.getters['getToken']
                 }
             })
-            console.log(response.data.data);
             partner.value = await response.data.data;
         }catch (error) {
             errors.value = error.response.data.errors;

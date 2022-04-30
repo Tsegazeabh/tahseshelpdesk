@@ -1,12 +1,12 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-    content: [
-        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
-        './storage/framework/views/*.php',
-        './resources/views/**/*.blade.php',
-        './resources/js/**/*.vue'
-    ],
+// to remove unused styles by scanning them on the following files
+            content: [
+            './resources/js/**/*.vue',
+            './resources/sass/**/*.scss',
+            './resources/css/**/*.css',
+        ],
 
     theme: {
         extend: {
@@ -19,9 +19,6 @@ module.exports = {
                 current: 'currentColor',
                 primary: '#56935D',
                 secondary: '#006E90'
-            },
-            fontFamily: {
-                sans: ['Poppins', ...defaultTheme.fontFamily.sans],
             },
         },
     },

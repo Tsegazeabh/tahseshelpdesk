@@ -51,7 +51,6 @@ export default function usePublicNews(){
                 }
             })
             news.value = await response.data.data;
-            console.log(response.data.data)
         }catch (error) {
         }
     }
