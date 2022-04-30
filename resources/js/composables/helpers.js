@@ -13,7 +13,7 @@ export default function helpers(){
             'tiny_mce_api_key':'rtjncvw6lujg8x1sordmdwp5jnwcl3pyiztsoi216anokyu4',
             'social_media':{
                 'facebook': 'https://www.facebook.com/thetahses',
-                'telegram': 'https://www.telegram.com/thetahses',
+                'telegram': 'https://www.telegram.org/thetahses',
                 'twitter': 'https://www.twitter.com/thetahses',
                 'instagram': 'https://www.instagram.com/thetahses',
             },

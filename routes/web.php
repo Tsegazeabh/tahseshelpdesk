@@ -12,10 +12,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Route::get('dashboard', function (){
-//    return view('dashboard');
-//})->middleware('auth');
-//Route::get('register', [App\Http\Controllers\Api\ServiceController::class,'index']);
+
+Route::get('/sitemap', [\App\Http\Controllers\SEOController::class, 'generateSitemap']);
+
+//Route::get('/sitemap', function () {
+//    return 'its reaching here';
+//});
 
 Route::get('/{any}', function () {
     return view('app');
