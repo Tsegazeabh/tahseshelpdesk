@@ -124,7 +124,6 @@ onMounted(()=>{
 //upload image
 function Upload(event) {
     carousel.value.image = event.target.files[0];
-    console.log(carousel.value)
 }
 
 // form submit method

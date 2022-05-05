@@ -13,11 +13,16 @@
 </template>
 
 <script setup>
-import { ref,onMounted } from 'vue';
-import NavBar from '../components/Navbar';
-import MyFooter from '../components/MyFooter';
+import { ref, onMounted, provide } from 'vue';
+import NavBar from '@components/Navbar';
+import MyFooter from '@components/MyFooter';
+import useCompanyInfo from "@composable/public/public_company_info";
 
  let showMenu = ref(false)
+const { company, fetchCompanyInfo } = useCompanyInfo();
+
+ onMounted(fetchCompanyInfo);
+ provide('company',company);
 
 </script>
 

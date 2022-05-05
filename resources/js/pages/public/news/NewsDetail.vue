@@ -16,7 +16,7 @@
                 </template>
                 <div v-if="allNews && allNews.length !== 0 && !isLoading" class="overflow-x-hidden overflow-y-auto space-y-4 h-[70vh] w-full bg-gray-200 rounded-md p-2">
                     <template v-for="news_all in allNews" :key="news_all.id">
-                        <button v-if="news_all.id !== news.id" @click="navigate(news_all)" class="flex bg-white h-32 overflow-hidden rounded-md hover:border hover:border-primary">
+                        <button v-if="news_all.id !== news.id" @click="navigate(news_all)" class="flex bg-white h-32 w-full overflow-hidden rounded-md hover:border hover:border-primary">
                             <div class="h-full w-1/4">
                                 <img :src="getFirstImage(news_all.description)" alt="image" class="w-full h-full object-cover">
                             </div>

@@ -16,7 +16,7 @@
                 </template>
                 <div v-if="allService && allService.length !== 0 && !isLoading" class="overflow-x-hidden overflow-y-auto space-y-4 h-[70vh] w-full bg-gray-200 rounded-md p-2">
                     <template v-for="services in allService" :key="services.id">
-                        <button v-if="services.id !== service.id" @click="navigate(services)" class="flex bg-white h-32 overflow-hidden rounded-md hover:border hover:border-primary">
+                        <button v-if="services.id !== service.id" @click="navigate(services)" class="flex bg-white h-32 w-full overflow-hidden rounded-md hover:border hover:border-primary">
                             <div class="h-full w-1/4">
                                 <img :src="getFirstImage(services.description)" alt="image" class="w-full h-full object-cover">
                             </div>

@@ -36,13 +36,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import useCompanyInfo from "@composable/public/public_company_info";
+import { ref, inject } from 'vue';
 import helpers from "@composable/helpers";
 
-const { company, fetchCompanyInfo } = useCompanyInfo();
+
 const { constants } = helpers();
 
+const company = inject('company');
 let showMenu = ref(false);
 let tahses = 'Tahses';
 const logo = ref('');
@@ -58,7 +58,6 @@ function updater(){
         }
 }
 setInterval(updater,sleepDuration);
-onMounted(fetchCompanyInfo)
 
 </script>
 

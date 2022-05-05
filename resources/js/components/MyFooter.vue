@@ -19,7 +19,7 @@
                <div class="flex flex-col justify-center items-center text-start">
                    <router-link :to="{name:'privacy_policy.index'}" class="p-2 hover:underline">Privacy Policy</router-link>
                    <router-link :to="{name:'terms_of_use.index'}" class="p-2 hover:underline">Terms of Use</router-link>
-                   <router-link :to="{name:'home'}" class="p-2 hover:underline">Site Map</router-link>
+<!--                   <router-link :to="{name:'home'}" class="p-2 hover:underline">Site Map</router-link>-->
                    <a class="md:py-2 py-1 md:px-6 px-2 bg-[#078282ff] rounded-full border border-white hover:border-[#078282ff] border-2 text-white hover:bg-gray-100 hover:text-[#078282ff] shadow-md" :href="constants.information.help_desk_link" target="_blank">Help Desk<i class="ml-2 fas fa-laptop"></i></a>
                    <div class="flex justify-around items-center text-[#078282ff]">
                        <a :href="constants.social_media.facebook" target="_blank" class="p-2" href="#"><i class="fab fa-facebook"></i></a>
@@ -29,20 +29,19 @@
                    </div>
                </div>
            </footer>
-    <div v-if="company" class="p-3 text-sm font-medium text-center capitalize bg-primary text-white">copy right &copy {{year}} {{ company.title }} P.L.C, All Rights Reserved. </div>
-    <div v-else class="p-3 text-sm font-medium text-center capitalize bg-primary text-white">copy right &copy {{year}} Tahses ICT and Consultancy P.L.C, All Rights Reserved. </div>
+    <div v-if="company" class="p-3 text-sm font-medium text-center capitalize bg-primary text-white">copyright &copy {{year}} {{ company.title }} P.L.C, All Rights Reserved. </div>
+    <div v-else class="p-3 text-sm font-medium text-center capitalize bg-primary text-white">copyright &copy {{year}} Tahses ICT and Consultancy P.L.C, All Rights Reserved. </div>
 <!--[#00cba9]-->
 </template>
 
 <script setup>
-import {onMounted, ref, computed} from 'vue';
+import { inject, ref, computed } from 'vue';
 import helpers from "@composable/helpers";
-import useCompanyInfo from "@composable/public/public_company_info";
 
-const { company, fetchCompanyInfo } = useCompanyInfo();
+
 const { constants } = helpers();
 let showMenu = ref(false)
-
+const company = inject('company');
 let year = ref(new Date().getFullYear());
 
 const tahses = computed(() => {
@@ -53,6 +52,5 @@ const tahses = computed(() => {
         return 'Tahses ICT and Consultancy';
     }
 })
-onMounted(fetchCompanyInfo);
 
 </script>

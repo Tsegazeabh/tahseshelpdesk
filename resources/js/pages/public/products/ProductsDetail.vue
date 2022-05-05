@@ -16,7 +16,7 @@
                 </template>
                 <div v-if="allProduct && allProduct.length !== 0 && !isLoading" class="overflow-x-hidden overflow-y-auto space-y-4 max-h-[70vh] w-full bg-gray-200 rounded-md p-2">
                     <template v-for="products in allProduct" :key="products.id">
-                    <button v-if="products.id !== product.id" @click="navigate(products)" class="flex bg-white h-32 overflow-hidden rounded-md hover:border hover:border-primary">
+                    <button v-if="products.id !== product.id" @click="navigate(products)" class="flex bg-white h-32 w-full overflow-hidden rounded-md hover:border hover:border-primary">
                         <div class="h-full w-1/4">
                             <img :src="getFirstImage(products.description)" alt="image" class="w-full h-full object-cover">
                         </div>

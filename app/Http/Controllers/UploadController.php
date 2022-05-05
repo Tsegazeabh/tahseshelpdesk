@@ -39,12 +39,10 @@ class UploadController extends Controller
                 "1920" => url($root_path . '/' . $imagename)
             );
 
-
             return response()->json([
                 'location' => url($root_path. '/' . $imagename)
             ]);
         } catch (\Throwable $ex) {
-//            logError($ex);
             return response('unable to upload image');
         }
     }

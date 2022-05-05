@@ -59,6 +59,7 @@ class CarouselController extends Controller
      */
     public function show(CarouselGallery $carousel)
     {
+        Log::info($carousel);
         return new CarouselResource($carousel);
     }
 

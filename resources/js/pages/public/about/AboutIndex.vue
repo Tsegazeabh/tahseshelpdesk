@@ -15,8 +15,8 @@
            <template v-else-if="(!about || about.length <= 0) && !isLoading">
                <h1 class="p-3 text-red-400 text-2xl">No Published Content Yet!</h1>
            </template>
-           <div class="border border-2 border-primary bg-gray-400">
-                   <iframe :src="constants.source_map" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+           <div v-if="company" class="border border-2 border-primary bg-gray-400">
+                   <iframe :src="company.source_map" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
            </div>
        </div>
     </home-layout>
@@ -26,12 +26,18 @@
 <script setup>
 import HomeLayout from '@layouts/HomeLayout.vue';
 import usePublicAbout from '@composable/public/public_about';
-import {onBeforeMount, onMounted, ref} from "vue";
+import useCompanyInfo from "@composable/public/public_company_info";
+import {onMounted} from "vue";
 import helpers from "@composable/helpers";
 
+
+const { company, fetchCompanyInfo } = useCompanyInfo();
 const { constants } = helpers();
 const { about, fetchAbout, isLoading } = usePublicAbout();
 
-onMounted(fetchAbout)
+onMounted(()=>{
+    fetchAbout();
+    fetchCompanyInfo();
+})
 </script>
 

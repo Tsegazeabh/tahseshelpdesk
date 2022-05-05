@@ -16,7 +16,7 @@
                 </div>
                 <div v-if="allCompetency && allCompetency.length !== 0 && !isLoading" class="overflow-x-hidden overflow-y-auto space-y-4 max-h-[70vh] w-full bg-gray-200 rounded-md p-2">
                     <template v-for="competencies in allCompetency" :key="competencies.id">
-                        <button v-if="competencies.id !== competency.id" @click="navigate(competencies)" class="flex bg-white h-32 overflow-hidden rounded-md hover:border hover:border-primary">
+                        <button v-if="competencies.id !== competency.id" @click="navigate(competencies)" class="flex bg-white h-32 w-full overflow-hidden rounded-md hover:border hover:border-primary">
                             <div class="h-full w-1/4">
                                 <img :src="getFirstImage(competencies.description)" alt="image" class="w-full h-full object-cover">
                             </div>
