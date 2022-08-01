@@ -1,6 +1,7 @@
 import router from "../router";
 import axios from 'axios';
 import {notify} from "@kyvg/vue3-notification";
+import { useSSRContext } from "vue";
 
 export default {
     //Login
@@ -25,6 +26,7 @@ export default {
             });
         });
     },
+   
 
     // Logout
     logout(context){

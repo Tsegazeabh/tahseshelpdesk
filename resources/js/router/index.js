@@ -76,6 +76,21 @@ import Login from '@pages/Auth/Login';
 import ForgotPassword from '@pages/Auth/ForgotPassword';
 import ResetPassword from '@pages/Auth/ResetPassword';
 import store from "../store";
+import LoginHelpDesk from '@pages/HelpDesk/Users/LoginHelpDesk'
+import RegisterHelpDesk from '@pages/HelpDesk/Users/RegisterHelpDesk'
+import ForgotPasswordHelpDesk from '@pages/HelpDesk/Users/ForgotPasswordHelpDesk'
+import ResetPasswordHelpDesk from '@pages/HelpDesk/Users/ResetPasswordHelpDesk'
+import AdminDashboard from '@pages/HelpDesk/Dashboards/AdminDashboard'
+import CreateLayout from '@pages/HelpDesk/layout/creatLayout'
+import editLayout from '@pages/HelpDesk/layout/editLayout'
+import RolesHelpDesk from '@pages/HelpDesk/Roles/Role/RolesHelpDesk'
+import ProjectsHelpDesk from '@pages/HelpDesk/Roles/projects/ProjectsHelpDesk'
+import SLAHelpDesk from '@pages/HelpDesk/Reports/SLAHelpDesk'
+import settingsHelpDesk from '@pages/HelpDesk/Dashboards/settingsHelpDesk'
+import RequestHelpDesk from '@pages/HelpDesk/Dashboards/RequestHelpDesk'
+import CreateSLA from '@pages/HelpDesk/Reports/CreateSLA'
+import UpdateSLA from '@pages/HelpDesk/Reports/UpdateSLA'
+import viewSLA from '@pages/HelpDesk/Reports/viewSLA'
 import {notify} from "@kyvg/vue3-notification";
 
 
@@ -718,7 +733,83 @@ const routes = [
             },
         ]
     },
-    { path: '/:pathMatch(.*)*', name: 'NotFound', component: PageNotFound },
+    { 
+        path: '/LoginHelpDesk', 
+        name: 'LoginHelpDesk', 
+        component: LoginHelpDesk 
+    },
+    { 
+        path: '/RegisterHelpDesk', 
+        name: 'RegisterHelpDesk', 
+        component: RegisterHelpDesk 
+    },
+    { 
+        path: '/ForgotPasswordHelpDesk', 
+        name: 'ForgotPasswordHelpDesk', 
+        component: ForgotPasswordHelpDesk 
+    },
+    { 
+        path: '/ResetPasswordHelpDesk', 
+        name: 'ResetPasswordHelpDesk', 
+        component: ResetPasswordHelpDesk 
+    },
+    { 
+        path: '/AdminDashboard', 
+        name: 'AdminDashboard', 
+        component: AdminDashboard
+    },
+    { 
+        path: '/createLayout', 
+        name: 'CreateLayout', 
+        component: CreateLayout
+    },
+    { 
+        path: '/editLayout', 
+        name: 'editLayout', 
+        component: editLayout
+    },
+    { 
+        path: '/RolesHelpDesk', 
+        name: 'RolesHelpDesk', 
+        component: RolesHelpDesk
+    },
+    { 
+        path: '/ProjectsHelpDesk', 
+        name: 'ProjectsHelpDesk', 
+        component:ProjectsHelpDesk
+    },
+     { 
+        path: '/SLAHelpDesk', 
+        name: 'SLAHelpDesk', 
+        component:SLAHelpDesk
+    },
+    { 
+        path: '/settingsHelpDesk', 
+        name: 'settingsHelpDesk', 
+        component:settingsHelpDesk
+    },
+    { 
+        path: '/RequestHelpDesk', 
+        name: 'RequestHelpDesk', 
+        component:RequestHelpDesk
+    },
+    { 
+        path: '/CreateSLA', 
+        name: 'CreateSLA', 
+        component:CreateSLA
+    },
+    { 
+        path: '/UpdateSLA', 
+        name: 'UpdateSLA', 
+        component:UpdateSLA
+    },
+    { 
+        path: '/viewSLA', 
+        name: 'viewSLA', 
+        component:viewSLA
+    },
+
+
 ]
 
 const router = createRouter({

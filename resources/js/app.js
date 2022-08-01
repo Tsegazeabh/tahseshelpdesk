@@ -7,6 +7,7 @@ import store from './store/index';
 import Notifications from '@kyvg/vue3-notification';
 import BaseSpinner from '@components/BaseSpinner';
 
+
 window.Alpine = Alpine;
 Alpine.start();
 

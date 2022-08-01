@@ -19,7 +19,7 @@
                 <input v-model="user.password" type="password" :class="{'border border-red-600': v$.password.$error}" class="w-full p-4 text-sm bg-gray-50 focus:outline-primary focus:border-primary focus:outline-offset-0 border border-gray-200 rounded text-gray-600" placeholder="Password">
             </div>
             <div>
-                <button type="submit" class="w-full py-4 bg-primary hover:bg-[#56af5D] rounded text-sm font-bold text-gray-50 transition duration-200">Sign In</button>
+                <button type="submit" class="w-full py-4 bg-#56935d hover:bg-[#56af5D] rounded text-sm font-bold text-gray-50 transition duration-200">Sign In</button>
             </div>
             <div class="flex items-center justify-between">
                 <div class="flex flex-row items-center">

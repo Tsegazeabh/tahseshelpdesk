@@ -7,7 +7,6 @@ module.exports = {
             './resources/sass/**/*.scss',
             './resources/css/**/*.css',
         ],
-
     theme: {
         extend: {
             borderRadius:{
@@ -18,7 +17,8 @@ module.exports = {
                 transparent: 'transparent',
                 current: 'currentColor',
                 primary: '#56935D',
-                secondary: '#006E90'
+                secondary: '#006E90',
+        
             },
         },
     },

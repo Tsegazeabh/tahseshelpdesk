@@ -9,7 +9,9 @@
                 </div>
                 <!-- social media icons -->
                 <div class="social ml-4 pl-6 pt-2 flex md:justify-evenly justify-items-center items-center mb-2 space-x-4 md:space-x-4 md:mr-8 md:pr-4 text-white">
-                    <a class="md:py-2 py-1 md:px-6 px-2 bg-[#078282ff] rounded-full border border-white border-2 text-white hover:bg-gray-100 hover:text-[#078282ff] shadow-md" :href="constants.information.help_desk_link" target="_blank">Help Desk<i class="ml-2 fas fa-laptop"></i></a>
+                    <a class="md:py-2 py-1 md:px-6 px-2 bg-[#078282ff] rounded-full border border-white border-2 text-white hover:bg-gray-100 hover:text-[#078282ff] shadow-md" > 
+                    <router-link :to="{name:'LoginHelpDesk'}">Help Desk</router-link><i class="ml-2 fas fa-laptop"></i></a>
+                   
                     <a class="hover:text-primary w-[20px] h-[20px] rounded-full hover:bg-white bg-primary text-white text-center" :href="constants.social_media.facebook" target="_blank"><i class="fab fa-facebook"></i></a>
                     <a class="hover:text-primary w-[20px] h-[20px] rounded-full hover:bg-white bg-primary text-white text-center" :href="constants.social_media.twitter" target="_blank"><i class="fab fa-twitter"></i></a>
                     <a class="hover:text-primary w-[20px] h-[20px] rounded-full hover:bg-white bg-primary text-white text-center" :href="constants.social_media.telegram" target="_blank"><i class="fab fa-telegram"></i></a>
